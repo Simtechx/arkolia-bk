@@ -742,12 +742,7 @@ const Index = () => {
                          <ToggleGroupItem 
                            key={theme} 
                            value={theme}
-                           className="text-xs px-3 py-1 font-poppins"
-                           style={{
-                             backgroundColor: '#5C5D40',
-                             color: 'white',
-                             border: '1px solid #5C5D40'
-                           }}
+                           className="bg-white/25 text-[#0D3029] border-white/30 hover:bg-[#0D3029] hover:text-white data-[state=on]:bg-[#0D3029] data-[state=on]:text-white text-xs px-3 py-1 font-poppins"
                          >
                            {theme}
                          </ToggleGroupItem>
@@ -761,7 +756,7 @@ const Index = () => {
 
           {/* Main View Switch */}
           <div className="flex justify-center mb-6">
-            <div style={{backgroundColor: '#5C5D40'}} className="backdrop-blur-xl rounded-xl p-1 border border-white/20">
+            <div className="bg-black/50 backdrop-blur-xl rounded-xl p-1 border border-white/20">
               <div className="flex flex-wrap justify-center gap-1">
                 <button
                   onClick={() => setMainView("recent")}
@@ -1324,7 +1319,7 @@ const Index = () => {
                      {surahCount.toLocaleString()}
                    </div>
                    <div className="text-white text-lg font-medium opacity-90 relative">
-                     <span className="inline-flex items-center gap-2 bg-gray-800 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
+                     <span className="inline-flex items-center gap-2 border-2 border-[#2B3A28] bg-[#2B3A28]/20 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
                        <BookOpen className="w-4 h-4" />
                        Surahs
                      </span>
