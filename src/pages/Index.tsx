@@ -179,6 +179,9 @@ const Index = () => {
   const [currentTrack, setCurrentTrack] = useState(null);
   const [isPlayerVisible, setIsPlayerVisible] = useState(false);
   
+  // Favorites tracking
+  const [favoriteTrackIds, setFavoriteTrackIds] = useState(new Set());
+  
   // Filter states
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("all");
@@ -187,6 +190,18 @@ const Index = () => {
   const [selectedUsage, setSelectedUsage] = useState("all");
   const [showSajdah, setShowSajdah] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
+
+  const toggleFavorite = (trackId) => {
+    const newFavorites = new Set(favoriteTrackIds);
+    if (newFavorites.has(trackId)) {
+      newFavorites.delete(trackId);
+      toast({ description: "Removed from favourites" });
+    } else {
+      newFavorites.add(trackId);
+      toast({ description: "Added to favourites" });
+    }
+    setFavoriteTrackIds(newFavorites);
+  };
 
   const handleSurahClick = (surah) => {
     const surahId = surah.id;
@@ -594,7 +609,7 @@ const Index = () => {
       <main className="relative z-10 px-4 pb-32">
         <div className="max-w-6xl mx-auto">
           {/* Filter Section */}
-          <div className="bg-black/20 backdrop-blur-xl border-white/20 rounded-lg p-4 mb-6">
+          <div className="bg-black/30 backdrop-blur-xl border-white/20 rounded-lg p-4 mb-6">
             <div className="flex flex-row gap-3 items-center">
               {/* Search Input */}
               <div className="relative flex-1">
@@ -735,13 +750,13 @@ const Index = () => {
 
           {/* Main View Switch */}
           <div className="flex justify-center mb-6">
-            <div className="bg-black/20 backdrop-blur-xl rounded-xl p-1 border border-white/20">
+            <div className="bg-black/30 backdrop-blur-xl rounded-xl p-1 border border-white/20">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-1">
                 <button
                   onClick={() => setMainView("surahs")}
-                  className={`px-4 md:px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
+                  className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
                     mainView === "surahs"
-                      ? "bg-white/20 text-white shadow-lg"
+                      ? "bg-white/25 text-white shadow-lg"
                       : "text-white/70 hover:text-white"
                   }`}
                 >
@@ -749,9 +764,9 @@ const Index = () => {
                 </button>
                 <button
                   onClick={() => setMainView("recent")}
-                  className={`px-4 md:px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
+                  className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
                     mainView === "recent"
-                      ? "bg-white/20 text-white shadow-lg"
+                      ? "bg-white/25 text-white shadow-lg"
                       : "text-white/70 hover:text-white"
                   }`}
                 >
@@ -759,9 +774,9 @@ const Index = () => {
                 </button>
                 <button
                   onClick={() => setMainView("favourites")}
-                  className={`px-4 md:px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
+                  className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
                     mainView === "favourites"
-                      ? "bg-white/20 text-white shadow-lg"
+                      ? "bg-white/25 text-white shadow-lg"
                       : "text-white/70 hover:text-white"
                   }`}
                 >
@@ -769,9 +784,9 @@ const Index = () => {
                 </button>
                 <button
                   onClick={() => setMainView("completed")}
-                  className={`px-4 md:px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
+                  className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
                     mainView === "completed"
-                      ? "bg-white/20 text-white shadow-lg"
+                      ? "bg-white/25 text-white shadow-lg"
                       : "text-white/70 hover:text-white"
                   }`}
                 >
@@ -813,17 +828,17 @@ const Index = () => {
                               <span className="text-white font-bold text-sm font-poppins">{surah.id}</span>
                             </div>
                             <div className="flex-1">
-                              <div className="flex items-center gap-3 mb-1">
-                                <h3 className="font-semibold text-lg text-white font-poppins drop-shadow-sm">{surah.name}</h3>
-                                <Badge className={`${getBadgeColor(surah.type)} text-white text-xs px-2 py-1 font-poppins font-medium`}>
+                              <div className="flex items-center gap-3 mb-2">
+                                <h3 className="font-semibold text-lg text-white font-poppins drop-shadow-lg">{surah.name}</h3>
+                                <Badge className={`${getBadgeColor(surah.type)} text-white text-xs px-2 py-1 font-poppins font-medium hover:opacity-80 transition-opacity`}>
                                   {surah.type}
                                 </Badge>
                               </div>
-                              <p className="text-xl font-arabic text-white/90 mb-1 drop-shadow-sm">{surah.nameArabic}</p>
+                              <p className="text-xl font-arabic text-white/90 mb-2 drop-shadow-lg">{surah.nameArabic}</p>
                               <div className="flex items-center space-x-4 text-sm text-white/80 font-poppins font-medium">
                                 <span>{surah.verses} verses</span>
                                 {surah.sajdah && (
-                                  <Badge className="bg-[#4B4155] text-white text-xs px-2 py-0.5 font-poppins">
+                                  <Badge className="bg-[#4B4155] hover:bg-[#4B4155]/80 text-white text-xs px-2 py-0.5 font-poppins transition-colors">
                                     Sajdah
                                   </Badge>
                                 )}
@@ -841,83 +856,94 @@ const Index = () => {
 
                     {/* Expanded Tracks */}
                     {isExpanded && (
-                      <div className="ml-4 mt-2 space-y-2">
+                      <div className="ml-2 md:ml-4 mt-3 space-y-3">
                         {mockTracks.map((track) => (
                           <Card 
                             key={track.id} 
-                            className="backdrop-blur-xl border-white/30"
+                            className="backdrop-blur-xl border-white/30 hover:bg-white/20 transition-all duration-300"
                             style={{ 
-                              backgroundColor: `rgba(255, 255, 255, 0.15)`,
+                              background: `linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.15) 100%)`,
                               borderWidth: "1px",
-                              borderStyle: 'solid'
+                              borderStyle: 'solid',
+                              backdropFilter: "blur(20px)"
                             }}
                           >
-                            <CardContent className="p-3">
-                              <div className="flex items-center justify-between">
-                                <div className="flex-1">
-                                  <h4 className="font-medium text-white font-poppins text-sm">{track.title}</h4>
-                                  <p className="text-white/80 text-xs font-poppins">
+                            <CardContent className="p-4">
+                              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="font-medium text-white font-poppins text-sm md:text-base mb-1 leading-tight">
+                                    {track.title}
+                                  </h4>
+                                  <p className="text-white/80 text-xs md:text-sm font-poppins">
                                     Verses {track.verseRange} • {track.duration}
                                   </p>
                                 </div>
-                                <div className="flex items-center space-x-1">
-                                  <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    className="text-white/70 hover:text-red-400 hover:bg-white/10"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      toast({ description: "Added to favourites" });
-                                    }}
-                                  >
-                                    <Heart className="w-3 h-3" />
-                                  </Button>
-                                  <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    className="text-white/70 hover:text-white hover:bg-white/10"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      toast({ description: "Sharing..." });
-                                    }}
-                                  >
-                                    <Share2 className="w-3 h-3" />
-                                  </Button>
-                                  <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    className="text-white/70 hover:text-white hover:bg-white/10"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      toast({ description: "Downloading..." });
-                                    }}
-                                  >
-                                    <Download className="w-3 h-3" />
-                                  </Button>
-                                  <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    className="text-white/70 hover:text-white hover:bg-white/10"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      toast({ description: "Opening PDF..." });
-                                    }}
-                                  >
-                                    <FileText className="w-3 h-3" />
-                                  </Button>
-                                  <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white ml-2"
-                                    onClick={() => handleTrackPlay(track, surah)}
-                                  >
-                                    {playingTrack === track.id ? (
-                                      <Pause className="w-3 h-3" />
-                                    ) : (
-                                      <Play className="w-3 h-3" />
-                                    )}
-                                  </Button>
-                                  <AudioWave isPlaying={playingTrack === track.id} />
+                                <div className="flex items-center justify-between md:justify-end gap-1 md:gap-2">
+                                  <div className="flex items-center gap-1">
+                                    <Button
+                                      size="sm"
+                                      variant="ghost"
+                                      className={`w-8 h-8 p-0 transition-colors ${
+                                        favoriteTrackIds.has(track.id)
+                                          ? "text-red-400 hover:text-red-300"
+                                          : "text-white/70 hover:text-red-400"
+                                      } hover:bg-white/10`}
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        toggleFavorite(track.id);
+                                      }}
+                                    >
+                                      <Heart className="w-3 h-3" fill={favoriteTrackIds.has(track.id) ? "currentColor" : "none"} />
+                                    </Button>
+                                    <Button
+                                      size="sm"
+                                      variant="ghost"
+                                      className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        toast({ description: "Sharing..." });
+                                      }}
+                                    >
+                                      <Share2 className="w-3 h-3" />
+                                    </Button>
+                                    <Button
+                                      size="sm"
+                                      variant="ghost"
+                                      className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        toast({ description: "Downloading..." });
+                                      }}
+                                    >
+                                      <Download className="w-3 h-3" />
+                                    </Button>
+                                    <Button
+                                      size="sm"
+                                      variant="ghost"
+                                      className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        toast({ description: "Opening PDF..." });
+                                      }}
+                                    >
+                                      <FileText className="w-3 h-3" />
+                                    </Button>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <Button
+                                      size="sm"
+                                      variant="ghost"
+                                      className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1"
+                                      onClick={() => handleTrackPlay(track, surah)}
+                                    >
+                                      {playingTrack === track.id ? (
+                                        <Pause className="w-3 h-3" />
+                                      ) : (
+                                        <Play className="w-3 h-3" />
+                                      )}
+                                    </Button>
+                                    <AudioWave isPlaying={playingTrack === track.id} />
+                                  </div>
                                 </div>
                               </div>
                             </CardContent>
@@ -980,60 +1006,68 @@ const Index = () => {
               ].map((track) => (
                 <Card 
                   key={track.id} 
-                  className="backdrop-blur-xl border-white/30 hover:bg-white/10 transition-all duration-300"
+                  className="backdrop-blur-xl border-white/30 hover:bg-white/15 transition-all duration-300"
                   style={{ 
-                    background: `linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)`,
+                    background: `linear-gradient(135deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.10) 100%)`,
                     borderWidth: "1px",
                     borderStyle: 'solid',
-                    backdropFilter: "blur(15px)"
+                    backdropFilter: "blur(20px)"
                   }}
                 >
                   <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <h4 className="font-medium text-white font-poppins text-sm mb-1">{track.title}</h4>
-                        <p className="text-white/80 text-xs font-poppins">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-medium text-white font-poppins text-sm md:text-base mb-1 leading-tight">
+                          {track.title}
+                        </h4>
+                        <p className="text-white/80 text-xs md:text-sm font-poppins">
                           {track.surahName} • Verses {track.verseRange} • {track.duration}
                         </p>
                         <p className="text-white/60 text-xs font-poppins mt-1">{track.date}</p>
                       </div>
-                      <div className="flex items-center space-x-1">
+                      <div className="flex items-center justify-between md:justify-end gap-1 md:gap-2">
+                        <div className="flex items-center gap-1">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className={`w-8 h-8 p-0 transition-colors ${
+                              favoriteTrackIds.has(track.id)
+                                ? "text-red-400 hover:text-red-300"
+                                : "text-white/70 hover:text-red-400"
+                            } hover:bg-white/10`}
+                            onClick={() => toggleFavorite(track.id)}
+                          >
+                            <Heart className="w-3 h-3" fill={favoriteTrackIds.has(track.id) ? "currentColor" : "none"} />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
+                            onClick={() => toast({ description: "Sharing..." })}
+                          >
+                            <Share2 className="w-3 h-3" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
+                            onClick={() => toast({ description: "Downloading..." })}
+                          >
+                            <Download className="w-3 h-3" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
+                            onClick={() => toast({ description: "Opening PDF..." })}
+                          >
+                            <FileText className="w-3 h-3" />
+                          </Button>
+                        </div>
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="text-white/70 hover:text-red-400 hover:bg-white/10"
-                          onClick={() => toast({ description: "Added to favourites" })}
-                        >
-                          <Heart className="w-3 h-3" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="text-white/70 hover:text-white hover:bg-white/10"
-                          onClick={() => toast({ description: "Sharing..." })}
-                        >
-                          <Share2 className="w-3 h-3" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="text-white/70 hover:text-white hover:bg-white/10"
-                          onClick={() => toast({ description: "Downloading..." })}
-                        >
-                          <Download className="w-3 h-3" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="text-white/70 hover:text-white hover:bg-white/10"
-                          onClick={() => toast({ description: "Opening PDF..." })}
-                        >
-                          <FileText className="w-3 h-3" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white ml-2"
+                          className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1"
                           onClick={() => {
                             setCurrentTrack({
                               id: track.id,
@@ -1057,11 +1091,83 @@ const Index = () => {
 
           {/* Favourites View */}
           {mainView === "favourites" && (
-            <div className="text-center py-12">
-              <div className="text-white/60 mb-4">
-                <p className="text-lg font-poppins">Favourite Tracks</p>
-                <p className="text-sm font-poppins">Your favourite tracks will appear here</p>
-              </div>
+            <div className="space-y-4">
+              {favoriteTrackIds.size === 0 ? (
+                <div className="text-center py-12">
+                  <div className="text-white/60 mb-4">
+                    <Heart className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                    <p className="text-lg font-poppins">No Favourite Tracks</p>
+                    <p className="text-sm font-poppins">Add tracks to favourites to see them here</p>
+                  </div>
+                </div>
+              ) : (
+                // Show favorite tracks - for demo purposes, we'll show the recent tracks that are favorited
+                Array.from(favoriteTrackIds).map((trackId: any) => (
+                  <Card 
+                    key={String(trackId)} 
+                    className="backdrop-blur-xl border-white/30 hover:bg-white/15 transition-all duration-300"
+                    style={{ 
+                      background: `linear-gradient(135deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.10) 100%)`,
+                      borderWidth: "1px",
+                      borderStyle: 'solid',
+                      backdropFilter: "blur(20px)"
+                    }}
+                  >
+                    <CardContent className="p-4">
+                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium text-white font-poppins text-sm md:text-base mb-1 leading-tight">
+                            Favorite Track #{String(trackId)}
+                          </h4>
+                          <p className="text-white/80 text-xs md:text-sm font-poppins">
+                            Sample favorite content
+                          </p>
+                        </div>
+                        <div className="flex items-center justify-between md:justify-end gap-1 md:gap-2">
+                          <div className="flex items-center gap-1">
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="w-8 h-8 p-0 text-red-400 hover:text-red-300 hover:bg-white/10"
+                              onClick={() => toggleFavorite(trackId)}
+                            >
+                              <Heart className="w-3 h-3" fill="currentColor" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
+                            >
+                              <Share2 className="w-3 h-3" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
+                            >
+                              <Download className="w-3 h-3" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
+                            >
+                              <FileText className="w-3 h-3" />
+                            </Button>
+                          </div>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1"
+                          >
+                            <Play className="w-3 h-3" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
             </div>
           )}
 
