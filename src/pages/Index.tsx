@@ -615,7 +615,7 @@ const Index = () => {
       <main className="relative z-10 px-4 pb-32">
         <div className="max-w-6xl mx-auto">
           {/* Filter Section */}
-          <div className="bg-black/50 backdrop-blur-xl border-white/20 rounded-lg p-4 mb-6">
+          <div className="bg-black/50 backdrop-blur-xl border-2 border-white rounded-lg p-4 mb-6">
             <div className="flex flex-row gap-3 items-center">
               {/* Search Input */}
               <div className="relative flex-1">
@@ -669,11 +669,11 @@ const Index = () => {
                       <SelectTrigger className="bg-white/25 border-white/30 text-black font-poppins focus:ring-[#0D3029]">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-white">
-                        <SelectItem value="all" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">All Types</SelectItem>
-                        <SelectItem value="Makkan" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Makkan</SelectItem>
-                        <SelectItem value="Medinan" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Medinan</SelectItem>
-                      </SelectContent>
+                       <SelectContent className="bg-white">
+                         <SelectItem value="all" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">All Types</SelectItem>
+                         <SelectItem value="Makkan" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Makkan</SelectItem>
+                         <SelectItem value="Medinan" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Medinan</SelectItem>
+                       </SelectContent>
                     </Select>
                   </div>
 
@@ -684,12 +684,12 @@ const Index = () => {
                       <SelectTrigger className="bg-white/25 border-white/30 text-black font-poppins focus:ring-[#0D3029]">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-white">
-                        <SelectItem value="all" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">All Lengths</SelectItem>
-                        <SelectItem value="Short" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Short</SelectItem>
-                        <SelectItem value="Medium" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Medium</SelectItem>
-                        <SelectItem value="Long" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Long</SelectItem>
-                      </SelectContent>
+                       <SelectContent className="bg-white">
+                         <SelectItem value="all" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">All Lengths</SelectItem>
+                         <SelectItem value="Short" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Short</SelectItem>
+                         <SelectItem value="Medium" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Medium</SelectItem>
+                         <SelectItem value="Long" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Long</SelectItem>
+                       </SelectContent>
                     </Select>
                   </div>
 
@@ -700,17 +700,17 @@ const Index = () => {
                       <SelectTrigger className="bg-white/25 border-white/30 text-black font-poppins focus:ring-[#0D3029]">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-white">
-                        <SelectItem value="all" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">All Usage</SelectItem>
-                        <SelectItem value="Daily" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Daily</SelectItem>
-                        <SelectItem value="Friday" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Friday</SelectItem>
-                        <SelectItem value="Before Sleep" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Before Sleep</SelectItem>
-                        <SelectItem value="Protection" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Protection</SelectItem>
-                        <SelectItem value="Night" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Night</SelectItem>
-                        <SelectItem value="Morning" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Morning</SelectItem>
-                        <SelectItem value="Ramadan" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Ramadan</SelectItem>
-                        <SelectItem value="Hajj" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Hajj</SelectItem>
-                      </SelectContent>
+                       <SelectContent className="bg-white">
+                         <SelectItem value="all" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">All Usage</SelectItem>
+                         <SelectItem value="Daily" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Daily</SelectItem>
+                         <SelectItem value="Friday" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Friday</SelectItem>
+                         <SelectItem value="Before Sleep" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Before Sleep</SelectItem>
+                         <SelectItem value="Protection" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Protection</SelectItem>
+                         <SelectItem value="Night" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Night</SelectItem>
+                         <SelectItem value="Morning" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Morning</SelectItem>
+                         <SelectItem value="Ramadan" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Ramadan</SelectItem>
+                         <SelectItem value="Hajj" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Hajj</SelectItem>
+                       </SelectContent>
                     </Select>
                   </div>
 
@@ -721,11 +721,11 @@ const Index = () => {
                       <SelectTrigger className="bg-white/25 border-white/30 text-black font-poppins focus:ring-[#0D3029]">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-white">
-                        <SelectItem value="all" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">All Surahs</SelectItem>
-                        <SelectItem value="yes" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">With Sajdah</SelectItem>
-                        <SelectItem value="no" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Without Sajdah</SelectItem>
-                      </SelectContent>
+                       <SelectContent className="bg-white">
+                         <SelectItem value="all" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">All Surahs</SelectItem>
+                         <SelectItem value="yes" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">With Sajdah</SelectItem>
+                         <SelectItem value="no" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Without Sajdah</SelectItem>
+                       </SelectContent>
                     </Select>
                   </div>
 
@@ -739,11 +739,11 @@ const Index = () => {
                       className="flex flex-wrap gap-2 justify-start"
                     >
                       {["Tawheed", "Stories", "Laws", "Commands", "Worship", "Qiyamah", "Duas", "Lessons", "Protection"].map(theme => (
-                        <ToggleGroupItem 
-                          key={theme} 
-                          value={theme}
-                          className="bg-[#0D3029] text-white border-white/30 hover:bg-[#5C5D40] hover:text-white data-[state=on]:bg-[#5C5D40] data-[state=on]:text-white text-xs px-3 py-1 font-poppins"
-                        >
+                         <ToggleGroupItem 
+                           key={theme} 
+                           value={theme}
+                           className="bg-[#0D3029] text-white border border-white hover:bg-[#5C5D40] hover:text-white data-[state=on]:bg-[#5C5D40] data-[state=on]:text-white text-xs px-3 py-1 font-poppins"
+                         >
                           {theme}
                         </ToggleGroupItem>
                       ))}
@@ -756,7 +756,7 @@ const Index = () => {
 
           {/* Main View Switch */}
           <div className="flex justify-center mb-6">
-            <div className="bg-black/50 backdrop-blur-xl rounded-xl p-1 border border-white/20">
+            <div className="bg-black/50 backdrop-blur-xl rounded-xl p-1 border-2 border-white">
               <div className="flex flex-wrap justify-center gap-1">
                 <button
                   onClick={() => setMainView("recent")}
@@ -940,7 +940,7 @@ const Index = () => {
                                     <Button
                                       size="sm"
                                       variant="ghost"
-                        className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border border-white"
+                           className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border-1 border-white"
                                       onClick={() => handleTrackPlay(track, surah)}
                                     >
                                       {playingTrack === track.id ? (
@@ -1082,7 +1082,7 @@ const Index = () => {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border border-white"
+                           className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border-1 border-white"
                           onClick={() => {
                             setCurrentTrack({
                               id: track.id,
@@ -1120,23 +1120,24 @@ const Index = () => {
               ) : (
                 // Show favorite tracks - for demo purposes, we'll show the recent tracks that are favorited
                 Array.from(favoriteTrackIds).map((trackId: any) => (
-                  <Card 
-                    key={String(trackId)} 
-                    className="backdrop-blur-xl border-white/30 hover:bg-white/15 transition-all duration-300"
-                    style={{ 
-                      background: `linear-gradient(135deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.10) 100%)`,
-                      borderWidth: "1px",
-                      borderStyle: 'solid',
-                      backdropFilter: "blur(20px)"
-                    }}
+                   <Card 
+                     key={String(trackId)} 
+                     className="backdrop-blur-xl border-white/30 hover:bg-white/15 transition-all duration-300"
+                     style={{ 
+                       background: `linear-gradient(135deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.10) 100%)`,
+                       borderColor: "#0D3029",
+                       borderWidth: "2px",
+                       borderStyle: 'solid',
+                       backdropFilter: "blur(20px)"
+                     }}
                   >
                     <CardContent className="p-4">
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-medium text-white font-poppins text-sm md:text-base mb-1 leading-tight">
-                            Favorite Track #{String(trackId)}
-                          </h4>
-                          <p className="text-white/80 text-xs md:text-sm font-poppins">
+                           <h4 className="font-medium text-[#0D3029] font-poppins text-sm md:text-base mb-1 leading-tight">
+                             Favorite Track #{String(trackId)}
+                           </h4>
+                           <p className="text-black text-xs md:text-sm font-poppins">
                             Sample favorite content
                           </p>
                         </div>
@@ -1218,26 +1219,27 @@ const Index = () => {
                     verseRange: "255-260"
                   }
                 ].filter(track => completedTrackIds.has(track.id)).map((track) => (
-                  <Card 
-                    key={track.id} 
-                    className="backdrop-blur-xl border-white/20 hover:bg-white/15 transition-all duration-300"
-                    style={{ 
-                      background: `linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%)`,
-                      borderWidth: "1px",
-                      borderStyle: 'solid',
-                      backdropFilter: "blur(20px)"
-                    }}
+                   <Card 
+                     key={track.id} 
+                     className="backdrop-blur-xl border-white/20 hover:bg-white/15 transition-all duration-300"
+                     style={{ 
+                       background: `linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%)`,
+                       borderColor: "#0D3029",
+                       borderWidth: "2px",
+                       borderStyle: 'solid',
+                       backdropFilter: "blur(20px)"
+                     }}
                   >
                     <CardContent className="p-4">
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-medium text-white font-poppins text-sm md:text-base mb-1 leading-tight">
-                            {track.title.split(' - ')[0]}
-                          </h4>
-                          <p className="text-white/80 text-xs md:text-sm font-poppins">
-                            {track.title.split(' - ')[1]}
-                          </p>
-                          <p className="text-white/60 text-xs font-poppins mt-1">{track.date}</p>
+                           <h4 className="font-medium text-[#0D3029] font-poppins text-sm md:text-base mb-1 leading-tight">
+                             {track.title.split(' - ')[0]}
+                           </h4>
+                           <p className="text-black text-xs md:text-sm font-poppins">
+                             {track.title.split(' - ')[1]}
+                           </p>
+                           <p className="text-black/70 text-xs font-poppins mt-1">{track.date}</p>
                         </div>
                         <div className="flex items-center justify-between md:justify-end gap-1 md:gap-2">
                           <div className="flex items-center gap-1">
@@ -1281,7 +1283,7 @@ const Index = () => {
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border border-white"
+                             className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border-1 border-white"
                             onClick={() => {
                               setCurrentTrack({
                                 id: track.id,
