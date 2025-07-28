@@ -182,6 +182,9 @@ const Index = () => {
   // Favorites tracking
   const [favoriteTrackIds, setFavoriteTrackIds] = useState(new Set());
   
+  // Completed tracks tracking
+  const [completedTrackIds, setCompletedTrackIds] = useState(new Set());
+  
   // Filter states
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("all");
@@ -224,6 +227,9 @@ const Index = () => {
     });
     setPlayingTrack(track.id);
     setIsPlayerVisible(true);
+    
+    // Add to completed tracks
+    setCompletedTrackIds(prev => new Set([...prev, track.id]));
   };
 
   const handlePlayPause = (trackId) => {
@@ -753,16 +759,6 @@ const Index = () => {
             <div className="bg-black/30 backdrop-blur-xl rounded-xl p-1 border border-white/20">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-1">
                 <button
-                  onClick={() => setMainView("surahs")}
-                  className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
-                    mainView === "surahs"
-                      ? "bg-white/25 text-white shadow-lg"
-                      : "text-white/70 hover:text-white"
-                  }`}
-                >
-                  Surahs
-                </button>
-                <button
                   onClick={() => setMainView("recent")}
                   className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
                     mainView === "recent"
@@ -771,6 +767,16 @@ const Index = () => {
                   }`}
                 >
                   Recent
+                </button>
+                <button
+                  onClick={() => setMainView("surahs")}
+                  className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
+                    mainView === "surahs"
+                      ? "bg-white/25 text-white shadow-lg"
+                      : "text-white/70 hover:text-white"
+                  }`}
+                >
+                  Surahs
                 </button>
                 <button
                   onClick={() => setMainView("favourites")}
@@ -1006,9 +1012,9 @@ const Index = () => {
               ].map((track) => (
                 <Card 
                   key={track.id} 
-                  className="backdrop-blur-xl border-white/30 hover:bg-white/15 transition-all duration-300"
+                  className="backdrop-blur-xl border-white/10 hover:bg-black/60 transition-all duration-300 shadow-2xl"
                   style={{ 
-                    background: `linear-gradient(135deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.10) 100%)`,
+                    background: `linear-gradient(135deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.40) 100%)`,
                     borderWidth: "1px",
                     borderStyle: 'solid',
                     backdropFilter: "blur(20px)"
@@ -1018,10 +1024,10 @@ const Index = () => {
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                       <div className="flex-1 min-w-0">
                         <h4 className="font-medium text-white font-poppins text-sm md:text-base mb-1 leading-tight">
-                          {track.title}
+                          {track.title.split(' - ')[0]}
                         </h4>
                         <p className="text-white/80 text-xs md:text-sm font-poppins">
-                          {track.surahName} • Verses {track.verseRange} • {track.duration}
+                          {track.title.split(' - ')[1]}
                         </p>
                         <p className="text-white/60 text-xs font-poppins mt-1">{track.date}</p>
                       </div>
@@ -1077,6 +1083,8 @@ const Index = () => {
                             });
                             setPlayingTrack(track.id);
                             setIsPlayerVisible(true);
+                            // Add to completed tracks
+                            setCompletedTrackIds(prev => new Set([...prev, track.id]));
                           }}
                         >
                           <Play className="w-3 h-3" />
@@ -1173,11 +1181,117 @@ const Index = () => {
 
           {/* Completed View */}
           {mainView === "completed" && (
-            <div className="text-center py-12">
-              <div className="text-white/60 mb-4">
-                <p className="text-lg font-poppins">Completed Tracks</p>
-                <p className="text-sm font-poppins">Tracks you've finished listening to will appear here</p>
-              </div>
+            <div className="space-y-4">
+              {completedTrackIds.size === 0 ? (
+                <div className="text-center py-12">
+                  <div className="text-white/60 mb-4">
+                    <p className="text-lg font-poppins">Completed Tracks</p>
+                    <p className="text-sm font-poppins">Tracks you've finished listening to will appear here</p>
+                  </div>
+                </div>
+              ) : (
+                // Show completed tracks from recent tracks and surah tracks
+                [
+                  {
+                    id: "recent-1",
+                    title: "Fri-20250728 - Surah Kahf, Verses 1–5",
+                    surahName: "Al-Kahf",
+                    duration: "12:45",
+                    date: "28 July 2025",
+                    verseRange: "1-5"
+                  },
+                  {
+                    id: "recent-2", 
+                    title: "Thu-20250727 - Surah Al-Baqarah, Verses 255–260",
+                    surahName: "Al-Baqarah",
+                    duration: "15:20",
+                    date: "27 July 2025",
+                    verseRange: "255-260"
+                  }
+                ].filter(track => completedTrackIds.has(track.id)).map((track) => (
+                  <Card 
+                    key={track.id} 
+                    className="backdrop-blur-xl border-white/20 hover:bg-white/15 transition-all duration-300"
+                    style={{ 
+                      background: `linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%)`,
+                      borderWidth: "1px",
+                      borderStyle: 'solid',
+                      backdropFilter: "blur(20px)"
+                    }}
+                  >
+                    <CardContent className="p-4">
+                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium text-white font-poppins text-sm md:text-base mb-1 leading-tight">
+                            {track.title.split(' - ')[0]}
+                          </h4>
+                          <p className="text-white/80 text-xs md:text-sm font-poppins">
+                            {track.title.split(' - ')[1]}
+                          </p>
+                          <p className="text-white/60 text-xs font-poppins mt-1">{track.date}</p>
+                        </div>
+                        <div className="flex items-center justify-between md:justify-end gap-1 md:gap-2">
+                          <div className="flex items-center gap-1">
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className={`w-8 h-8 p-0 transition-colors ${
+                                favoriteTrackIds.has(track.id)
+                                  ? "text-red-400 hover:text-red-300"
+                                  : "text-white/70 hover:text-red-400"
+                              } hover:bg-white/10`}
+                              onClick={() => toggleFavorite(track.id)}
+                            >
+                              <Heart className="w-3 h-3" fill={favoriteTrackIds.has(track.id) ? "currentColor" : "none"} />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
+                              onClick={() => toast({ description: "Sharing..." })}
+                            >
+                              <Share2 className="w-3 h-3" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
+                              onClick={() => toast({ description: "Downloading..." })}
+                            >
+                              <Download className="w-3 h-3" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
+                              onClick={() => toast({ description: "Opening PDF..." })}
+                            >
+                              <FileText className="w-3 h-3" />
+                            </Button>
+                          </div>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1"
+                            onClick={() => {
+                              setCurrentTrack({
+                                id: track.id,
+                                title: track.title,
+                                surahName: track.surahName,
+                                duration: track.duration
+                              });
+                              setPlayingTrack(track.id);
+                              setIsPlayerVisible(true);
+                            }}
+                          >
+                            <Play className="w-3 h-3" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
             </div>
           )}
 
@@ -1221,32 +1335,32 @@ const Index = () => {
             <Card 
               className="text-center transition-all duration-500 hover:scale-[1.02] relative overflow-hidden group"
               style={{ 
-                background: "rgba(245, 245, 220, 0.95)", // Soft beige matching Makkan color
-                borderColor: "#D4C4A8", // Darker shade border
+                background: "rgba(86, 110, 82, 0.6)", 
+                borderColor: "white", 
                 borderWidth: "2px",
                 borderStyle: 'solid',
                 backdropFilter: "blur(10px)"
               }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-[#D4C4A8]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#566E52]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <CardContent className="p-8 relative z-10">
                 <div className="space-y-4">
                   <div className="relative">
                     <div 
                       className="w-20 h-20 rounded-full mx-auto flex items-center justify-center shadow-2xl relative z-10 ring-4 ring-white/20"
                       style={{ 
-                        backgroundColor: numberBgColor,
-                        background: `linear-gradient(135deg, ${numberBgColor}, ${numberBgColor}dd)`
+                        backgroundColor: "rgba(255, 255, 255, 0.2)",
+                        background: `linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1))`
                       }}
                     >
                       <span className="text-2xl font-bold text-white font-poppins tracking-wide">
                         {surahCount.toLocaleString()}
                       </span>
                     </div>
-                    <div className="absolute inset-0 w-20 h-20 rounded-full mx-auto bg-[#D4C4A8]/30 blur-xl animate-pulse" />
+                    <div className="absolute inset-0 w-20 h-20 rounded-full mx-auto bg-white/30 blur-xl animate-pulse" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 font-poppins tracking-wider drop-shadow-sm">SURAHS</h3>
-                  <p className="text-gray-800 text-sm font-poppins font-medium drop-shadow-sm">Complete Quran Collection</p>
+                  <h3 className="text-xl font-bold text-white font-poppins tracking-wider drop-shadow-sm">SURAHS</h3>
+                  <p className="text-white/80 text-sm font-poppins font-medium drop-shadow-sm">Complete Quran Collection</p>
                 </div>
               </CardContent>
             </Card>
@@ -1255,32 +1369,32 @@ const Index = () => {
             <Card 
               className="text-center transition-all duration-500 hover:scale-[1.02] relative overflow-hidden group"
               style={{ 
-                background: "rgba(232, 245, 232, 0.95)", // Light professional green matching Medinan color
-                borderColor: "#B8D4B8", // Darker shade border
+                background: "rgba(106, 92, 116, 0.6)", 
+                borderColor: "white", 
                 borderWidth: "2px",
                 borderStyle: 'solid',
                 backdropFilter: "blur(10px)"
               }}
             >
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#B8D4B8]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#6A5C74]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <CardContent className="p-8 relative z-10">
                 <div className="space-y-4">
                   <div className="relative">
                     <div 
                       className="w-20 h-20 rounded-2xl mx-auto flex items-center justify-center shadow-2xl relative z-10 ring-4 ring-white/20 transform rotate-12 group-hover:rotate-0 transition-transform duration-500"
                       style={{ 
-                        backgroundColor: numberBgColor,
-                        background: `linear-gradient(45deg, ${numberBgColor}, ${numberBgColor}dd)`
+                        backgroundColor: "rgba(255, 255, 255, 0.2)",
+                        background: `linear-gradient(45deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1))`
                       }}
                     >
                       <span className="text-2xl font-bold text-white font-poppins tracking-wide">
                         {audioCount.toLocaleString()}
                       </span>
                     </div>
-                    <div className="absolute inset-0 w-20 h-20 rounded-2xl mx-auto bg-[#B8D4B8]/30 blur-xl animate-pulse" />
+                    <div className="absolute inset-0 w-20 h-20 rounded-2xl mx-auto bg-white/30 blur-xl animate-pulse" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 font-poppins tracking-wider drop-shadow-sm">AUDIOS</h3>
-                  <p className="text-gray-800 text-sm font-poppins font-medium drop-shadow-sm">Tafseer Recordings</p>
+                  <h3 className="text-xl font-bold text-white font-poppins tracking-wider drop-shadow-sm">AUDIOS</h3>
+                  <p className="text-white/80 text-sm font-poppins font-medium drop-shadow-sm">Tafseer Recordings</p>
                 </div>
               </CardContent>
             </Card>
@@ -1289,29 +1403,29 @@ const Index = () => {
             <Card 
               className="text-center transition-all duration-500 hover:scale-[1.02] relative overflow-hidden group"
               style={{ 
-                background: "rgba(75, 65, 85, 0.15)", // Subtle purple matching site accent
-                borderColor: "#4B4155", // Matching border color
+                background: "rgba(178, 163, 119, 0.6)", 
+                borderColor: "white", 
                 borderWidth: "2px",
                 borderStyle: 'solid',
                 backdropFilter: "blur(10px)"
               }}
             >
-              <div className="absolute inset-0 bg-gradient-to-bl from-[#4B4155]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-bl from-[#B2A377]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <CardContent className="p-8 relative z-10">
                 <div className="space-y-4">
                   <div className="relative">
                     <div 
                       className="w-20 h-16 rounded-xl mx-auto flex items-center justify-center shadow-2xl relative z-10 ring-4 ring-white/20 group-hover:scale-110 transition-transform duration-300"
                       style={{ 
-                        backgroundColor: numberBgColor,
-                        background: `linear-gradient(135deg, ${numberBgColor}, ${numberBgColor}aa)`
+                        backgroundColor: "rgba(255, 255, 255, 0.2)",
+                        background: `linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1))`
                       }}
                     >
                       <span className="text-xl font-bold text-white font-poppins tracking-wide">
                         {hoursCount.toLocaleString()}
                       </span>
                     </div>
-                    <div className="absolute inset-0 w-20 h-16 rounded-xl mx-auto bg-[#4B4155]/30 blur-xl animate-pulse" />
+                    <div className="absolute inset-0 w-20 h-16 rounded-xl mx-auto bg-white/30 blur-xl animate-pulse" />
                   </div>
                   <h3 className="text-xl font-bold text-white font-poppins tracking-wider drop-shadow-lg">HOURS</h3>
                   <p className="text-white/90 text-sm font-poppins font-medium drop-shadow-lg">Total Content Duration</p>
@@ -1324,36 +1438,45 @@ const Index = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Surahs - Image Style */}
               <div className="relative group">
-                <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-8 text-center shadow-2xl border border-white/10 backdrop-blur-xl">
+                <div className="bg-gradient-to-br from-[#566E52] to-[#566E52] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
                   <div className="text-6xl font-bold text-white mb-2 font-poppins">
                     {surahCount.toLocaleString()}
                   </div>
                   <div className="text-white text-lg font-medium opacity-90">
                     Surahs
                   </div>
+                  <div className="text-white/70 text-sm font-medium mt-1">
+                    Complete Quran Collection
+                  </div>
                 </div>
               </div>
 
               {/* Audios - Image Style */}
               <div className="relative group">
-                <div className="bg-gradient-to-br from-purple-600 to-purple-800 rounded-2xl p-8 text-center shadow-2xl border border-white/10 backdrop-blur-xl">
+                <div className="bg-gradient-to-br from-[#6A5C74] to-[#6A5C74] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
                   <div className="text-6xl font-bold text-white mb-2 font-poppins">
                     {audioCount.toLocaleString()}
                   </div>
                   <div className="text-white text-lg font-medium opacity-90">
                     Audios
                   </div>
+                  <div className="text-white/70 text-sm font-medium mt-1">
+                    Tafseer Recordings
+                  </div>
                 </div>
               </div>
 
               {/* Hours - Image Style */}
               <div className="relative group">
-                <div className="bg-gradient-to-br from-gray-700 to-gray-900 rounded-2xl p-8 text-center shadow-2xl border border-white/10 backdrop-blur-xl">
+                <div className="bg-gradient-to-br from-[#B2A377] to-[#B2A377] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
                   <div className="text-6xl font-bold text-white mb-2 font-poppins">
                     {hoursCount.toLocaleString()}
                   </div>
                   <div className="text-white text-lg font-medium opacity-90">
                     Hours
+                  </div>
+                  <div className="text-white/70 text-sm font-medium mt-1">
+                    Total Content Duration
                   </div>
                 </div>
               </div>
