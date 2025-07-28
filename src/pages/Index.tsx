@@ -669,11 +669,11 @@ const Index = () => {
                       <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-white/90 backdrop-blur-xl">
-                        <SelectItem value="all">All Types</SelectItem>
-                        <SelectItem value="Makkan" className="focus:bg-[#0D3029] focus:text-white">Makkan</SelectItem>
-                        <SelectItem value="Medinan" className="focus:bg-[#0D3029] focus:text-white">Medinan</SelectItem>
-                      </SelectContent>
+                       <SelectContent className="bg-white/90 backdrop-blur-xl">
+                         <SelectItem value="all" className="text-black">All Types</SelectItem>
+                         <SelectItem value="Makkan" className="text-black focus:bg-[#0D3029] focus:text-white">Makkan</SelectItem>
+                         <SelectItem value="Medinan" className="text-black focus:bg-[#0D3029] focus:text-white">Medinan</SelectItem>
+                       </SelectContent>
                     </Select>
                   </div>
 
@@ -684,12 +684,12 @@ const Index = () => {
                       <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-white/90 backdrop-blur-xl">
-                        <SelectItem value="all">All Lengths</SelectItem>
-                        <SelectItem value="Short" className="focus:bg-[#0D3029] focus:text-white">Short</SelectItem>
-                        <SelectItem value="Medium" className="focus:bg-[#0D3029] focus:text-white">Medium</SelectItem>
-                        <SelectItem value="Long" className="focus:bg-[#0D3029] focus:text-white">Long</SelectItem>
-                      </SelectContent>
+                       <SelectContent className="bg-white/90 backdrop-blur-xl">
+                         <SelectItem value="all" className="text-black">All Lengths</SelectItem>
+                         <SelectItem value="Short" className="text-black focus:bg-[#0D3029] focus:text-white">Short</SelectItem>
+                         <SelectItem value="Medium" className="text-black focus:bg-[#0D3029] focus:text-white">Medium</SelectItem>
+                         <SelectItem value="Long" className="text-black focus:bg-[#0D3029] focus:text-white">Long</SelectItem>
+                       </SelectContent>
                     </Select>
                   </div>
 
@@ -700,17 +700,17 @@ const Index = () => {
                       <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-white/90 backdrop-blur-xl">
-                        <SelectItem value="all">All Usage</SelectItem>
-                        <SelectItem value="Daily" className="focus:bg-[#0D3029] focus:text-white">Daily</SelectItem>
-                        <SelectItem value="Friday" className="focus:bg-[#0D3029] focus:text-white">Friday</SelectItem>
-                        <SelectItem value="Before Sleep" className="focus:bg-[#0D3029] focus:text-white">Before Sleep</SelectItem>
-                        <SelectItem value="Protection" className="focus:bg-[#0D3029] focus:text-white">Protection</SelectItem>
-                        <SelectItem value="Night" className="focus:bg-[#0D3029] focus:text-white">Night</SelectItem>
-                        <SelectItem value="Morning" className="focus:bg-[#0D3029] focus:text-white">Morning</SelectItem>
-                        <SelectItem value="Ramadan" className="focus:bg-[#0D3029] focus:text-white">Ramadan</SelectItem>
-                        <SelectItem value="Hajj" className="focus:bg-[#0D3029] focus:text-white">Hajj</SelectItem>
-                      </SelectContent>
+                       <SelectContent className="bg-white/90 backdrop-blur-xl">
+                         <SelectItem value="all" className="text-black">All Usage</SelectItem>
+                         <SelectItem value="Daily" className="text-black focus:bg-[#0D3029] focus:text-white">Daily</SelectItem>
+                         <SelectItem value="Friday" className="text-black focus:bg-[#0D3029] focus:text-white">Friday</SelectItem>
+                         <SelectItem value="Before Sleep" className="text-black focus:bg-[#0D3029] focus:text-white">Before Sleep</SelectItem>
+                         <SelectItem value="Protection" className="text-black focus:bg-[#0D3029] focus:text-white">Protection</SelectItem>
+                         <SelectItem value="Night" className="text-black focus:bg-[#0D3029] focus:text-white">Night</SelectItem>
+                         <SelectItem value="Morning" className="text-black focus:bg-[#0D3029] focus:text-white">Morning</SelectItem>
+                         <SelectItem value="Ramadan" className="text-black focus:bg-[#0D3029] focus:text-white">Ramadan</SelectItem>
+                         <SelectItem value="Hajj" className="text-black focus:bg-[#0D3029] focus:text-white">Hajj</SelectItem>
+                       </SelectContent>
                     </Select>
                   </div>
 
@@ -721,11 +721,11 @@ const Index = () => {
                       <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-white/90 backdrop-blur-xl">
-                        <SelectItem value="all">All Surahs</SelectItem>
-                        <SelectItem value="yes" className="focus:bg-[#0D3029] focus:text-white">With Sajdah</SelectItem>
-                        <SelectItem value="no" className="focus:bg-[#0D3029] focus:text-white">Without Sajdah</SelectItem>
-                      </SelectContent>
+                       <SelectContent className="bg-white/90 backdrop-blur-xl">
+                         <SelectItem value="all" className="text-black">All Surahs</SelectItem>
+                         <SelectItem value="yes" className="text-black focus:bg-[#0D3029] focus:text-white">With Sajdah</SelectItem>
+                         <SelectItem value="no" className="text-black focus:bg-[#0D3029] focus:text-white">Without Sajdah</SelectItem>
+                       </SelectContent>
                     </Select>
                   </div>
 
@@ -738,15 +738,20 @@ const Index = () => {
                       onValueChange={setSelectedThemes}
                       className="flex flex-wrap gap-2 justify-start"
                     >
-                      {["Tawheed", "Stories", "Laws", "Commands", "Worship", "Qiyamah", "Duas", "Lessons", "Protection"].map(theme => (
-                        <ToggleGroupItem 
-                          key={theme} 
-                          value={theme}
-                          className="bg-white/25 text-[#0D3029] border-white/30 hover:bg-[#0D3029] hover:text-white data-[state=on]:bg-[#0D3029] data-[state=on]:text-white text-xs px-3 py-1 font-poppins"
-                        >
-                          {theme}
-                        </ToggleGroupItem>
-                      ))}
+                       {["Tawheed", "Stories", "Laws", "Commands", "Worship", "Qiyamah", "Duas", "Lessons", "Protection"].map(theme => (
+                         <ToggleGroupItem 
+                           key={theme} 
+                           value={theme}
+                           className="text-xs px-3 py-1 font-poppins"
+                           style={{
+                             backgroundColor: '#5C5D40',
+                             color: 'white',
+                             border: '1px solid #5C5D40'
+                           }}
+                         >
+                           {theme}
+                         </ToggleGroupItem>
+                       ))}
                     </ToggleGroup>
                   </div>
                 </div>
@@ -756,7 +761,7 @@ const Index = () => {
 
           {/* Main View Switch */}
           <div className="flex justify-center mb-6">
-            <div className="bg-black/50 backdrop-blur-xl rounded-xl p-1 border border-white/20">
+            <div style={{backgroundColor: '#5C5D40'}} className="backdrop-blur-xl rounded-xl p-1 border border-white/20">
               <div className="flex flex-wrap justify-center gap-1">
                 <button
                   onClick={() => setMainView("recent")}
@@ -1313,73 +1318,58 @@ const Index = () => {
           {/* Image View Only - Default */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Surahs - Image Style */}
-              <div className="relative group">
-                <div className="bg-gradient-to-br from-[#3F533C] to-[#3F533C] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
-                  <div className="flex justify-center mb-4">
-                    <div className="w-16 h-16 rounded-full bg-[#2B3A28] flex items-center justify-center">
-                      <BookOpen className="w-8 h-8 text-white" />
-                    </div>
-                  </div>
-                  <div className="text-6xl font-bold text-white mb-2 font-poppins">
-                    {surahCount.toLocaleString()}
-                  </div>
-                  <div className="text-white text-lg font-medium opacity-90 relative">
-                    <span className="inline-flex items-center gap-2 border-2 border-[#2B3A28] bg-[#2B3A28]/20 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
-                      <BookOpen className="w-4 h-4" />
-                      Surahs
-                    </span>
-                  </div>
-                  <div className="text-white/70 text-sm font-medium mt-1">
-                    Complete Quran Collection
-                  </div>
-                </div>
-              </div>
+               <div className="relative group">
+                 <div className="bg-gradient-to-br from-[#3F533C] to-[#3F533C] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
+                   <div className="text-6xl font-bold text-white mb-4 font-poppins">
+                     {surahCount.toLocaleString()}
+                   </div>
+                   <div className="text-white text-lg font-medium opacity-90 relative">
+                     <span className="inline-flex items-center gap-2 bg-gray-800 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
+                       <BookOpen className="w-4 h-4" />
+                       Surahs
+                     </span>
+                   </div>
+                   <div className="text-white/70 text-sm font-medium mt-1">
+                     Complete Quran Collection
+                   </div>
+                 </div>
+               </div>
 
               {/* Audios - Image Style */}
-              <div className="relative group">
-                <div className="bg-gradient-to-br from-[#54465F] to-[#54465F] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
-                  <div className="flex justify-center mb-4">
-                    <div className="w-16 h-16 rounded-full bg-[#3F3248] flex items-center justify-center">
-                      <Headphones className="w-8 h-8 text-white" />
-                    </div>
-                  </div>
-                  <div className="text-6xl font-bold text-white mb-2 font-poppins">
-                    {audioCount.toLocaleString()}
-                  </div>
-                  <div className="text-white text-lg font-medium opacity-90 relative">
-                    <span className="inline-flex items-center gap-2 border-2 border-[#3F3248] bg-[#3F3248]/20 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
-                      <Headphones className="w-4 h-4" />
-                      Audios
-                    </span>
-                  </div>
-                  <div className="text-white/70 text-sm font-medium mt-1">
-                    Tafseer Recordings
-                  </div>
-                </div>
-              </div>
+               <div className="relative group">
+                 <div className="bg-gradient-to-br from-[#54465F] to-[#54465F] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
+                   <div className="text-6xl font-bold text-white mb-4 font-poppins">
+                     {audioCount.toLocaleString()}
+                   </div>
+                   <div className="text-white text-lg font-medium opacity-90 relative">
+                     <span className="inline-flex items-center gap-2 bg-gray-800 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
+                       <Headphones className="w-4 h-4" />
+                       Audios
+                     </span>
+                   </div>
+                   <div className="text-white/70 text-sm font-medium mt-1">
+                     Tafseer Recordings
+                   </div>
+                 </div>
+               </div>
 
               {/* Hours - Image Style */}
-              <div className="relative group">
-                <div className="bg-gradient-to-br from-[#5C5D40] to-[#5C5D40] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
-                  <div className="flex justify-center mb-4">
-                    <div className="w-16 h-16 rounded-full bg-[#484A30] flex items-center justify-center">
-                      <Clock className="w-8 h-8 text-white" />
-                    </div>
-                  </div>
-                  <div className="text-6xl font-bold text-white mb-2 font-poppins">
-                    {hoursCount.toLocaleString()}
-                  </div>
-                  <div className="text-white text-lg font-medium opacity-90 relative">
-                    <span className="inline-flex items-center gap-2 border-2 border-[#484A30] bg-[#484A30]/20 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
-                      <Clock className="w-4 h-4" />
-                      Hours
-                    </span>
-                  </div>
-                  <div className="text-white/70 text-sm font-medium mt-1">
-                    Total Content Duration
-                  </div>
-                </div>
-              </div>
+               <div className="relative group">
+                 <div className="bg-gradient-to-br from-[#5C5D40] to-[#5C5D40] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
+                   <div className="text-6xl font-bold text-white mb-4 font-poppins">
+                     {hoursCount.toLocaleString()}
+                   </div>
+                   <div className="text-white text-lg font-medium opacity-90 relative">
+                     <span className="inline-flex items-center gap-2 bg-gray-800 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
+                       <Clock className="w-4 h-4" />
+                       Hours
+                     </span>
+                   </div>
+                   <div className="text-white/70 text-sm font-medium mt-1">
+                     Total Content Duration
+                   </div>
+                 </div>
+               </div>
           </div>
         </div>
       </section>
@@ -1389,24 +1379,127 @@ const Index = () => {
         <div className="fixed bottom-16 left-0 right-0 z-30">
           <div className="max-w-6xl mx-auto px-4">
             <Card className="bg-[#0D3029]/95 backdrop-blur-xl border-2 border-white text-white">
-              <CardContent className="p-3 md:p-4">
-                {/* Mobile Layout */}
-                <div className="md:hidden">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center space-x-3 flex-1 min-w-0">
-                      <img 
-                        src="/lovable-uploads/7c4f4c34-d840-49ba-8b37-be7770f72a79.png" 
-                        alt="ARKolia" 
-                        className="w-10 h-10 rounded-full flex-shrink-0"
-                      />
-                      <div className="min-w-0 flex-1">
-                        <h3 className="font-semibold text-sm font-poppins truncate">{currentTrack.title}</h3>
-                        <p className="text-white/80 text-xs font-poppins truncate">
-                          {currentTrack.surahName} • {currentTrack.duration}
-                        </p>
-                      </div>
-                    </div>
-                    
+               <CardContent className="p-2 md:p-4 border-2 border-white">
+                 {/* Mobile Layout */}
+                 <div className="md:hidden">
+                   <div className="flex items-center gap-2 mb-2">
+                     <img 
+                       src="/lovable-uploads/7c4f4c34-d840-49ba-8b37-be7770f72a79.png" 
+                       alt="ARKolia" 
+                       className="w-8 h-8 rounded flex-shrink-0"
+                     />
+                     <div className="min-w-0 flex-1">
+                       <h3 className="font-semibold text-xs font-poppins truncate leading-tight">{currentTrack.title}</h3>
+                       <p className="text-white/80 text-xs font-poppins truncate">
+                         {currentTrack.surahName}
+                       </p>
+                     </div>
+                     <span className="text-white/60 text-xs font-poppins flex-shrink-0">2:15</span>
+                     <Button
+                       size="sm"
+                       variant="ghost"
+                       onClick={() => setIsPlayerVisible(false)}
+                       className="text-white/60 hover:text-white hover:bg-white/10 w-6 h-6 p-0 flex-shrink-0"
+                     >
+                       <X className="w-3 h-3" />
+                     </Button>
+                   </div>
+                   
+                   {/* Progress Bar */}
+                   <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden mb-2">
+                     <div 
+                       className="h-full bg-white/70 transition-all duration-300"
+                       style={{ width: playingTrack === currentTrack.id ? '30%' : '0%' }}
+                     />
+                   </div>
+                   
+                   {/* Audio Wave Animation for Mobile */}
+                   <div className="flex items-center justify-center space-x-1 mb-2">
+                     {[...Array(8)].map((_, i) => (
+                       <div
+                         key={i}
+                         className="w-0.5 bg-white/70 rounded-full animate-pulse"
+                         style={{
+                           height: `${Math.random() * 12 + 6}px`,
+                           animationDelay: `${i * 0.1}s`,
+                           animationDuration: '1.2s'
+                         }}
+                       />
+                     ))}
+                   </div>
+                   
+                   {/* Controls */}
+                   <div className="flex items-center justify-center">
+                     <Button
+                       size="sm"
+                       variant="ghost"
+                       className="bg-white/20 hover:bg-white/30 text-white w-8 h-8 p-0"
+                       onClick={() => handlePlayPause(currentTrack.id)}
+                     >
+                       {playingTrack === currentTrack.id ? (
+                         <Pause className="w-4 h-4" />
+                       ) : (
+                         <Play className="w-4 h-4" />
+                       )}
+                     </Button>
+                   </div>
+                 </div>
+
+                  {/* Desktop and Tablet Layout */}
+                 <div className="hidden md:flex items-center justify-between border-2 border-white p-3 rounded-lg">
+                   <div className="flex items-center space-x-4">
+                     <img 
+                       src="/lovable-uploads/7c4f4c34-d840-49ba-8b37-be7770f72a79.png" 
+                       alt="ARKolia" 
+                       className="w-12 h-12 rounded flex-shrink-0"
+                     />
+                     <div>
+                       <h3 className="font-semibold text-sm font-poppins">{currentTrack.title}</h3>
+                       <p className="text-white/80 text-xs font-poppins">
+                         {currentTrack.surahName} • 2:15 / {currentTrack.duration}
+                       </p>
+                     </div>
+                   </div>
+                   
+                   <div className="flex items-center space-x-4">
+                     {/* Progress Bar */}
+                     <div className="w-32 h-1 bg-white/20 rounded-full overflow-hidden">
+                       <div 
+                         className="h-full bg-white/70 transition-all duration-300"
+                         style={{ width: playingTrack === currentTrack.id ? '30%' : '0%' }}
+                       />
+                     </div>
+                     
+                     {/* Audio Wave Animation */}
+                     <div className="flex items-center space-x-1">
+                       {[...Array(12)].map((_, i) => (
+                         <div
+                           key={i}
+                           className="w-0.5 bg-white/70 rounded-full animate-pulse"
+                           style={{
+                             height: `${Math.random() * 16 + 8}px`,
+                             animationDelay: `${i * 0.1}s`,
+                             animationDuration: '1.3s'
+                           }}
+                         />
+                       ))}
+                     </div>
+                     
+                     <div className="flex items-center space-x-2">
+                       <Button
+                         size="sm"
+                         variant="ghost"
+                         className="bg-white/20 hover:bg-white/30 text-white"
+                         onClick={() => handlePlayPause(currentTrack.id)}
+                       >
+                         {playingTrack === currentTrack.id ? (
+                           <Pause className="w-4 h-4" />
+                         ) : (
+                           <Play className="w-4 h-4" />
+                         )}
+                       </Button>
+                     </div>
+                     
                      <Button
                        size="sm"
                        variant="ghost"
@@ -1416,118 +1509,7 @@ const Index = () => {
                        <X className="w-4 h-4" />
                      </Button>
                    </div>
-                   
-                   {/* Audio Wave Animation for Mobile */}
-                   {playingTrack === currentTrack.id && (
-                     <div className="flex items-center justify-center space-x-1 mb-3">
-                       {[...Array(5)].map((_, i) => (
-                         <div
-                           key={i}
-                           className="w-1 bg-white/60 rounded-full animate-pulse"
-                           style={{
-                             height: `${Math.random() * 16 + 8}px`,
-                             animationDelay: `${i * 100}ms`,
-                             animationDuration: '1.5s'
-                           }}
-                         />
-                       ))}
-                     </div>
-                   )}
-                  <div className="flex items-center justify-center space-x-6">
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      className="text-white hover:bg-white/10"
-                    >
-                      ⏮
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      className="bg-white/20 hover:bg-white/30 text-white"
-                      onClick={() => handlePlayPause(currentTrack.id)}
-                    >
-                      {playingTrack === currentTrack.id ? (
-                        <Pause className="w-5 h-5" />
-                      ) : (
-                        <Play className="w-5 h-5" />
-                      )}
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      className="text-white hover:bg-white/10"
-                    >
-                      ⏭
-                    </Button>
-                  </div>
-                </div>
-
-                 {/* Desktop and Tablet Layout */}
-                <div className="hidden md:flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
-                    <img 
-                      src="/lovable-uploads/7c4f4c34-d840-49ba-8b37-be7770f72a79.png" 
-                      alt="ARKolia" 
-                      className="w-12 h-12 rounded-full flex-shrink-0"
-                    />
-                    <div>
-                      <h3 className="font-semibold text-sm font-poppins">{currentTrack.title}</h3>
-                      <p className="text-white/80 text-xs font-poppins">
-                        {currentTrack.surahName} • {currentTrack.duration}
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center space-x-4">
-                    <AudioWave isPlaying={playingTrack === currentTrack.id} />
-                    
-                    <div className="flex items-center space-x-2">
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        className="text-white hover:bg-white/10"
-                      >
-                        ⏮
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        className="bg-white/20 hover:bg-white/30 text-white"
-                        onClick={() => handlePlayPause(currentTrack.id)}
-                      >
-                        {playingTrack === currentTrack.id ? (
-                          <Pause className="w-4 h-4" />
-                        ) : (
-                          <Play className="w-4 h-4" />
-                        )}
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        className="text-white hover:bg-white/10"
-                      >
-                        ⏭
-                      </Button>
-                    </div>
-                    
-                    <div className="w-32 h-1 bg-white/20 rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-white/70 transition-all duration-300"
-                        style={{ width: playingTrack === currentTrack.id ? '30%' : '0%' }}
-                      />
-                    </div>
-                    
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => setIsPlayerVisible(false)}
-                      className="text-white/60 hover:text-white hover:bg-white/10 p-1.5"
-                    >
-                      <X className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
+                 </div>
               </CardContent>
             </Card>
           </div>
