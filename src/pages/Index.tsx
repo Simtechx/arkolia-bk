@@ -666,13 +666,13 @@ const Index = () => {
                   <div>
                     <label className="text-white text-sm mb-2 block font-poppins font-medium">Type</label>
                     <Select value={selectedType} onValueChange={setSelectedType}>
-                      <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
+                      <SelectTrigger className="bg-white/25 border-white/30 text-black font-poppins focus:ring-[#0D3029]">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-white/90 backdrop-blur-xl">
-                        <SelectItem value="all">All Types</SelectItem>
-                        <SelectItem value="Makkan" className="focus:bg-[#0D3029] focus:text-white">Makkan</SelectItem>
-                        <SelectItem value="Medinan" className="focus:bg-[#0D3029] focus:text-white">Medinan</SelectItem>
+                      <SelectContent className="bg-white">
+                        <SelectItem value="all" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">All Types</SelectItem>
+                        <SelectItem value="Makkan" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Makkan</SelectItem>
+                        <SelectItem value="Medinan" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Medinan</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -681,14 +681,14 @@ const Index = () => {
                   <div>
                     <label className="text-white text-sm mb-2 block font-poppins font-medium">Length</label>
                     <Select value={selectedLength} onValueChange={setSelectedLength}>
-                      <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
+                      <SelectTrigger className="bg-white/25 border-white/30 text-black font-poppins focus:ring-[#0D3029]">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-white/90 backdrop-blur-xl">
-                        <SelectItem value="all">All Lengths</SelectItem>
-                        <SelectItem value="Short" className="focus:bg-[#0D3029] focus:text-white">Short</SelectItem>
-                        <SelectItem value="Medium" className="focus:bg-[#0D3029] focus:text-white">Medium</SelectItem>
-                        <SelectItem value="Long" className="focus:bg-[#0D3029] focus:text-white">Long</SelectItem>
+                      <SelectContent className="bg-white">
+                        <SelectItem value="all" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">All Lengths</SelectItem>
+                        <SelectItem value="Short" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Short</SelectItem>
+                        <SelectItem value="Medium" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Medium</SelectItem>
+                        <SelectItem value="Long" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Long</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -697,19 +697,19 @@ const Index = () => {
                   <div>
                     <label className="text-white text-sm mb-2 block font-poppins font-medium">Usage</label>
                     <Select value={selectedUsage} onValueChange={setSelectedUsage}>
-                      <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
+                      <SelectTrigger className="bg-white/25 border-white/30 text-black font-poppins focus:ring-[#0D3029]">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-white/90 backdrop-blur-xl">
-                        <SelectItem value="all">All Usage</SelectItem>
-                        <SelectItem value="Daily" className="focus:bg-[#0D3029] focus:text-white">Daily</SelectItem>
-                        <SelectItem value="Friday" className="focus:bg-[#0D3029] focus:text-white">Friday</SelectItem>
-                        <SelectItem value="Before Sleep" className="focus:bg-[#0D3029] focus:text-white">Before Sleep</SelectItem>
-                        <SelectItem value="Protection" className="focus:bg-[#0D3029] focus:text-white">Protection</SelectItem>
-                        <SelectItem value="Night" className="focus:bg-[#0D3029] focus:text-white">Night</SelectItem>
-                        <SelectItem value="Morning" className="focus:bg-[#0D3029] focus:text-white">Morning</SelectItem>
-                        <SelectItem value="Ramadan" className="focus:bg-[#0D3029] focus:text-white">Ramadan</SelectItem>
-                        <SelectItem value="Hajj" className="focus:bg-[#0D3029] focus:text-white">Hajj</SelectItem>
+                      <SelectContent className="bg-white">
+                        <SelectItem value="all" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">All Usage</SelectItem>
+                        <SelectItem value="Daily" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Daily</SelectItem>
+                        <SelectItem value="Friday" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Friday</SelectItem>
+                        <SelectItem value="Before Sleep" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Before Sleep</SelectItem>
+                        <SelectItem value="Protection" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Protection</SelectItem>
+                        <SelectItem value="Night" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Night</SelectItem>
+                        <SelectItem value="Morning" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Morning</SelectItem>
+                        <SelectItem value="Ramadan" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Ramadan</SelectItem>
+                        <SelectItem value="Hajj" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Hajj</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -718,13 +718,13 @@ const Index = () => {
                   <div>
                     <label className="text-white text-sm mb-2 block font-poppins font-medium">Sajdah</label>
                     <Select value={showSajdah} onValueChange={setShowSajdah}>
-                      <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
+                      <SelectTrigger className="bg-white/25 border-white/30 text-black font-poppins focus:ring-[#0D3029]">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-white/90 backdrop-blur-xl">
-                        <SelectItem value="all">All Surahs</SelectItem>
-                        <SelectItem value="yes" className="focus:bg-[#0D3029] focus:text-white">With Sajdah</SelectItem>
-                        <SelectItem value="no" className="focus:bg-[#0D3029] focus:text-white">Without Sajdah</SelectItem>
+                      <SelectContent className="bg-white">
+                        <SelectItem value="all" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">All Surahs</SelectItem>
+                        <SelectItem value="yes" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">With Sajdah</SelectItem>
+                        <SelectItem value="no" className="bg-[#0D3029] text-white hover:bg-[#5C5D40] focus:bg-[#5C5D40]">Without Sajdah</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -742,7 +742,7 @@ const Index = () => {
                         <ToggleGroupItem 
                           key={theme} 
                           value={theme}
-                          className="bg-white/25 text-[#0D3029] border-white/30 hover:bg-[#0D3029] hover:text-white data-[state=on]:bg-[#0D3029] data-[state=on]:text-white text-xs px-3 py-1 font-poppins"
+                          className="bg-[#0D3029] text-white border-white/30 hover:bg-[#5C5D40] hover:text-white data-[state=on]:bg-[#5C5D40] data-[state=on]:text-white text-xs px-3 py-1 font-poppins"
                         >
                           {theme}
                         </ToggleGroupItem>
@@ -940,7 +940,7 @@ const Index = () => {
                                     <Button
                                       size="sm"
                                       variant="ghost"
-                        className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border-2 border-white"
+                        className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border border-white"
                                       onClick={() => handleTrackPlay(track, surah)}
                                     >
                                       {playingTrack === track.id ? (
@@ -1082,7 +1082,7 @@ const Index = () => {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border-2 border-white"
+                          className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border border-white"
                           onClick={() => {
                             setCurrentTrack({
                               id: track.id,
@@ -1175,7 +1175,7 @@ const Index = () => {
                           <Button
                             size="sm"
                             variant="ghost"
-                          className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border-2 border-white"
+                          className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border border-white"
                           >
                             <Play className="w-3 h-3" />
                           </Button>
@@ -1281,7 +1281,7 @@ const Index = () => {
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border-2 border-white"
+                            className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border border-white"
                             onClick={() => {
                               setCurrentTrack({
                                 id: track.id,
