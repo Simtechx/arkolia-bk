@@ -615,17 +615,17 @@ const Index = () => {
       <main className="relative z-10 px-4 pb-32">
         <div className="max-w-6xl mx-auto">
           {/* Filter Section */}
-          <div className="bg-black/30 backdrop-blur-xl border-white/20 rounded-lg p-4 mb-6">
+          <div className="bg-black/50 backdrop-blur-xl border-white/20 rounded-lg p-4 mb-6">
             <div className="flex flex-row gap-3 items-center">
               {/* Search Input */}
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#0D3029]/60 w-4 h-4" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#0D3029] w-4 h-4" />
                 <input
                   type="text"
                   placeholder="Search Surahs..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-white/25 border border-white/30 rounded-lg text-[#0D3029] placeholder-[#0D3029]/60 focus:outline-none focus:ring-2 focus:ring-[#0D3029] font-poppins"
+                  className="w-full pl-10 pr-4 py-2 bg-white/25 border border-white/30 rounded-lg text-[#0D3029] placeholder-[#0D3029]/60 focus:outline-none focus:ring-2 focus:ring-[#0D3029] font-poppins font-bold"
                 />
               </div>
 
@@ -633,7 +633,7 @@ const Index = () => {
               <Button
                 variant="ghost"
                 onClick={() => setShowFilters(!showFilters)}
-                className="text-[#0D3029] hover:bg-[#0D3029] hover:text-white relative font-poppins shrink-0"
+                className="bg-green-300 text-[#0D3029] hover:bg-green-400 hover:text-[#0D3029] relative font-poppins shrink-0"
               >
                 <Filter className="w-4 h-4 mr-2" />
                 Filters
@@ -762,7 +762,7 @@ const Index = () => {
                   onClick={() => setMainView("recent")}
                   className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
                     mainView === "recent"
-                      ? "bg-white/25 text-white shadow-lg"
+                      ? "bg-white/25 text-black shadow-lg"
                       : "text-white/70 hover:text-white"
                   }`}
                 >
@@ -772,7 +772,7 @@ const Index = () => {
                   onClick={() => setMainView("surahs")}
                   className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
                     mainView === "surahs"
-                      ? "bg-white/25 text-white shadow-lg"
+                      ? "bg-white/25 text-black shadow-lg"
                       : "text-white/70 hover:text-white"
                   }`}
                 >
@@ -782,7 +782,7 @@ const Index = () => {
                   onClick={() => setMainView("favourites")}
                   className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
                     mainView === "favourites"
-                      ? "bg-white/25 text-white shadow-lg"
+                      ? "bg-white/25 text-black shadow-lg"
                       : "text-white/70 hover:text-white"
                   }`}
                 >
@@ -792,7 +792,7 @@ const Index = () => {
                   onClick={() => setMainView("completed")}
                   className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
                     mainView === "completed"
-                      ? "bg-white/25 text-white shadow-lg"
+                      ? "bg-white/25 text-black shadow-lg"
                       : "text-white/70 hover:text-white"
                   }`}
                 >
@@ -1009,17 +1009,18 @@ const Index = () => {
                   date: "26 July 2025",
                   verseRange: "1-12"
                 }
-              ].map((track) => (
-                <Card 
-                  key={track.id} 
-                  className="backdrop-blur-xl border-white/10 hover:bg-black/60 transition-all duration-300 shadow-2xl"
-                  style={{ 
-                    background: `linear-gradient(135deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.40) 100%)`,
-                    borderWidth: "1px",
-                    borderStyle: 'solid',
-                    backdropFilter: "blur(20px)"
-                  }}
-                >
+                ].map((track) => (
+                  <Card 
+                    key={track.id} 
+                    className="backdrop-blur-xl hover:bg-black/60 transition-all duration-300 shadow-2xl"
+                    style={{ 
+                      background: `linear-gradient(135deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.40) 100%)`,
+                      borderWidth: "2px",
+                      borderStyle: 'solid',
+                      borderColor: "white",
+                      backdropFilter: "blur(20px)"
+                    }}
+                  >
                   <CardContent className="p-4">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                       <div className="flex-1 min-w-0">
@@ -1301,187 +1302,53 @@ const Index = () => {
       {/* Counter Statistics Module */}
       <section ref={counterRef} className="relative z-10 px-4 mb-20">
         <div className="max-w-6xl mx-auto">
-          {/* View Switch */}
-          <div className="flex justify-center mb-8">
-            <div className="bg-black/20 backdrop-blur-xl rounded-xl p-1 border border-white/20">
-              <div className="flex">
-                <button
-                  onClick={() => setCounterView("blocks")}
-                  className={`px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 ${
-                    counterView === "blocks"
-                      ? "bg-white/20 text-white shadow-lg"
-                      : "text-white/70 hover:text-white"
-                  }`}
-                >
-                  Blocks
-                </button>
-                <button
-                  onClick={() => setCounterView("image")}
-                  className={`px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 ${
-                    counterView === "image"
-                      ? "bg-white/20 text-white shadow-lg"
-                      : "text-white/70 hover:text-white"
-                  }`}
-                >
-                  Image
-                </button>
+          {/* Image View Only - Default */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Surahs - Image Style */}
+            <div className="relative group">
+              <div className="bg-gradient-to-br from-[#3F533C] to-[#3F533C] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
+                <div className="text-6xl font-bold text-white mb-2 font-poppins">
+                  {surahCount.toLocaleString()}
+                </div>
+                <div className="text-white text-lg font-medium opacity-90">
+                  Surahs
+                </div>
+                <div className="text-white/70 text-sm font-medium mt-1">
+                  Complete Quran Collection
+                </div>
+              </div>
+            </div>
+
+            {/* Audios - Image Style */}
+            <div className="relative group">
+              <div className="bg-gradient-to-br from-[#54465F] to-[#54465F] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
+                <div className="text-6xl font-bold text-white mb-2 font-poppins">
+                  {audioCount.toLocaleString()}
+                </div>
+                <div className="text-white text-lg font-medium opacity-90">
+                  Audios
+                </div>
+                <div className="text-white/70 text-sm font-medium mt-1">
+                  Tafseer Recordings
+                </div>
+              </div>
+            </div>
+
+            {/* Hours - Image Style */}
+            <div className="relative group">
+              <div className="bg-gradient-to-br from-[#5C5D40] to-[#5C5D40] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
+                <div className="text-6xl font-bold text-white mb-2 font-poppins">
+                  {hoursCount.toLocaleString()}
+                </div>
+                <div className="text-white text-lg font-medium opacity-90">
+                  Hours
+                </div>
+                <div className="text-white/70 text-sm font-medium mt-1">
+                  Total Content Duration
+                </div>
               </div>
             </div>
           </div>
-
-          {counterView === "blocks" ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Surahs Counter - Elegant Design 1 */}
-            <Card 
-              className="text-center transition-all duration-500 hover:scale-[1.02] relative overflow-hidden group"
-              style={{ 
-                background: "rgba(86, 110, 82, 0.6)", 
-                borderColor: "white", 
-                borderWidth: "2px",
-                borderStyle: 'solid',
-                backdropFilter: "blur(10px)"
-              }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-[#566E52]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <CardContent className="p-8 relative z-10">
-                <div className="space-y-4">
-                  <div className="relative">
-                    <div 
-                      className="w-20 h-20 rounded-full mx-auto flex items-center justify-center shadow-2xl relative z-10 ring-4 ring-white/20"
-                      style={{ 
-                        backgroundColor: "rgba(255, 255, 255, 0.2)",
-                        background: `linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1))`
-                      }}
-                    >
-                      <span className="text-2xl font-bold text-white font-poppins tracking-wide">
-                        {surahCount.toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="absolute inset-0 w-20 h-20 rounded-full mx-auto bg-white/30 blur-xl animate-pulse" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white font-poppins tracking-wider drop-shadow-sm">SURAHS</h3>
-                  <p className="text-white/80 text-sm font-poppins font-medium drop-shadow-sm">Complete Quran Collection</p>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Audios Counter - Elegant Design 2 */}
-            <Card 
-              className="text-center transition-all duration-500 hover:scale-[1.02] relative overflow-hidden group"
-              style={{ 
-                background: "rgba(106, 92, 116, 0.6)", 
-                borderColor: "white", 
-                borderWidth: "2px",
-                borderStyle: 'solid',
-                backdropFilter: "blur(10px)"
-              }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#6A5C74]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <CardContent className="p-8 relative z-10">
-                <div className="space-y-4">
-                  <div className="relative">
-                    <div 
-                      className="w-20 h-20 rounded-2xl mx-auto flex items-center justify-center shadow-2xl relative z-10 ring-4 ring-white/20 transform rotate-12 group-hover:rotate-0 transition-transform duration-500"
-                      style={{ 
-                        backgroundColor: "rgba(255, 255, 255, 0.2)",
-                        background: `linear-gradient(45deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1))`
-                      }}
-                    >
-                      <span className="text-2xl font-bold text-white font-poppins tracking-wide">
-                        {audioCount.toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="absolute inset-0 w-20 h-20 rounded-2xl mx-auto bg-white/30 blur-xl animate-pulse" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white font-poppins tracking-wider drop-shadow-sm">AUDIOS</h3>
-                  <p className="text-white/80 text-sm font-poppins font-medium drop-shadow-sm">Tafseer Recordings</p>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Hours Counter - Elegant Design 3 */}
-            <Card 
-              className="text-center transition-all duration-500 hover:scale-[1.02] relative overflow-hidden group"
-              style={{ 
-                background: "rgba(178, 163, 119, 0.6)", 
-                borderColor: "white", 
-                borderWidth: "2px",
-                borderStyle: 'solid',
-                backdropFilter: "blur(10px)"
-              }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-bl from-[#B2A377]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <CardContent className="p-8 relative z-10">
-                <div className="space-y-4">
-                  <div className="relative">
-                    <div 
-                      className="w-20 h-16 rounded-xl mx-auto flex items-center justify-center shadow-2xl relative z-10 ring-4 ring-white/20 group-hover:scale-110 transition-transform duration-300"
-                      style={{ 
-                        backgroundColor: "rgba(255, 255, 255, 0.2)",
-                        background: `linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1))`
-                      }}
-                    >
-                      <span className="text-xl font-bold text-white font-poppins tracking-wide">
-                        {hoursCount.toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="absolute inset-0 w-20 h-16 rounded-xl mx-auto bg-white/30 blur-xl animate-pulse" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white font-poppins tracking-wider drop-shadow-lg">HOURS</h3>
-                  <p className="text-white/90 text-sm font-poppins font-medium drop-shadow-lg">Total Content Duration</p>
-                </div>
-              </CardContent>
-            </Card>
-            </div>
-          ) : (
-            /* Image View Counters */
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Surahs - Image Style */}
-              <div className="relative group">
-                <div className="bg-gradient-to-br from-[#566E52] to-[#566E52] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
-                  <div className="text-6xl font-bold text-white mb-2 font-poppins">
-                    {surahCount.toLocaleString()}
-                  </div>
-                  <div className="text-white text-lg font-medium opacity-90">
-                    Surahs
-                  </div>
-                  <div className="text-white/70 text-sm font-medium mt-1">
-                    Complete Quran Collection
-                  </div>
-                </div>
-              </div>
-
-              {/* Audios - Image Style */}
-              <div className="relative group">
-                <div className="bg-gradient-to-br from-[#6A5C74] to-[#6A5C74] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
-                  <div className="text-6xl font-bold text-white mb-2 font-poppins">
-                    {audioCount.toLocaleString()}
-                  </div>
-                  <div className="text-white text-lg font-medium opacity-90">
-                    Audios
-                  </div>
-                  <div className="text-white/70 text-sm font-medium mt-1">
-                    Tafseer Recordings
-                  </div>
-                </div>
-              </div>
-
-              {/* Hours - Image Style */}
-              <div className="relative group">
-                <div className="bg-gradient-to-br from-[#B2A377] to-[#B2A377] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
-                  <div className="text-6xl font-bold text-white mb-2 font-poppins">
-                    {hoursCount.toLocaleString()}
-                  </div>
-                  <div className="text-white text-lg font-medium opacity-90">
-                    Hours
-                  </div>
-                  <div className="text-white/70 text-sm font-medium mt-1">
-                    Total Content Duration
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </section>
 
