@@ -625,7 +625,7 @@ const Index = () => {
                   placeholder="Search Surahs..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-white/25 border border-white/30 rounded-lg text-[#0D3029] placeholder-[#0D3029]/60 focus:outline-none focus:ring-2 focus:ring-[#0D3029] font-poppins font-bold"
+                  className="w-full pl-10 pr-4 py-2 bg-white/25 border border-white/30 rounded-lg text-black placeholder-black/60 focus:outline-none focus:ring-2 focus:ring-[#0D3029] font-poppins font-bold"
                 />
               </div>
 
@@ -633,7 +633,7 @@ const Index = () => {
               <Button
                 variant="ghost"
                 onClick={() => setShowFilters(!showFilters)}
-                className="bg-green-300 text-[#0D3029] hover:bg-green-400 hover:text-[#0D3029] relative font-poppins shrink-0"
+                className="bg-[#0D3029] text-white hover:bg-[#0D3029]/80 hover:text-white relative font-poppins shrink-0"
               >
                 <Filter className="w-4 h-4 mr-2" />
                 Filters
@@ -866,11 +866,12 @@ const Index = () => {
                         {mockTracks.map((track) => (
                           <Card 
                             key={track.id} 
-                            className="backdrop-blur-xl border-white/30 hover:bg-white/20 transition-all duration-300"
+                            className="backdrop-blur-xl hover:bg-black/60 transition-all duration-300 shadow-2xl"
                             style={{ 
-                              background: `linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.15) 100%)`,
-                              borderWidth: "1px",
+                              background: `linear-gradient(135deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.40) 100%)`,
+                              borderWidth: "2px",
                               borderStyle: 'solid',
+                              borderColor: "white",
                               backdropFilter: "blur(20px)"
                             }}
                           >
@@ -1033,6 +1034,13 @@ const Index = () => {
                         <p className="text-white/60 text-xs font-poppins mt-1">{track.date}</p>
                       </div>
                       <div className="flex items-center justify-between md:justify-end gap-1 md:gap-2">
+                        <div className="flex items-center space-x-1 ml-2">
+                          <div className="flex space-x-0.5">
+                            {[...Array(5)].map((_, i) => (
+                              <div key={i} className="w-0.5 bg-emerald-400/60 rounded-full animate-pulse" style={{ height: `${Math.random() * 8 + 4}px` }}></div>
+                            ))}
+                          </div>
+                        </div>
                         <div className="flex items-center gap-1">
                           <Button
                             size="sm"
@@ -1357,8 +1365,66 @@ const Index = () => {
         <div className="fixed bottom-16 left-0 right-0 z-30">
           <div className="max-w-6xl mx-auto px-4">
             <Card className="bg-[#0D3029]/95 backdrop-blur-xl border-[#0D3029]/50 text-white">
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
+              <CardContent className="p-3 md:p-4">
+                {/* Mobile Layout */}
+                <div className="md:hidden">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-3 flex-1 min-w-0">
+                      <div 
+                        className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                        style={{ backgroundColor: numberBgColor }}
+                      >
+                        <span className="text-white font-bold text-xs font-poppins">
+                          {currentTrack.id}
+                        </span>
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-semibold text-sm font-poppins truncate">{currentTrack.title}</h3>
+                        <p className="text-white/80 text-xs font-poppins truncate">
+                          {currentTrack.surahName} • {currentTrack.duration}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-1 ml-2">
+                      <div className="flex space-x-0.5">
+                        {[...Array(5)].map((_, i) => (
+                          <div key={i} className="w-0.5 bg-emerald-400/60 rounded-full animate-pulse" style={{ height: `${Math.random() * 8 + 4}px` }}></div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-center space-x-6">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="text-white hover:bg-white/10"
+                    >
+                      ⏮
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="bg-white/20 hover:bg-white/30 text-white"
+                      onClick={() => handlePlayPause(currentTrack.id)}
+                    >
+                      {playingTrack === currentTrack.id ? (
+                        <Pause className="w-5 h-5" />
+                      ) : (
+                        <Play className="w-5 h-5" />
+                      )}
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="text-white hover:bg-white/10"
+                    >
+                      ⏭
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Desktop Layout */}
+                <div className="hidden md:flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <div 
                       className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
