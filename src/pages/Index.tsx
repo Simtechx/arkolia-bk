@@ -940,7 +940,7 @@ const Index = () => {
                                     <Button
                                       size="sm"
                                       variant="ghost"
-                                      className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1"
+                        className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border-2 border-white"
                                       onClick={() => handleTrackPlay(track, surah)}
                                     >
                                       {playingTrack === track.id ? (
@@ -1082,7 +1082,7 @@ const Index = () => {
                         <Button
                           size="sm"
                           variant="ghost"
-                          className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1"
+                          className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border-2 border-white"
                           onClick={() => {
                             setCurrentTrack({
                               id: track.id,
@@ -1175,7 +1175,7 @@ const Index = () => {
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1"
+                          className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border-2 border-white"
                           >
                             <Play className="w-3 h-3" />
                           </Button>
@@ -1281,7 +1281,7 @@ const Index = () => {
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1"
+                            className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border-2 border-white"
                             onClick={() => {
                               setCurrentTrack({
                                 id: track.id,
@@ -1315,11 +1315,6 @@ const Index = () => {
               {/* Surahs - Image Style */}
               <div className="relative group">
                 <div className="bg-gradient-to-br from-[#3F533C] to-[#3F533C] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
-                  <div className="flex justify-center mb-4">
-                    <div className="w-16 h-16 rounded-full bg-[#2B3A28] flex items-center justify-center">
-                      <BookOpen className="w-8 h-8 text-white" />
-                    </div>
-                  </div>
                   <div className="text-6xl font-bold text-white mb-2 font-poppins">
                     {surahCount.toLocaleString()}
                   </div>
@@ -1338,11 +1333,6 @@ const Index = () => {
               {/* Audios - Image Style */}
               <div className="relative group">
                 <div className="bg-gradient-to-br from-[#54465F] to-[#54465F] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
-                  <div className="flex justify-center mb-4">
-                    <div className="w-16 h-16 rounded-full bg-[#3F3248] flex items-center justify-center">
-                      <Headphones className="w-8 h-8 text-white" />
-                    </div>
-                  </div>
                   <div className="text-6xl font-bold text-white mb-2 font-poppins">
                     {audioCount.toLocaleString()}
                   </div>
@@ -1361,11 +1351,6 @@ const Index = () => {
               {/* Hours - Image Style */}
               <div className="relative group">
                 <div className="bg-gradient-to-br from-[#5C5D40] to-[#5C5D40] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
-                  <div className="flex justify-center mb-4">
-                    <div className="w-16 h-16 rounded-full bg-[#484A30] flex items-center justify-center">
-                      <Clock className="w-8 h-8 text-white" />
-                    </div>
-                  </div>
                   <div className="text-6xl font-bold text-white mb-2 font-poppins">
                     {hoursCount.toLocaleString()}
                   </div>
