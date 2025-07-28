@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, Download, Share2, FileText, Settings, Image as ImageIcon, Filter, Search, X, Palette, ChevronDown, ChevronRight } from 'lucide-react';
+import { Play, Pause, Download, Share2, FileText, Settings, Image as ImageIcon, Filter, Search, X, Palette, ChevronDown, ChevronRight, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -594,7 +594,7 @@ const Index = () => {
       <main className="relative z-10 px-4 pb-32">
         <div className="max-w-6xl mx-auto">
           {/* Filter Section */}
-          <div className="bg-white/30 backdrop-blur-xl border-white/20 rounded-lg p-4 mb-6">
+          <div className="bg-black/20 backdrop-blur-xl border-white/20 rounded-lg p-4 mb-6">
             <div className="flex flex-row gap-3 items-center">
               {/* Search Input */}
               <div className="relative flex-1">
@@ -736,10 +736,10 @@ const Index = () => {
           {/* Main View Switch */}
           <div className="flex justify-center mb-6">
             <div className="bg-black/20 backdrop-blur-xl rounded-xl p-1 border border-white/20">
-              <div className="grid grid-cols-4 gap-1">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-1">
                 <button
                   onClick={() => setMainView("surahs")}
-                  className={`px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 ${
+                  className={`px-4 md:px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
                     mainView === "surahs"
                       ? "bg-white/20 text-white shadow-lg"
                       : "text-white/70 hover:text-white"
@@ -749,7 +749,7 @@ const Index = () => {
                 </button>
                 <button
                   onClick={() => setMainView("recent")}
-                  className={`px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 ${
+                  className={`px-4 md:px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
                     mainView === "recent"
                       ? "bg-white/20 text-white shadow-lg"
                       : "text-white/70 hover:text-white"
@@ -759,7 +759,7 @@ const Index = () => {
                 </button>
                 <button
                   onClick={() => setMainView("favourites")}
-                  className={`px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 ${
+                  className={`px-4 md:px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
                     mainView === "favourites"
                       ? "bg-white/20 text-white shadow-lg"
                       : "text-white/70 hover:text-white"
@@ -769,7 +769,7 @@ const Index = () => {
                 </button>
                 <button
                   onClick={() => setMainView("completed")}
-                  className={`px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 ${
+                  className={`px-4 md:px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
                     mainView === "completed"
                       ? "bg-white/20 text-white shadow-lg"
                       : "text-white/70 hover:text-white"
@@ -792,35 +792,35 @@ const Index = () => {
                   <div key={surah.id}>
                     {/* Surah Card */}
                     <Card 
-                      className="transition-all duration-300 cursor-pointer hover:scale-[1.01] shadow-xl"
+                      className="backdrop-blur-xl border-white/20 hover:bg-white/10 transition-all duration-300 cursor-pointer"
                       style={{ 
-                        background: isMakkan 
-                          ? "rgba(245, 245, 220, 0.95)" 
-                          : "rgba(232, 245, 232, 0.95)",
+                        background: `linear-gradient(135deg, ${isMakkan 
+                          ? 'rgba(245, 245, 220, 0.15)' 
+                          : 'rgba(232, 245, 232, 0.15)'} 0%, rgba(255, 255, 255, 0.05) 100%)`,
                         borderColor: isMakkan ? "#D4C4A8" : "#B8D4B8",
-                        borderWidth: "2px",
+                        borderWidth: "1px",
                         borderStyle: 'solid',
-                        backdropFilter: "blur(10px)"
+                        backdropFilter: "blur(15px)"
                       }}
                     >
                       <CardContent className="p-4" onClick={() => handleSurahClick(surah)}>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-4">
                             <div 
-                              className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
+                              className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 shadow-lg"
                               style={{ backgroundColor: numberBgColor }}
                             >
                               <span className="text-white font-bold text-sm font-poppins">{surah.id}</span>
                             </div>
                             <div className="flex-1">
                               <div className="flex items-center gap-3 mb-1">
-                                <h3 className="font-semibold text-lg text-gray-900 font-poppins drop-shadow-sm">{surah.name}</h3>
+                                <h3 className="font-semibold text-lg text-white font-poppins drop-shadow-sm">{surah.name}</h3>
                                 <Badge className={`${getBadgeColor(surah.type)} text-white text-xs px-2 py-1 font-poppins font-medium`}>
                                   {surah.type}
                                 </Badge>
                               </div>
-                              <p className="text-xl font-arabic text-gray-800 mb-1 drop-shadow-sm">{surah.nameArabic}</p>
-                              <div className="flex items-center space-x-4 text-sm text-gray-700 font-poppins font-medium">
+                              <p className="text-xl font-arabic text-white/90 mb-1 drop-shadow-sm">{surah.nameArabic}</p>
+                              <div className="flex items-center space-x-4 text-sm text-white/80 font-poppins font-medium">
                                 <span>{surah.verses} verses</span>
                                 {surah.sajdah && (
                                   <Badge className="bg-[#4B4155] text-white text-xs px-2 py-0.5 font-poppins">
@@ -831,18 +831,7 @@ const Index = () => {
                             </div>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleTrackPlay(mockTracks[0], surah);
-                              }}
-                            >
-                              <Play className="w-4 h-4" />
-                            </Button>
-                            <span className="text-gray-600 font-poppins text-sm">
+                            <span className="text-white/60 font-poppins text-sm">
                               {isExpanded ? '▼' : '▶'}
                             </span>
                           </div>
@@ -871,11 +860,55 @@ const Index = () => {
                                     Verses {track.verseRange} • {track.duration}
                                   </p>
                                 </div>
-                                <div className="flex items-center space-x-2">
+                                <div className="flex items-center space-x-1">
                                   <Button
                                     size="sm"
                                     variant="ghost"
-                                    className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white"
+                                    className="text-white/70 hover:text-red-400 hover:bg-white/10"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      toast({ description: "Added to favourites" });
+                                    }}
+                                  >
+                                    <Heart className="w-3 h-3" />
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className="text-white/70 hover:text-white hover:bg-white/10"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      toast({ description: "Sharing..." });
+                                    }}
+                                  >
+                                    <Share2 className="w-3 h-3" />
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className="text-white/70 hover:text-white hover:bg-white/10"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      toast({ description: "Downloading..." });
+                                    }}
+                                  >
+                                    <Download className="w-3 h-3" />
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className="text-white/70 hover:text-white hover:bg-white/10"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      toast({ description: "Opening PDF..." });
+                                    }}
+                                  >
+                                    <FileText className="w-3 h-3" />
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white ml-2"
                                     onClick={() => handleTrackPlay(track, surah)}
                                   >
                                     {playingTrack === track.id ? (
@@ -917,11 +950,108 @@ const Index = () => {
 
           {/* Recent View */}
           {mainView === "recent" && (
-            <div className="text-center py-12">
-              <div className="text-white/60 mb-4">
-                <p className="text-lg font-poppins">Recent Tracks</p>
-                <p className="text-sm font-poppins">Your recently played tracks will appear here</p>
-              </div>
+            <div className="space-y-4">
+              {/* Sample Recent Tracks */}
+              {[
+                {
+                  id: "recent-1",
+                  title: "Fri-20250728 - Surah Kahf, Verses 1–5",
+                  surahName: "Al-Kahf",
+                  duration: "12:45",
+                  date: "28 July 2025",
+                  verseRange: "1-5"
+                },
+                {
+                  id: "recent-2", 
+                  title: "Thu-20250727 - Surah Al-Baqarah, Verses 255–260",
+                  surahName: "Al-Baqarah",
+                  duration: "15:20",
+                  date: "27 July 2025",
+                  verseRange: "255-260"
+                },
+                {
+                  id: "recent-3",
+                  title: "Wed-20250726 - Surah Yasin, Verses 1–12",
+                  surahName: "Ya-Sin",
+                  duration: "9:30",
+                  date: "26 July 2025",
+                  verseRange: "1-12"
+                }
+              ].map((track) => (
+                <Card 
+                  key={track.id} 
+                  className="backdrop-blur-xl border-white/30 hover:bg-white/10 transition-all duration-300"
+                  style={{ 
+                    background: `linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)`,
+                    borderWidth: "1px",
+                    borderStyle: 'solid',
+                    backdropFilter: "blur(15px)"
+                  }}
+                >
+                  <CardContent className="p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <h4 className="font-medium text-white font-poppins text-sm mb-1">{track.title}</h4>
+                        <p className="text-white/80 text-xs font-poppins">
+                          {track.surahName} • Verses {track.verseRange} • {track.duration}
+                        </p>
+                        <p className="text-white/60 text-xs font-poppins mt-1">{track.date}</p>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="text-white/70 hover:text-red-400 hover:bg-white/10"
+                          onClick={() => toast({ description: "Added to favourites" })}
+                        >
+                          <Heart className="w-3 h-3" />
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="text-white/70 hover:text-white hover:bg-white/10"
+                          onClick={() => toast({ description: "Sharing..." })}
+                        >
+                          <Share2 className="w-3 h-3" />
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="text-white/70 hover:text-white hover:bg-white/10"
+                          onClick={() => toast({ description: "Downloading..." })}
+                        >
+                          <Download className="w-3 h-3" />
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="text-white/70 hover:text-white hover:bg-white/10"
+                          onClick={() => toast({ description: "Opening PDF..." })}
+                        >
+                          <FileText className="w-3 h-3" />
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white ml-2"
+                          onClick={() => {
+                            setCurrentTrack({
+                              id: track.id,
+                              title: track.title,
+                              surahName: track.surahName,
+                              duration: track.duration
+                            });
+                            setPlayingTrack(track.id);
+                            setIsPlayerVisible(true);
+                          }}
+                        >
+                          <Play className="w-3 h-3" />
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           )}
 
