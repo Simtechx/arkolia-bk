@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, Download, Share2, FileText, Settings, Image as ImageIcon, Filter, Search, X, Palette, ChevronDown, ChevronRight, Heart } from 'lucide-react';
+import { Play, Pause, Download, Share2, FileText, Settings, Image as ImageIcon, Filter, Search, X, Palette, ChevronDown, ChevronRight, Heart, BookOpen, Headphones, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -664,7 +664,7 @@ const Index = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {/* Type Filter */}
                   <div>
-                    <label className="text-[#0D3029]/90 text-sm mb-2 block font-poppins font-medium">Type</label>
+                    <label className="text-white text-sm mb-2 block font-poppins font-medium">Type</label>
                     <Select value={selectedType} onValueChange={setSelectedType}>
                       <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
                         <SelectValue />
@@ -679,7 +679,7 @@ const Index = () => {
 
                   {/* Length Filter */}
                   <div>
-                    <label className="text-[#0D3029]/90 text-sm mb-2 block font-poppins font-medium">Length</label>
+                    <label className="text-white text-sm mb-2 block font-poppins font-medium">Length</label>
                     <Select value={selectedLength} onValueChange={setSelectedLength}>
                       <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
                         <SelectValue />
@@ -695,7 +695,7 @@ const Index = () => {
 
                   {/* Usage Filter */}
                   <div>
-                    <label className="text-[#0D3029]/90 text-sm mb-2 block font-poppins font-medium">Usage</label>
+                    <label className="text-white text-sm mb-2 block font-poppins font-medium">Usage</label>
                     <Select value={selectedUsage} onValueChange={setSelectedUsage}>
                       <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
                         <SelectValue />
@@ -716,7 +716,7 @@ const Index = () => {
 
                   {/* Sajdah Filter */}
                   <div>
-                    <label className="text-[#0D3029]/90 text-sm mb-2 block font-poppins font-medium">Sajdah</label>
+                    <label className="text-white text-sm mb-2 block font-poppins font-medium">Sajdah</label>
                     <Select value={showSajdah} onValueChange={setShowSajdah}>
                       <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
                         <SelectValue />
@@ -731,7 +731,7 @@ const Index = () => {
 
                   {/* Themes Filter */}
                   <div className="md:col-span-2">
-                    <label className="text-[#0D3029]/90 text-sm mb-2 block font-poppins font-medium">Themes</label>
+                    <label className="text-white text-sm mb-2 block font-poppins font-medium">Themes</label>
                     <ToggleGroup 
                       type="multiple" 
                       value={selectedThemes} 
@@ -756,8 +756,8 @@ const Index = () => {
 
           {/* Main View Switch */}
           <div className="flex justify-center mb-6">
-            <div className="bg-black/30 backdrop-blur-xl rounded-xl p-1 border border-white/20">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-1">
+            <div className="bg-black/50 backdrop-blur-xl rounded-xl p-1 border border-white/20">
+              <div className="flex flex-wrap justify-center gap-1">
                 <button
                   onClick={() => setMainView("recent")}
                   className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
@@ -786,7 +786,7 @@ const Index = () => {
                       : "text-white/70 hover:text-white"
                   }`}
                 >
-                  Favourites
+                  Liked
                 </button>
                 <button
                   onClick={() => setMainView("completed")}
@@ -796,7 +796,7 @@ const Index = () => {
                       : "text-white/70 hover:text-white"
                   }`}
                 >
-                  Completed
+                  Done
                 </button>
               </div>
             </div>
@@ -1312,56 +1312,74 @@ const Index = () => {
         <div className="max-w-6xl mx-auto">
           {/* Image View Only - Default */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Surahs - Image Style */}
-            <div className="relative group">
-              <div className="bg-gradient-to-br from-[#3F533C] to-[#3F533C] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
-                <div className="text-6xl font-bold text-white mb-2 font-poppins">
-                  {surahCount.toLocaleString()}
-                </div>
-                <div className="text-white text-lg font-medium opacity-90 relative">
-                  <span className="inline-block bg-[#2B3A28] text-white px-2 py-1 rounded-md text-sm font-medium">
-                    Surahs
-                  </span>
-                </div>
-                <div className="text-white/70 text-sm font-medium mt-1">
-                  Complete Quran Collection
+              {/* Surahs - Image Style */}
+              <div className="relative group">
+                <div className="bg-gradient-to-br from-[#3F533C] to-[#3F533C] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
+                  <div className="flex justify-center mb-4">
+                    <div className="w-16 h-16 rounded-full bg-[#2B3A28] flex items-center justify-center">
+                      <BookOpen className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <div className="text-6xl font-bold text-white mb-2 font-poppins">
+                    {surahCount.toLocaleString()}
+                  </div>
+                  <div className="text-white text-lg font-medium opacity-90 relative">
+                    <span className="inline-flex items-center gap-2 border-2 border-[#2B3A28] bg-[#2B3A28]/20 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
+                      <BookOpen className="w-4 h-4" />
+                      Surahs
+                    </span>
+                  </div>
+                  <div className="text-white/70 text-sm font-medium mt-1">
+                    Complete Quran Collection
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Audios - Image Style */}
-            <div className="relative group">
-              <div className="bg-gradient-to-br from-[#54465F] to-[#54465F] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
-                <div className="text-6xl font-bold text-white mb-2 font-poppins">
-                  {audioCount.toLocaleString()}
-                </div>
-                <div className="text-white text-lg font-medium opacity-90 relative">
-                  <span className="inline-block bg-[#3F3248] text-white px-2 py-1 rounded-md text-sm font-medium">
-                    Audios
-                  </span>
-                </div>
-                <div className="text-white/70 text-sm font-medium mt-1">
-                  Tafseer Recordings
+              {/* Audios - Image Style */}
+              <div className="relative group">
+                <div className="bg-gradient-to-br from-[#54465F] to-[#54465F] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
+                  <div className="flex justify-center mb-4">
+                    <div className="w-16 h-16 rounded-full bg-[#3F3248] flex items-center justify-center">
+                      <Headphones className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <div className="text-6xl font-bold text-white mb-2 font-poppins">
+                    {audioCount.toLocaleString()}
+                  </div>
+                  <div className="text-white text-lg font-medium opacity-90 relative">
+                    <span className="inline-flex items-center gap-2 border-2 border-[#3F3248] bg-[#3F3248]/20 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
+                      <Headphones className="w-4 h-4" />
+                      Audios
+                    </span>
+                  </div>
+                  <div className="text-white/70 text-sm font-medium mt-1">
+                    Tafseer Recordings
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Hours - Image Style */}
-            <div className="relative group">
-              <div className="bg-gradient-to-br from-[#5C5D40] to-[#5C5D40] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
-                <div className="text-6xl font-bold text-white mb-2 font-poppins">
-                  {hoursCount.toLocaleString()}
-                </div>
-                <div className="text-white text-lg font-medium opacity-90 relative">
-                  <span className="inline-block bg-[#484A30] text-white px-2 py-1 rounded-md text-sm font-medium">
-                    Hours
-                  </span>
-                </div>
-                <div className="text-white/70 text-sm font-medium mt-1">
-                  Total Content Duration
+              {/* Hours - Image Style */}
+              <div className="relative group">
+                <div className="bg-gradient-to-br from-[#5C5D40] to-[#5C5D40] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
+                  <div className="flex justify-center mb-4">
+                    <div className="w-16 h-16 rounded-full bg-[#484A30] flex items-center justify-center">
+                      <Clock className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <div className="text-6xl font-bold text-white mb-2 font-poppins">
+                    {hoursCount.toLocaleString()}
+                  </div>
+                  <div className="text-white text-lg font-medium opacity-90 relative">
+                    <span className="inline-flex items-center gap-2 border-2 border-[#484A30] bg-[#484A30]/20 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
+                      <Clock className="w-4 h-4" />
+                      Hours
+                    </span>
+                  </div>
+                  <div className="text-white/70 text-sm font-medium mt-1">
+                    Total Content Duration
+                  </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </section>
