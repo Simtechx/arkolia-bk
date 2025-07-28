@@ -633,7 +633,7 @@ const Index = () => {
               <Button
                 variant="ghost"
                 onClick={() => setShowFilters(!showFilters)}
-                className="bg-[#0D3029] text-white hover:bg-[#0D3029]/80 hover:text-white relative font-poppins shrink-0"
+                className="bg-[#5C5D40] text-white hover:bg-[#4A4E35] hover:text-white active:bg-[#3A3E28] relative font-poppins shrink-0"
               >
                 <Filter className="w-4 h-4 mr-2" />
                 Filters
@@ -1364,20 +1364,17 @@ const Index = () => {
       {isPlayerVisible && currentTrack && (
         <div className="fixed bottom-16 left-0 right-0 z-30">
           <div className="max-w-6xl mx-auto px-4">
-            <Card className="bg-[#0D3029]/95 backdrop-blur-xl border-[#0D3029]/50 text-white">
+            <Card className="bg-[#0D3029]/95 backdrop-blur-xl border-2 border-white text-white">
               <CardContent className="p-3 md:p-4">
                 {/* Mobile Layout */}
                 <div className="md:hidden">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center space-x-3 flex-1 min-w-0">
-                      <div 
-                        className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
-                        style={{ backgroundColor: numberBgColor }}
-                      >
-                        <span className="text-white font-bold text-xs font-poppins">
-                          {currentTrack.id}
-                        </span>
-                      </div>
+                      <img 
+                        src="/lovable-uploads/7c4f4c34-d840-49ba-8b37-be7770f72a79.png" 
+                        alt="ARKolia" 
+                        className="w-10 h-10 rounded-full flex-shrink-0"
+                      />
                       <div className="min-w-0 flex-1">
                         <h3 className="font-semibold text-sm font-poppins truncate">{currentTrack.title}</h3>
                         <p className="text-white/80 text-xs font-poppins truncate">
@@ -1385,14 +1382,33 @@ const Index = () => {
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-1 ml-2">
-                      <div className="flex space-x-0.5">
-                        {[...Array(5)].map((_, i) => (
-                          <div key={i} className="w-0.5 bg-emerald-400/60 rounded-full animate-pulse" style={{ height: `${Math.random() * 8 + 4}px` }}></div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                    
+                     <Button
+                       size="sm"
+                       variant="ghost"
+                       onClick={() => setIsPlayerVisible(false)}
+                       className="text-white/60 hover:text-white hover:bg-white/10 p-1.5"
+                     >
+                       <X className="w-4 h-4" />
+                     </Button>
+                   </div>
+                   
+                   {/* Audio Wave Animation for Mobile */}
+                   {playingTrack === currentTrack.id && (
+                     <div className="flex items-center justify-center space-x-1 mb-3">
+                       {[...Array(5)].map((_, i) => (
+                         <div
+                           key={i}
+                           className="w-1 bg-white/60 rounded-full animate-pulse"
+                           style={{
+                             height: `${Math.random() * 16 + 8}px`,
+                             animationDelay: `${i * 100}ms`,
+                             animationDuration: '1.5s'
+                           }}
+                         />
+                       ))}
+                     </div>
+                   )}
                   <div className="flex items-center justify-center space-x-6">
                     <Button
                       size="sm"
@@ -1485,7 +1501,7 @@ const Index = () => {
                       size="sm"
                       variant="ghost"
                       onClick={() => setIsPlayerVisible(false)}
-                      className="text-white/60 hover:text-white hover:bg-white/10"
+                      className="text-white/60 hover:text-white hover:bg-white/10 p-1.5"
                     >
                       <X className="w-4 h-4" />
                     </Button>
