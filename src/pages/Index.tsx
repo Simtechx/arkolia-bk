@@ -170,7 +170,7 @@ const Index = () => {
   const [counterView, setCounterView] = useState("blocks");
   
   // Main view state (replaces surahs view)
-  const [mainView, setMainView] = useState("surahs");
+  const [mainView, setMainView] = useState("recent");
   
   // Track expansion states for surah toggle
   const [expandedSurahs, setExpandedSurahs] = useState(new Set());
@@ -1318,8 +1318,10 @@ const Index = () => {
                 <div className="text-6xl font-bold text-white mb-2 font-poppins">
                   {surahCount.toLocaleString()}
                 </div>
-                <div className="text-white text-lg font-medium opacity-90">
-                  Surahs
+                <div className="text-white text-lg font-medium opacity-90 relative">
+                  <span className="inline-block bg-[#2B3A28] text-white px-2 py-1 rounded-md text-sm font-medium">
+                    Surahs
+                  </span>
                 </div>
                 <div className="text-white/70 text-sm font-medium mt-1">
                   Complete Quran Collection
@@ -1333,8 +1335,10 @@ const Index = () => {
                 <div className="text-6xl font-bold text-white mb-2 font-poppins">
                   {audioCount.toLocaleString()}
                 </div>
-                <div className="text-white text-lg font-medium opacity-90">
-                  Audios
+                <div className="text-white text-lg font-medium opacity-90 relative">
+                  <span className="inline-block bg-[#3F3248] text-white px-2 py-1 rounded-md text-sm font-medium">
+                    Audios
+                  </span>
                 </div>
                 <div className="text-white/70 text-sm font-medium mt-1">
                   Tafseer Recordings
@@ -1348,8 +1352,10 @@ const Index = () => {
                 <div className="text-6xl font-bold text-white mb-2 font-poppins">
                   {hoursCount.toLocaleString()}
                 </div>
-                <div className="text-white text-lg font-medium opacity-90">
-                  Hours
+                <div className="text-white text-lg font-medium opacity-90 relative">
+                  <span className="inline-block bg-[#484A30] text-white px-2 py-1 rounded-md text-sm font-medium">
+                    Hours
+                  </span>
                 </div>
                 <div className="text-white/70 text-sm font-medium mt-1">
                   Total Content Duration
@@ -1439,17 +1445,14 @@ const Index = () => {
                   </div>
                 </div>
 
-                {/* Desktop Layout */}
+                 {/* Desktop and Tablet Layout */}
                 <div className="hidden md:flex items-center justify-between">
                   <div className="flex items-center space-x-4">
-                    <div 
-                      className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
-                      style={{ backgroundColor: numberBgColor }}
-                    >
-                      <span className="text-white font-bold text-sm font-poppins">
-                        {currentTrack.id}
-                      </span>
-                    </div>
+                    <img 
+                      src="/lovable-uploads/7c4f4c34-d840-49ba-8b37-be7770f72a79.png" 
+                      alt="ARKolia" 
+                      className="w-12 h-12 rounded-full flex-shrink-0"
+                    />
                     <div>
                       <h3 className="font-semibold text-sm font-poppins">{currentTrack.title}</h3>
                       <p className="text-white/80 text-xs font-poppins">
