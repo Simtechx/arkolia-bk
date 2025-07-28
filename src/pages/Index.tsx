@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, Download, Share2, FileText, Settings, Image as ImageIcon, Filter, Search, X, Palette } from 'lucide-react';
+import { Play, Pause, Download, Share2, FileText, Settings, Image as ImageIcon, Filter, Search, X, Palette, ChevronDown, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -169,8 +169,15 @@ const Index = () => {
   // Counter view state
   const [counterView, setCounterView] = useState("blocks");
   
-  // Surahs view state
-  const [surahsView, setSurahsView] = useState("glass");
+  // Main view state (replaces surahs view)
+  const [mainView, setMainView] = useState("surahs");
+  
+  // Track expansion states for surah toggle
+  const [expandedSurahs, setExpandedSurahs] = useState(new Set());
+  
+  // Current playing track info for bottom player
+  const [currentTrack, setCurrentTrack] = useState(null);
+  const [isPlayerVisible, setIsPlayerVisible] = useState(false);
   
   // Filter states
   const [searchTerm, setSearchTerm] = useState("");
@@ -182,8 +189,26 @@ const Index = () => {
   const [showFilters, setShowFilters] = useState(false);
 
   const handleSurahClick = (surah) => {
-    setSelectedSurah(surah);
-    setActiveTab("tracks");
+    const surahId = surah.id;
+    if (expandedSurahs.has(surahId)) {
+      const newExpanded = new Set(expandedSurahs);
+      newExpanded.delete(surahId);
+      setExpandedSurahs(newExpanded);
+    } else {
+      const newExpanded = new Set(expandedSurahs);
+      newExpanded.add(surahId);
+      setExpandedSurahs(newExpanded);
+    }
+  };
+
+  const handleTrackPlay = (track, surah) => {
+    setCurrentTrack({
+      ...track,
+      surahName: surah.name,
+      surahArabic: surah.nameArabic
+    });
+    setPlayingTrack(track.id);
+    setIsPlayerVisible(true);
   };
 
   const handlePlayPause = (trackId) => {
@@ -566,235 +591,221 @@ const Index = () => {
       </section>
 
       {/* Main Content */}
-      <main className="relative z-10 px-4 pb-24">
+      <main className="relative z-10 px-4 pb-32">
         <div className="max-w-6xl mx-auto">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-6 bg-white/30 backdrop-blur-xl border-white/20">
-              <TabsTrigger 
-                value="surahs" 
-                className="data-[state=active]:bg-white/30 data-[state=active]:text-[#0D3029] text-[#0D3029]/70 font-poppins font-medium"
+          {/* Filter Section */}
+          <div className="bg-white/30 backdrop-blur-xl border-white/20 rounded-lg p-4 mb-6">
+            <div className="flex flex-row gap-3 items-center">
+              {/* Search Input */}
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#0D3029]/60 w-4 h-4" />
+                <input
+                  type="text"
+                  placeholder="Search Surahs..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 bg-white/25 border border-white/30 rounded-lg text-[#0D3029] placeholder-[#0D3029]/60 focus:outline-none focus:ring-2 focus:ring-[#0D3029] font-poppins"
+                />
+              </div>
+
+              {/* Filter Toggle */}
+              <Button
+                variant="ghost"
+                onClick={() => setShowFilters(!showFilters)}
+                className="text-[#0D3029] hover:bg-[#0D3029] hover:text-white relative font-poppins shrink-0"
               >
-                Surahs ({filteredSurahs.length})
-              </TabsTrigger>
-              <TabsTrigger 
-                value="tracks" 
-                className="data-[state=active]:bg-white/30 data-[state=active]:text-[#0D3029] text-[#0D3029]/70 font-poppins font-medium"
-                disabled={!selectedSurah}
-              >
-                {selectedSurah ? `${selectedSurah.name} Tracks` : 'Select Surah'}
-              </TabsTrigger>
-            </TabsList>
-
-            {/* Surahs Grid */}
-            <TabsContent value="surahs" className="space-y-6">
-              {/* Search and Filter Bar */}
-              <div className="bg-white/30 backdrop-blur-xl border-white/20 rounded-lg p-4">
-                <div className="flex flex-row gap-3 items-center">
-                  {/* Search Input */}
-                  <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#0D3029]/60 w-4 h-4" />
-                    <input
-                      type="text"
-                      placeholder="Search Surahs..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 bg-white/25 border border-white/30 rounded-lg text-[#0D3029] placeholder-[#0D3029]/60 focus:outline-none focus:ring-2 focus:ring-[#0D3029] font-poppins"
-                    />
-                  </div>
-
-                  {/* Filter Toggle */}
-                  <Button
-                    variant="ghost"
-                    onClick={() => setShowFilters(!showFilters)}
-                    className="text-[#0D3029] hover:bg-[#0D3029] hover:text-white relative font-poppins shrink-0"
-                  >
-                    <Filter className="w-4 h-4 mr-2" />
-                    Filters
-                    {activeFiltersCount > 0 && (
-                      <Badge className="ml-2 bg-[#0D3029] text-white text-xs px-2 py-0.5">
-                        {activeFiltersCount}
-                      </Badge>
-                    )}
-                  </Button>
-
-                  {/* Clear Filters */}
-                  {activeFiltersCount > 0 && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={clearFilters}
-                      className="text-[#0D3029]/70 hover:text-[#0D3029] hover:bg-[#0D3029]/10 font-poppins shrink-0"
-                    >
-                      <X className="w-4 h-4 mr-1" />
-                      Clear
-                    </Button>
-                  )}
-                </div>
-
-                {/* Expanded Filters */}
-                {showFilters && (
-                  <div className="mt-4 pt-4 border-t border-white/20">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {/* Type Filter */}
-                      <div>
-                        <label className="text-[#0D3029]/90 text-sm mb-2 block font-poppins font-medium">Type</label>
-                        <Select value={selectedType} onValueChange={setSelectedType}>
-                          <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="bg-white/90 backdrop-blur-xl">
-                            <SelectItem value="all">All Types</SelectItem>
-                            <SelectItem value="Makkan" className="focus:bg-[#0D3029] focus:text-white">Makkan</SelectItem>
-                            <SelectItem value="Medinan" className="focus:bg-[#0D3029] focus:text-white">Medinan</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      {/* Length Filter */}
-                      <div>
-                        <label className="text-[#0D3029]/90 text-sm mb-2 block font-poppins font-medium">Length</label>
-                        <Select value={selectedLength} onValueChange={setSelectedLength}>
-                          <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="bg-white/90 backdrop-blur-xl">
-                            <SelectItem value="all">All Lengths</SelectItem>
-                            <SelectItem value="Short" className="focus:bg-[#0D3029] focus:text-white">Short</SelectItem>
-                            <SelectItem value="Medium" className="focus:bg-[#0D3029] focus:text-white">Medium</SelectItem>
-                            <SelectItem value="Long" className="focus:bg-[#0D3029] focus:text-white">Long</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      {/* Usage Filter */}
-                      <div>
-                        <label className="text-[#0D3029]/90 text-sm mb-2 block font-poppins font-medium">Usage</label>
-                        <Select value={selectedUsage} onValueChange={setSelectedUsage}>
-                          <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="bg-white/90 backdrop-blur-xl">
-                            <SelectItem value="all">All Usage</SelectItem>
-                            <SelectItem value="Daily" className="focus:bg-[#0D3029] focus:text-white">Daily</SelectItem>
-                            <SelectItem value="Friday" className="focus:bg-[#0D3029] focus:text-white">Friday</SelectItem>
-                            <SelectItem value="Before Sleep" className="focus:bg-[#0D3029] focus:text-white">Before Sleep</SelectItem>
-                            <SelectItem value="Protection" className="focus:bg-[#0D3029] focus:text-white">Protection</SelectItem>
-                            <SelectItem value="Night" className="focus:bg-[#0D3029] focus:text-white">Night</SelectItem>
-                            <SelectItem value="Morning" className="focus:bg-[#0D3029] focus:text-white">Morning</SelectItem>
-                            <SelectItem value="Ramadan" className="focus:bg-[#0D3029] focus:text-white">Ramadan</SelectItem>
-                            <SelectItem value="Hajj" className="focus:bg-[#0D3029] focus:text-white">Hajj</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      {/* Sajdah Filter */}
-                      <div>
-                        <label className="text-[#0D3029]/90 text-sm mb-2 block font-poppins font-medium">Sajdah</label>
-                        <Select value={showSajdah} onValueChange={setShowSajdah}>
-                          <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="bg-white/90 backdrop-blur-xl">
-                            <SelectItem value="all">All Surahs</SelectItem>
-                            <SelectItem value="yes" className="focus:bg-[#0D3029] focus:text-white">With Sajdah</SelectItem>
-                            <SelectItem value="no" className="focus:bg-[#0D3029] focus:text-white">Without Sajdah</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      {/* Themes Filter */}
-                      <div className="md:col-span-2">
-                        <label className="text-[#0D3029]/90 text-sm mb-2 block font-poppins font-medium">Themes</label>
-                        <ToggleGroup 
-                          type="multiple" 
-                          value={selectedThemes} 
-                          onValueChange={setSelectedThemes}
-                          className="flex flex-wrap gap-2 justify-start"
-                        >
-                          {["Tawheed", "Stories", "Laws", "Commands", "Worship", "Qiyamah", "Duas", "Lessons", "Protection"].map(theme => (
-                            <ToggleGroupItem 
-                              key={theme} 
-                              value={theme}
-                              className="bg-white/25 text-[#0D3029] border-white/30 hover:bg-[#0D3029] hover:text-white data-[state=on]:bg-[#0D3029] data-[state=on]:text-white text-xs px-3 py-1 font-poppins"
-                            >
-                              {theme}
-                            </ToggleGroupItem>
-                          ))}
-                        </ToggleGroup>
-                      </div>
-                    </div>
-                  </div>
+                <Filter className="w-4 h-4 mr-2" />
+                Filters
+                {activeFiltersCount > 0 && (
+                  <Badge className="ml-2 bg-[#0D3029] text-white text-xs px-2 py-0.5">
+                    {activeFiltersCount}
+                  </Badge>
                 )}
-              </div>
+              </Button>
 
-              {/* Surahs View Switch */}
-              <div className="flex justify-center mb-6">
-                <div className="bg-black/20 backdrop-blur-xl rounded-xl p-1 border border-white/20">
-                  <div className="flex">
-                    <button
-                      onClick={() => setSurahsView("glass")}
-                      className={`px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 ${
-                        surahsView === "glass"
-                          ? "bg-white/20 text-white shadow-lg"
-                          : "text-white/70 hover:text-white"
-                      }`}
+              {/* Clear Filters */}
+              {activeFiltersCount > 0 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={clearFilters}
+                  className="text-[#0D3029]/70 hover:text-[#0D3029] hover:bg-[#0D3029]/10 font-poppins shrink-0"
+                >
+                  <X className="w-4 h-4 mr-1" />
+                  Clear
+                </Button>
+              )}
+            </div>
+
+            {/* Expanded Filters */}
+            {showFilters && (
+              <div className="mt-4 pt-4 border-t border-white/20">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {/* Type Filter */}
+                  <div>
+                    <label className="text-[#0D3029]/90 text-sm mb-2 block font-poppins font-medium">Type</label>
+                    <Select value={selectedType} onValueChange={setSelectedType}>
+                      <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white/90 backdrop-blur-xl">
+                        <SelectItem value="all">All Types</SelectItem>
+                        <SelectItem value="Makkan" className="focus:bg-[#0D3029] focus:text-white">Makkan</SelectItem>
+                        <SelectItem value="Medinan" className="focus:bg-[#0D3029] focus:text-white">Medinan</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Length Filter */}
+                  <div>
+                    <label className="text-[#0D3029]/90 text-sm mb-2 block font-poppins font-medium">Length</label>
+                    <Select value={selectedLength} onValueChange={setSelectedLength}>
+                      <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white/90 backdrop-blur-xl">
+                        <SelectItem value="all">All Lengths</SelectItem>
+                        <SelectItem value="Short" className="focus:bg-[#0D3029] focus:text-white">Short</SelectItem>
+                        <SelectItem value="Medium" className="focus:bg-[#0D3029] focus:text-white">Medium</SelectItem>
+                        <SelectItem value="Long" className="focus:bg-[#0D3029] focus:text-white">Long</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Usage Filter */}
+                  <div>
+                    <label className="text-[#0D3029]/90 text-sm mb-2 block font-poppins font-medium">Usage</label>
+                    <Select value={selectedUsage} onValueChange={setSelectedUsage}>
+                      <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white/90 backdrop-blur-xl">
+                        <SelectItem value="all">All Usage</SelectItem>
+                        <SelectItem value="Daily" className="focus:bg-[#0D3029] focus:text-white">Daily</SelectItem>
+                        <SelectItem value="Friday" className="focus:bg-[#0D3029] focus:text-white">Friday</SelectItem>
+                        <SelectItem value="Before Sleep" className="focus:bg-[#0D3029] focus:text-white">Before Sleep</SelectItem>
+                        <SelectItem value="Protection" className="focus:bg-[#0D3029] focus:text-white">Protection</SelectItem>
+                        <SelectItem value="Night" className="focus:bg-[#0D3029] focus:text-white">Night</SelectItem>
+                        <SelectItem value="Morning" className="focus:bg-[#0D3029] focus:text-white">Morning</SelectItem>
+                        <SelectItem value="Ramadan" className="focus:bg-[#0D3029] focus:text-white">Ramadan</SelectItem>
+                        <SelectItem value="Hajj" className="focus:bg-[#0D3029] focus:text-white">Hajj</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Sajdah Filter */}
+                  <div>
+                    <label className="text-[#0D3029]/90 text-sm mb-2 block font-poppins font-medium">Sajdah</label>
+                    <Select value={showSajdah} onValueChange={setShowSajdah}>
+                      <SelectTrigger className="bg-white/25 border-white/30 text-[#0D3029] font-poppins focus:ring-[#0D3029]">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white/90 backdrop-blur-xl">
+                        <SelectItem value="all">All Surahs</SelectItem>
+                        <SelectItem value="yes" className="focus:bg-[#0D3029] focus:text-white">With Sajdah</SelectItem>
+                        <SelectItem value="no" className="focus:bg-[#0D3029] focus:text-white">Without Sajdah</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Themes Filter */}
+                  <div className="md:col-span-2">
+                    <label className="text-[#0D3029]/90 text-sm mb-2 block font-poppins font-medium">Themes</label>
+                    <ToggleGroup 
+                      type="multiple" 
+                      value={selectedThemes} 
+                      onValueChange={setSelectedThemes}
+                      className="flex flex-wrap gap-2 justify-start"
                     >
-                      Glass
-                    </button>
-                    <button
-                      onClick={() => setSurahsView("color")}
-                      className={`px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 ${
-                        surahsView === "color"
-                          ? "bg-white/20 text-white shadow-lg"
-                          : "text-white/70 hover:text-white"
-                      }`}
-                    >
-                      Color
-                    </button>
+                      {["Tawheed", "Stories", "Laws", "Commands", "Worship", "Qiyamah", "Duas", "Lessons", "Protection"].map(theme => (
+                        <ToggleGroupItem 
+                          key={theme} 
+                          value={theme}
+                          className="bg-white/25 text-[#0D3029] border-white/30 hover:bg-[#0D3029] hover:text-white data-[state=on]:bg-[#0D3029] data-[state=on]:text-white text-xs px-3 py-1 font-poppins"
+                        >
+                          {theme}
+                        </ToggleGroupItem>
+                      ))}
+                    </ToggleGroup>
                   </div>
                 </div>
               </div>
+            )}
+          </div>
 
-              <div className={`${surahsView === "color" ? "space-y-3" : "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3"}`}>
-                {filteredSurahs.map((surah) => {
-                  const getCardStyle = () => {
-                    if (surahsView === "color") {
-                      const isMakkan = surah.type === "Makkan";
-                      return {
-                        background: isMakkan 
-                          ? "rgba(245, 245, 220, 0.95)" // Soft beige with transparency for Makkan
-                          : "rgba(232, 245, 232, 0.95)", // Light professional green with transparency for Medinan
-                        borderColor: isMakkan ? "#D4C4A8" : "#B8D4B8", // Darker shade borders
-                        borderWidth: "2px",
-                        backdropFilter: "blur(10px)"
-                      };
-                    }
-                    return {
-                      backgroundColor: `rgba(255, 255, 255, ${blockDarkness[0] / 100})`,
-                      borderColor: surah.type === "Makkan" ? "#A68C6B" : "#0D3029",
-                      backdropFilter: "blur(20px)"
-                    };
-                  };
-                  
-                  return (
+          {/* Main View Switch */}
+          <div className="flex justify-center mb-6">
+            <div className="bg-black/20 backdrop-blur-xl rounded-xl p-1 border border-white/20">
+              <div className="grid grid-cols-4 gap-1">
+                <button
+                  onClick={() => setMainView("surahs")}
+                  className={`px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 ${
+                    mainView === "surahs"
+                      ? "bg-white/20 text-white shadow-lg"
+                      : "text-white/70 hover:text-white"
+                  }`}
+                >
+                  Surahs
+                </button>
+                <button
+                  onClick={() => setMainView("recent")}
+                  className={`px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 ${
+                    mainView === "recent"
+                      ? "bg-white/20 text-white shadow-lg"
+                      : "text-white/70 hover:text-white"
+                  }`}
+                >
+                  Recent
+                </button>
+                <button
+                  onClick={() => setMainView("favourites")}
+                  className={`px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 ${
+                    mainView === "favourites"
+                      ? "bg-white/20 text-white shadow-lg"
+                      : "text-white/70 hover:text-white"
+                  }`}
+                >
+                  Favourites
+                </button>
+                <button
+                  onClick={() => setMainView("completed")}
+                  className={`px-6 py-3 rounded-lg font-poppins font-medium transition-all duration-300 ${
+                    mainView === "completed"
+                      ? "bg-white/20 text-white shadow-lg"
+                      : "text-white/70 hover:text-white"
+                  }`}
+                >
+                  Completed
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Main Content Based on View */}
+          {mainView === "surahs" && (
+            <div className="space-y-3">
+              {filteredSurahs.map((surah) => {
+                const isExpanded = expandedSurahs.has(surah.id);
+                const isMakkan = surah.type === "Makkan";
+                
+                return (
+                  <div key={surah.id}>
+                    {/* Surah Card */}
                     <Card 
-                      key={surah.id}
-                      className={`transition-all duration-300 cursor-pointer group ${
-                        surahsView === "glass" 
-                          ? `backdrop-blur-xl hover:bg-white/40 ${getBorderColor(surah.type, selectedSurah?.id === surah.id)} ${selectedSurah?.id === surah.id ? 'bg-blue-500/30' : ''}`
-                          : `hover:scale-[1.02] shadow-xl ${selectedSurah?.id === surah.id ? 'ring-2 ring-blue-400/50 shadow-2xl' : ''}`
-                      }`}
+                      className="transition-all duration-300 cursor-pointer hover:scale-[1.01] shadow-xl"
                       style={{ 
-                        ...getCardStyle(),
-                        borderWidth: surahsView === "color" ? "2px" : `${borderThickness[0]}px`,
-                        borderStyle: 'solid'
+                        background: isMakkan 
+                          ? "rgba(245, 245, 220, 0.95)" 
+                          : "rgba(232, 245, 232, 0.95)",
+                        borderColor: isMakkan ? "#D4C4A8" : "#B8D4B8",
+                        borderWidth: "2px",
+                        borderStyle: 'solid',
+                        backdropFilter: "blur(10px)"
                       }}
-                      onClick={() => handleSurahClick(surah)}
                     >
-                    <CardContent className={`${surahsView === "color" ? "p-4" : "p-3"}`}>
-                      <div className={`${surahsView === "color" ? "flex items-center space-x-4" : "text-center"}`}>
-                        {surahsView === "color" ? (
-                          <>
+                      <CardContent className="p-4" onClick={() => handleSurahClick(surah)}>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-4">
                             <div 
                               className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
                               style={{ backgroundColor: numberBgColor }}
@@ -802,9 +813,9 @@ const Index = () => {
                               <span className="text-white font-bold text-sm font-poppins">{surah.id}</span>
                             </div>
                             <div className="flex-1">
-                              <div className="flex items-center justify-between mb-1">
+                              <div className="flex items-center gap-3 mb-1">
                                 <h3 className="font-semibold text-lg text-gray-900 font-poppins drop-shadow-sm">{surah.name}</h3>
-                                <Badge className={`${getBadgeColor(surah.type)} text-white text-xs px-2 py-1 font-poppins font-medium hover:${getBadgeColor(surah.type)}/80`}>
+                                <Badge className={`${getBadgeColor(surah.type)} text-white text-xs px-2 py-1 font-poppins font-medium`}>
                                   {surah.type}
                                 </Badge>
                               </div>
@@ -812,42 +823,78 @@ const Index = () => {
                               <div className="flex items-center space-x-4 text-sm text-gray-700 font-poppins font-medium">
                                 <span>{surah.verses} verses</span>
                                 {surah.sajdah && (
-                                  <Badge className="bg-[#4B4155] text-white text-xs px-2 py-0.5 font-poppins hover:bg-[#4B4155]/80">
+                                  <Badge className="bg-[#4B4155] text-white text-xs px-2 py-0.5 font-poppins">
                                     Sajdah
                                   </Badge>
                                 )}
                               </div>
                             </div>
-                          </>
-                        ) : (
-                          <>
-                            <div className="flex justify-between items-start mb-2">
-                              <div 
-                                className="w-8 h-8 rounded-full flex items-center justify-center group-hover:opacity-80 transition-opacity"
-                                style={{ backgroundColor: numberBgColor }}
-                              >
-                                <span className="text-white font-bold text-xs font-poppins">{surah.id}</span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleTrackPlay(mockTracks[0], surah);
+                              }}
+                            >
+                              <Play className="w-4 h-4" />
+                            </Button>
+                            <span className="text-gray-600 font-poppins text-sm">
+                              {isExpanded ? '▼' : '▶'}
+                            </span>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Expanded Tracks */}
+                    {isExpanded && (
+                      <div className="ml-4 mt-2 space-y-2">
+                        {mockTracks.map((track) => (
+                          <Card 
+                            key={track.id} 
+                            className="backdrop-blur-xl border-white/30"
+                            style={{ 
+                              backgroundColor: `rgba(255, 255, 255, 0.15)`,
+                              borderWidth: "1px",
+                              borderStyle: 'solid'
+                            }}
+                          >
+                            <CardContent className="p-3">
+                              <div className="flex items-center justify-between">
+                                <div className="flex-1">
+                                  <h4 className="font-medium text-white font-poppins text-sm">{track.title}</h4>
+                                  <p className="text-white/80 text-xs font-poppins">
+                                    Verses {track.verseRange} • {track.duration}
+                                  </p>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white"
+                                    onClick={() => handleTrackPlay(track, surah)}
+                                  >
+                                    {playingTrack === track.id ? (
+                                      <Pause className="w-3 h-3" />
+                                    ) : (
+                                      <Play className="w-3 h-3" />
+                                    )}
+                                  </Button>
+                                  <AudioWave isPlaying={playingTrack === track.id} />
+                                </div>
                               </div>
-                              <Badge className={`${getBadgeColor(surah.type)} text-white text-xs px-2 py-1 font-poppins font-medium hover:${getBadgeColor(surah.type)}/80`}>
-                                {surah.type}
-                              </Badge>
-                            </div>
-                            <h3 className="font-semibold text-sm mb-1 leading-tight font-poppins text-white drop-shadow-lg">{surah.name}</h3>
-                            <p className="text-lg mb-1 font-arabic leading-tight text-amber-200 drop-shadow-lg">{surah.nameArabic}</p>
-                            <p className="text-xs font-poppins text-white/90 drop-shadow-lg font-medium">{surah.verses} verses</p>
-                            {surah.sajdah && (
-                              <Badge className="mt-1 bg-[#4B4155] text-white text-xs px-2 py-0.5 font-poppins hover:bg-[#4B4155]/80">
-                                Sajdah
-                              </Badge>
-                            )}
-                          </>
-                        )}
+                            </CardContent>
+                          </Card>
+                        ))}
                       </div>
-                    </CardContent>
-                   </Card>
-                  );
-                })}
-              </div>
+                    )}
+                  </div>
+                );
+              })}
 
               {/* No Results Message */}
               {filteredSurahs.length === 0 && (
@@ -865,107 +912,39 @@ const Index = () => {
                   </Button>
                 </div>
               )}
-            </TabsContent>
+            </div>
+          )}
 
-            {/* Tracks List */}
-            <TabsContent value="tracks" className="space-y-4">
-              {selectedSurah && (
-                <div className="mb-6">
-                  <Button 
-                    variant="ghost" 
-                    onClick={() => setActiveTab("surahs")}
-                    className="text-white/70 hover:text-white hover:bg-white/10 mb-4 font-poppins"
-                  >
-                    ← Back to Surahs
-                  </Button>
-                  <div className="flex items-center gap-3 mb-4">
-                    <h2 className="text-2xl font-bold text-white font-poppins">{selectedSurah.name}</h2>
-                    <Badge className={`${getBadgeColor(selectedSurah.type)} text-white font-poppins hover:${getBadgeColor(selectedSurah.type)}/80`}>
-                      {selectedSurah.type}
-                    </Badge>
-                  </div>
-                  <p className="text-white/90 text-xl font-arabic">{selectedSurah.nameArabic}</p>
-                </div>
-              )}
-              
-              <div className="space-y-4">
-                {mockTracks.map((track) => (
-                  <Card 
-                    key={track.id} 
-                    className={`backdrop-blur-xl ${selectedSurah ? getTrackBorderColor(selectedSurah.type) : 'border-white/20'}`}
-                    style={{ 
-                      backgroundColor: `rgba(255, 255, 255, ${blockDarkness[0] / 100})`,
-                      borderWidth: `${borderThickness[0]}px`,
-                      borderStyle: 'solid'
-                    }}
-                  >
-                    <CardContent className="p-4">
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-white mb-1 font-poppins">{track.title}</h3>
-                          <p className="text-white/80 text-sm mb-1 font-poppins">
-                            {selectedSurah?.name} - Verses {track.verseRange}
-                          </p>
-                          <p className="text-white/70 text-sm font-poppins">{track.duration}</p>
-                        </div>
-                        <AudioWave isPlaying={playingTrack === track.id} />
-                      </div>
-                      
-                      {/* Audio Controls */}
-                      <div className="flex items-center space-x-2 mb-3">
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className={`${selectedSurah ? getBadgeColor(selectedSurah.type) : 'bg-[#0D3029]'} hover:${selectedSurah ? getBadgeColor(selectedSurah.type) : 'bg-[#0D3029]'}/80 text-white`}
-                          onClick={() => handlePlayPause(track.id)}
-                        >
-                          {playingTrack === track.id ? (
-                            <Pause className="w-4 h-4" />
-                          ) : (
-                            <Play className="w-4 h-4" />
-                          )}
-                        </Button>
-                        
-                        <div className="flex-1 h-2 bg-white/20 rounded-full overflow-hidden">
-                          <div 
-                            className={`h-full ${selectedSurah ? getBadgeColor(selectedSurah.type) : 'bg-[#0D3029]'} transition-all duration-300 ${
-                              playingTrack === track.id ? 'w-1/3' : 'w-0'
-                            }`}
-                          />
-                        </div>
-                      </div>
-                      
-                      {/* Action Buttons with badges */}
-                      <div className="flex flex-wrap gap-2">
-                        <Badge 
-                          className={`${selectedSurah ? getBadgeColor(selectedSurah.type) : 'bg-[#0D3029]'} hover:${selectedSurah ? getBadgeColor(selectedSurah.type) : 'bg-[#0D3029]'}/80 text-white font-poppins cursor-pointer`}
-                          onClick={() => handleDownload(track)}
-                        >
-                          <Download className="w-4 h-4 mr-1" />
-                          Download
-                        </Badge>
-                        
-                        <Badge 
-                          className={`${selectedSurah ? getBadgeColor(selectedSurah.type) : 'bg-[#0D3029]'} hover:${selectedSurah ? getBadgeColor(selectedSurah.type) : 'bg-[#0D3029]'}/80 text-white font-poppins cursor-pointer`}
-                          onClick={() => handleShare(track)}
-                        >
-                          <Share2 className="w-4 h-4 mr-1" />
-                          Share
-                        </Badge>
-                        
-                        <Badge 
-                          className={`${selectedSurah ? getBadgeColor(selectedSurah.type) : 'bg-[#0D3029]'} hover:${selectedSurah ? getBadgeColor(selectedSurah.type) : 'bg-[#0D3029]'}/80 text-white font-poppins cursor-pointer`}
-                        >
-                          <FileText className="w-4 h-4 mr-1" />
-                          PDF Tafseer
-                        </Badge>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+          {/* Recent View */}
+          {mainView === "recent" && (
+            <div className="text-center py-12">
+              <div className="text-white/60 mb-4">
+                <p className="text-lg font-poppins">Recent Tracks</p>
+                <p className="text-sm font-poppins">Your recently played tracks will appear here</p>
               </div>
-            </TabsContent>
-          </Tabs>
+            </div>
+          )}
+
+          {/* Favourites View */}
+          {mainView === "favourites" && (
+            <div className="text-center py-12">
+              <div className="text-white/60 mb-4">
+                <p className="text-lg font-poppins">Favourite Tracks</p>
+                <p className="text-sm font-poppins">Your favourite tracks will appear here</p>
+              </div>
+            </div>
+          )}
+
+          {/* Completed View */}
+          {mainView === "completed" && (
+            <div className="text-center py-12">
+              <div className="text-white/60 mb-4">
+                <p className="text-lg font-poppins">Completed Tracks</p>
+                <p className="text-sm font-poppins">Tracks you've finished listening to will appear here</p>
+              </div>
+            </div>
+          )}
+
         </div>
       </main>
 
@@ -1146,6 +1125,85 @@ const Index = () => {
           )}
         </div>
       </section>
+
+      {/* Bottom Audio Player */}
+      {isPlayerVisible && currentTrack && (
+        <div className="fixed bottom-16 left-0 right-0 z-30">
+          <div className="max-w-6xl mx-auto px-4">
+            <Card className="bg-[#0D3029]/95 backdrop-blur-xl border-[#0D3029]/50 text-white">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div 
+                      className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: numberBgColor }}
+                    >
+                      <span className="text-white font-bold text-sm font-poppins">
+                        {currentTrack.id}
+                      </span>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-sm font-poppins">{currentTrack.title}</h3>
+                      <p className="text-white/80 text-xs font-poppins">
+                        {currentTrack.surahName} • {currentTrack.duration}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-4">
+                    <AudioWave isPlaying={playingTrack === currentTrack.id} />
+                    
+                    <div className="flex items-center space-x-2">
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="text-white hover:bg-white/10"
+                      >
+                        ⏮
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="bg-white/20 hover:bg-white/30 text-white"
+                        onClick={() => handlePlayPause(currentTrack.id)}
+                      >
+                        {playingTrack === currentTrack.id ? (
+                          <Pause className="w-4 h-4" />
+                        ) : (
+                          <Play className="w-4 h-4" />
+                        )}
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="text-white hover:bg-white/10"
+                      >
+                        ⏭
+                      </Button>
+                    </div>
+                    
+                    <div className="w-32 h-1 bg-white/20 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-white/70 transition-all duration-300"
+                        style={{ width: playingTrack === currentTrack.id ? '30%' : '0%' }}
+                      />
+                    </div>
+                    
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setIsPlayerVisible(false)}
+                      className="text-white/60 hover:text-white hover:bg-white/10"
+                    >
+                      <X className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="fixed bottom-0 left-0 right-0 z-20 bg-black/80 backdrop-blur-xl border-t border-white/10">
