@@ -1379,63 +1379,71 @@ const Index = () => {
               <CardContent className="p-3 md:p-4">
                 {/* Mobile Layout */}
                 <div className="md:hidden">
-                  {/* Top section with title/subtitle and close button */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="text-center flex-1">
-                      <h3 className="font-semibold text-lg font-poppins text-white mb-1">{currentTrack.title}</h3>
-                      <p className="text-white/70 text-sm font-poppins">
-                        {currentTrack.surahName}
-                      </p>
-                    </div>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => setIsPlayerVisible(false)}
-                      className="text-white/60 hover:text-white hover:bg-white/10 p-1.5 absolute top-2 right-2"
-                    >
-                      <X className="w-4 h-4" />
-                    </Button>
-                  </div>
-                  
-                  {/* Progress section with time and slider */}
-                  <div className="mb-6">
-                    <div className="flex items-center justify-between text-white/70 text-sm mb-2">
-                      <span className="font-poppins">2:14</span>
-                      <span className="font-poppins">4:32</span>
-                    </div>
-                    <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-white transition-all duration-300"
-                        style={{ width: playingTrack === currentTrack.id ? '53%' : '0%' }}
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-3 flex-1 min-w-0">
+                      <img 
+                        src="/lovable-uploads/7c4f4c34-d840-49ba-8b37-be7770f72a79.png" 
+                        alt="ARKolia" 
+                        className="w-10 h-10 rounded-full flex-shrink-0"
                       />
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-semibold text-sm font-poppins truncate">{currentTrack.title}</h3>
+                        <p className="text-white/80 text-xs font-poppins truncate">
+                          {currentTrack.surahName} • {currentTrack.duration}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  
-                  {/* Control buttons at bottom */}
-                  <div className="flex items-center justify-center space-x-8">
+                    
+                     <Button
+                       size="sm"
+                       variant="ghost"
+                       onClick={() => setIsPlayerVisible(false)}
+                       className="text-white/60 hover:text-white hover:bg-white/10 p-1.5"
+                     >
+                       <X className="w-4 h-4" />
+                     </Button>
+                   </div>
+                   
+                   {/* Audio Wave Animation for Mobile */}
+                   {playingTrack === currentTrack.id && (
+                     <div className="flex items-center justify-center space-x-1 mb-3">
+                       {[...Array(5)].map((_, i) => (
+                         <div
+                           key={i}
+                           className="w-1 bg-white/60 rounded-full animate-pulse"
+                           style={{
+                             height: `${Math.random() * 16 + 8}px`,
+                             animationDelay: `${i * 100}ms`,
+                             animationDuration: '1.5s'
+                           }}
+                         />
+                       ))}
+                     </div>
+                   )}
+                  <div className="flex items-center justify-center space-x-6">
                     <Button
                       size="sm"
                       variant="ghost"
-                      className="text-white hover:bg-white/10 p-2"
+                      className="text-white hover:bg-white/10"
                     >
                       ⏮
                     </Button>
                     <Button
-                      size="lg"
+                      size="sm"
                       variant="ghost"
-                      className="bg-white/20 hover:bg-white/30 text-white p-3 rounded-full"
+                      className="bg-white/20 hover:bg-white/30 text-white"
                       onClick={() => handlePlayPause(currentTrack.id)}
                     >
                       {playingTrack === currentTrack.id ? (
-                        <Pause className="w-6 h-6" />
+                        <Pause className="w-5 h-5" />
                       ) : (
-                        <Play className="w-6 h-6" />
+                        <Play className="w-5 h-5" />
                       )}
                     </Button>
                     <Button
                       size="sm"
                       variant="ghost"
-                      className="text-white hover:bg-white/10 p-2"
+                      className="text-white hover:bg-white/10"
                     >
                       ⏭
                     </Button>
