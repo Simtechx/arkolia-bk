@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { toast } from '@/hooks/use-toast';
+import { useRSSFeed } from '@/hooks/useRSSFeed';
 
 // Complete list of all 114 Surahs with comprehensive metadata
 const surahs = [
@@ -177,6 +178,9 @@ const Index = () => {
   
   // Current playing track info for bottom player
   const [currentTrack, setCurrentTrack] = useState(null);
+  
+  // RSS Feed for Recent tab
+  const { data: rssData, isLoading: rssLoading, error: rssError } = useRSSFeed('https://feeds.captivate.fm/arkolia-tafseer/');
   const [isPlayerVisible, setIsPlayerVisible] = useState(false);
   
   // Favorites tracking
@@ -984,33 +988,16 @@ const Index = () => {
           {/* Recent View */}
           {mainView === "recent" && (
             <div className="space-y-4">
-              {/* Sample Recent Tracks */}
-              {[
-                {
-                  id: "recent-1",
-                  title: "Fri-20250728 - Surah Kahf, Verses 1–5",
-                  surahName: "Al-Kahf",
-                  duration: "12:45",
-                  date: "28 July 2025",
-                  verseRange: "1-5"
-                },
-                {
-                  id: "recent-2", 
-                  title: "Thu-20250727 - Surah Al-Baqarah, Verses 255–260",
-                  surahName: "Al-Baqarah",
-                  duration: "15:20",
-                  date: "27 July 2025",
-                  verseRange: "255-260"
-                },
-                {
-                  id: "recent-3",
-                  title: "Wed-20250726 - Surah Yasin, Verses 1–12",
-                  surahName: "Ya-Sin",
-                  duration: "9:30",
-                  date: "26 July 2025",
-                  verseRange: "1-12"
-                }
-                ].map((track) => (
+              {rssLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="text-white/60 font-poppins">Loading latest episodes...</div>
+                </div>
+              ) : rssError ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="text-white/60 font-poppins">Failed to load recent episodes. Please try again later.</div>
+                </div>
+              ) : rssData && rssData.length > 0 ? (
+                rssData.slice(0, 10).map((track) => (
                   <Card 
                     key={track.id} 
                     className="backdrop-blur-xl hover:bg-black/60 transition-all duration-300 shadow-2xl"
@@ -1026,10 +1013,10 @@ const Index = () => {
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                       <div className="flex-1 min-w-0">
                         <h4 className="font-medium text-white font-poppins text-sm md:text-base mb-1 leading-tight">
-                          {track.title.split(' - ')[0]}
+                          {track.title.split(' - ')[0] || track.title}
                         </h4>
                         <p className="text-white/80 text-xs md:text-sm font-poppins">
-                          {track.title.split(' - ')[1]}
+                          {track.title.split(' - ')[1] || `${track.surahName} ${track.verseRange ? `• ${track.verseRange}` : ''}`}
                         </p>
                         <p className="text-white/60 text-xs font-poppins mt-1">{track.date}</p>
                       </div>
@@ -1066,7 +1053,16 @@ const Index = () => {
                             size="sm"
                             variant="ghost"
                             className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
-                            onClick={() => toast({ description: "Downloading..." })}
+                            onClick={() => {
+                              if (track.audioUrl) {
+                                const link = document.createElement('a');
+                                link.href = track.audioUrl;
+                                link.download = `${track.title}.mp3`;
+                                link.click();
+                              } else {
+                                toast({ description: "Audio not available for download" });
+                              }
+                            }}
                           >
                             <Download className="w-3 h-3" />
                           </Button>
@@ -1074,7 +1070,7 @@ const Index = () => {
                             size="sm"
                             variant="ghost"
                             className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
-                            onClick={() => toast({ description: "Opening PDF..." })}
+                            onClick={() => toast({ description: "PDF feature coming soon..." })}
                           >
                             <FileText className="w-3 h-3" />
                           </Button>
@@ -1088,7 +1084,8 @@ const Index = () => {
                               id: track.id,
                               title: track.title,
                               surahName: track.surahName,
-                              duration: track.duration
+                              duration: track.duration,
+                              audioUrl: track.audioUrl
                             });
                             setPlayingTrack(track.id);
                             setIsPlayerVisible(true);
@@ -1102,7 +1099,12 @@ const Index = () => {
                     </div>
                   </CardContent>
                 </Card>
-              ))}
+                ))
+              ) : (
+                <div className="flex items-center justify-center py-8">
+                  <div className="text-white/60 font-poppins">No recent episodes available.</div>
+                </div>
+              )}
             </div>
           )}
 
