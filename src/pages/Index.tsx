@@ -253,42 +253,10 @@ const Index = () => {
       const track = recentTracks?.find(t => t.id === trackId);
       if (track) {
         handleTrackPlay(track, null);
-        // Auto-play after loading
-        setTimeout(() => {
-          if (audioState.duration > 0) {
-            togglePlayPause();
-          }
-        }, 500);
       }
     }
-  };
-
-  const playNextTrack = () => {
-    if (!recentTracks || !currentTrack) return;
-    const currentIndex = recentTracks.findIndex(t => t.id === currentTrack.id);
-    const nextIndex = (currentIndex + 1) % recentTracks.length;
-    const nextTrack = recentTracks[nextIndex];
-    if (nextTrack) {
-      handleTrackPlay(nextTrack, null);
-      setTimeout(() => togglePlayPause(), 500);
-    }
-  };
-
-  const playPreviousTrack = () => {
-    if (!recentTracks || !currentTrack) return;
-    const currentIndex = recentTracks.findIndex(t => t.id === currentTrack.id);
-    const prevIndex = currentIndex > 0 ? currentIndex - 1 : recentTracks.length - 1;
-    const prevTrack = recentTracks[prevIndex];
-    if (prevTrack) {
-      handleTrackPlay(prevTrack, null);
-      setTimeout(() => togglePlayPause(), 500);
-    }
-  };
-
-  // Update playing track state when audio state changes
-  React.useEffect(() => {
-    setPlayingTrack(audioState.isPlaying && currentTrack ? currentTrack.id : null);
-  }, [audioState.isPlaying, currentTrack]);
+    // Update visual state
+    setPlayingTrack(audioState.isPlaying ? trackId : null);
   };
 
   const handleShare = (track) => {
@@ -1449,14 +1417,13 @@ const Index = () => {
                      </div>
                    )}
                   <div className="flex items-center justify-center space-x-6">
-                     <Button
-                       size="sm"
-                       variant="ghost"
-                       className="text-white hover:bg-white/10"
-                       onClick={playPreviousTrack}
-                     >
-                       ⏮
-                     </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="text-white hover:bg-white/10"
+                    >
+                      ⏮
+                    </Button>
                     <Button
                       size="sm"
                       variant="ghost"
@@ -1469,14 +1436,13 @@ const Index = () => {
                         <Play className="w-5 h-5" />
                       )}
                     </Button>
-                     <Button
-                       size="sm"
-                       variant="ghost"
-                       className="text-white hover:bg-white/10"
-                       onClick={playNextTrack}
-                     >
-                       ⏭
-                     </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="text-white hover:bg-white/10"
+                    >
+                      ⏭
+                    </Button>
                   </div>
                 </div>
 
@@ -1500,14 +1466,13 @@ const Index = () => {
                     <AudioWave isPlaying={playingTrack === currentTrack.id} />
                     
                     <div className="flex items-center space-x-2">
-                       <Button
-                         size="sm"
-                         variant="ghost"
-                         className="text-white hover:bg-white/10"
-                         onClick={playPreviousTrack}
-                       >
-                         ⏮
-                       </Button>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="text-white hover:bg-white/10"
+                      >
+                        ⏮
+                      </Button>
                       <Button
                         size="sm"
                         variant="ghost"
@@ -1520,38 +1485,21 @@ const Index = () => {
                           <Play className="w-4 h-4" />
                         )}
                       </Button>
-                       <Button
-                         size="sm"
-                         variant="ghost"
-                         className="text-white hover:bg-white/10"
-                         onClick={playNextTrack}
-                       >
-                         ⏭
-                       </Button>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="text-white hover:bg-white/10"
+                      >
+                        ⏭
+                      </Button>
                     </div>
                     
-                     <div className="flex items-center space-x-2">
-                       <span className="text-white/70 text-xs font-mono">
-                         {formatTime(audioState.currentTime)}
-                       </span>
-                       <div className="w-24 h-1 bg-white/20 rounded-full overflow-hidden cursor-pointer" 
-                            onClick={(e) => {
-                              if (audioState.duration > 0) {
-                                const rect = e.currentTarget.getBoundingClientRect();
-                                const percent = (e.clientX - rect.left) / rect.width;
-                                const newTime = percent * audioState.duration;
-                                seek(newTime);
-                              }
-                            }}>
-                         <div 
-                           className="h-full bg-white/70 transition-all duration-300"
-                           style={{ width: audioState.duration > 0 ? `${(audioState.currentTime / audioState.duration) * 100}%` : '0%' }}
-                         />
-                       </div>
-                       <span className="text-white/70 text-xs font-mono">
-                         {formatTime(audioState.duration)}
-                       </span>
-                     </div>
+                    <div className="w-32 h-1 bg-white/20 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-white/70 transition-all duration-300"
+                        style={{ width: playingTrack === currentTrack.id ? '30%' : '0%' }}
+                      />
+                    </div>
                     
                     <Button
                       size="sm"
