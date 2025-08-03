@@ -76,8 +76,18 @@ const transformRSSToTracks = (rssItems: RSSItem[]): Track[] => {
       verseRange = verseMatch[1];
     }
     
-    // Format date
-    const date = item.pubDate ? new Date(item.pubDate).toLocaleDateString() : '';
+    // Format date as DD MMM YY
+    const formatDate = (dateString: string) => {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      const options: Intl.DateTimeFormatOptions = { 
+        day: '2-digit', 
+        month: 'short', 
+        year: '2-digit' 
+      };
+      return date.toLocaleDateString('en-GB', options).replace(/,/g, '');
+    };
+    const date = formatDate(item.pubDate);
     
     return {
       id: item.guid || item.link || `rss-${index}`,
