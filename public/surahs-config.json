@@ -1,0 +1,15 @@
+{
+  "surahs": [
+    {
+      "id": 12,
+      "name": "Yusuf",
+      "nameArabic": "يوسف",
+      "collectionId": "9975ecfc-ff4c-429c-8e24-d190db8143f3",
+      "playlistUrl": "https://player.captivate.fm/collection/9975ecfc-ff4c-429c-8e24-d190db8143f3",
+      "feedUrl": "https://feeds.captivate.fm/arkolia-tafseer/",
+      "description": "Complete Tafseer of Surah Yusuf with detailed explanations"
+    }
+  ],
+  "lastUpdated": "2025-08-03T09:48:00Z",
+  "version": "1.0.0"
+}

@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { toast } from '@/hooks/use-toast';
 import { useRSSFeed } from '@/hooks/useRSSFeed';
+import { useAudioPlayer } from '@/hooks/useAudioPlayer';
 
 // Complete list of all 114 Surahs with comprehensive metadata
 const surahs = [
@@ -176,11 +177,18 @@ const Index = () => {
   // Track expansion states for surah toggle
   const [expandedSurahs, setExpandedSurahs] = useState(new Set());
   
-  // Current playing track info for bottom player
-  const [currentTrack, setCurrentTrack] = useState(null);
+  // Audio Player Hook
+  const { 
+    currentTrack, 
+    audioState, 
+    loadTrack, 
+    togglePlayPause, 
+    seek, 
+    formatTime 
+  } = useAudioPlayer();
   
   // RSS Feed for Recent tab
-  const { data: rssData, isLoading: rssLoading, error: rssError } = useRSSFeed('https://feeds.captivate.fm/arkolia-tafseer/');
+  const { data: recentTracks, isLoading: isLoadingRSS, error: rssError } = useRSSFeed('https://feeds.captivate.fm/arkolia-tafseer/');
   const [isPlayerVisible, setIsPlayerVisible] = useState(false);
   
   // Favorites tracking
@@ -224,12 +232,13 @@ const Index = () => {
   };
 
   const handleTrackPlay = (track, surah) => {
-    setCurrentTrack({
+    const trackToPlay = {
       ...track,
-      surahName: surah.name,
-      surahArabic: surah.nameArabic
-    });
-    setPlayingTrack(track.id);
+      surahName: surah ? surah.name : track.surahName,
+      surahArabic: surah ? surah.nameArabic : undefined
+    };
+    
+    loadTrack(trackToPlay);
     setIsPlayerVisible(true);
     
     // Add to completed tracks
@@ -237,11 +246,17 @@ const Index = () => {
   };
 
   const handlePlayPause = (trackId) => {
-    if (playingTrack === trackId) {
-      setPlayingTrack(null);
+    if (currentTrack?.id === trackId) {
+      togglePlayPause();
     } else {
-      setPlayingTrack(trackId);
+      // Find and load the track
+      const track = recentTracks?.find(t => t.id === trackId);
+      if (track) {
+        handleTrackPlay(track, null);
+      }
     }
+    // Update visual state
+    setPlayingTrack(audioState.isPlaying ? trackId : null);
   };
 
   const handleShare = (track) => {
@@ -988,7 +1003,7 @@ const Index = () => {
           {/* Recent View */}
           {mainView === "recent" && (
             <div className="space-y-4">
-              {rssLoading ? (
+              {isLoadingRSS ? (
                 <div className="flex items-center justify-center py-8">
                   <div className="text-white/60 font-poppins">Loading latest episodes...</div>
                 </div>
@@ -996,8 +1011,8 @@ const Index = () => {
                 <div className="flex items-center justify-center py-8">
                   <div className="text-white/60 font-poppins">Failed to load recent episodes. Please try again later.</div>
                 </div>
-              ) : rssData && rssData.length > 0 ? (
-                rssData.slice(0, 10).map((track) => (
+              ) : recentTracks && recentTracks.length > 0 ? (
+                recentTracks.slice(0, 10).map((track) => (
                   <Card 
                     key={track.id} 
                     className="backdrop-blur-xl hover:bg-black/60 transition-all duration-300 shadow-2xl"
@@ -1077,24 +1092,12 @@ const Index = () => {
                         </div>
                         <Button
                           size="sm"
-                          variant="ghost"
-                           className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border-1 border-white"
-                          onClick={() => {
-                            setCurrentTrack({
-                              id: track.id,
-                              title: track.title,
-                              surahName: track.surahName,
-                              duration: track.duration,
-                              audioUrl: track.audioUrl
-                            });
-                            setPlayingTrack(track.id);
-                            setIsPlayerVisible(true);
-                            // Add to completed tracks
-                            setCompletedTrackIds(prev => new Set([...prev, track.id]));
-                          }}
-                        >
-                          <Play className="w-3 h-3" />
-                        </Button>
+                           variant="ghost"
+                            className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border-1 border-white"
+                            onClick={() => handleTrackPlay(track, null)}
+                         >
+                           <Play className="w-3 h-3" />
+                         </Button>
                       </div>
                     </div>
                   </CardContent>
@@ -1286,16 +1289,7 @@ const Index = () => {
                             size="sm"
                             variant="ghost"
                              className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border-1 border-white"
-                            onClick={() => {
-                              setCurrentTrack({
-                                id: track.id,
-                                title: track.title,
-                                surahName: track.surahName,
-                                duration: track.duration
-                              });
-                              setPlayingTrack(track.id);
-                              setIsPlayerVisible(true);
-                            }}
+                              onClick={() => handleTrackPlay(track, null)}
                           >
                             <Play className="w-3 h-3" />
                           </Button>
@@ -1436,7 +1430,7 @@ const Index = () => {
                       className="bg-white/20 hover:bg-white/30 text-white"
                       onClick={() => handlePlayPause(currentTrack.id)}
                     >
-                      {playingTrack === currentTrack.id ? (
+                      {audioState.isPlaying ? (
                         <Pause className="w-5 h-5" />
                       ) : (
                         <Play className="w-5 h-5" />
