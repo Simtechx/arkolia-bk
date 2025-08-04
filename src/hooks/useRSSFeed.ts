@@ -1,5 +1,30 @@
 import { useQuery } from '@tanstack/react-query';
-import { RSSItem, RSSFeed, Track } from '@/types';
+
+interface RSSItem {
+  title: string;
+  pubDate: string;
+  enclosure?: {
+    url: string;
+    type: string;
+  };
+  description?: string;
+  guid?: string;
+  link?: string;
+}
+
+interface RSSFeed {
+  items: RSSItem[];
+}
+
+interface Track {
+  id: string;
+  title: string;
+  surahName: string;
+  duration: string;
+  date: string;
+  verseRange: string;
+  audioUrl?: string;
+}
 
 const parseRSSFeed = async (url: string): Promise<RSSFeed> => {
   // Use CORS proxy to bypass CORS restrictions
@@ -51,12 +76,8 @@ const transformRSSToTracks = (rssItems: RSSItem[]): Track[] => {
       verseRange = verseMatch[1];
     }
     
-    // Format date to DD Mmm YY
-    const date = item.pubDate ? new Date(item.pubDate).toLocaleDateString('en-GB', {
-      day: '2-digit',
-      month: 'short',
-      year: '2-digit'
-    }) : '';
+    // Format date
+    const date = item.pubDate ? new Date(item.pubDate).toLocaleDateString() : '';
     
     return {
       id: item.guid || item.link || `rss-${index}`,
