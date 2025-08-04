@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, Download, Share2, FileText, Settings, Image as ImageIcon, Filter, Search, X, Palette, ChevronDown, ChevronRight, Heart, BookOpen, Headphones, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -104,116 +103,98 @@ const surahs = [
   { id: 87, name: "Al-A'la", nameArabic: "الأعلى", verses: 19, type: "Makkan", length: "Short", juz: 30, themes: ["Tawheed", "Praise"], usage: ["Daily"], openingStyle: "Praise", sajdah: true },
   { id: 88, name: "Al-Ghashiyah", nameArabic: "الغاشية", verses: 26, type: "Makkan", length: "Short", juz: 30, themes: ["Qiyamah", "Tawheed"], usage: ["Daily"], openingStyle: "Commands", sajdah: false },
   { id: 89, name: "Al-Fajr", nameArabic: "الفجر", verses: 30, type: "Makkan", length: "Short", juz: 30, themes: ["Stories", "Qiyamah"], usage: ["Morning"], openingStyle: "Oaths", sajdah: false },
-  { id: 90, name: "Al-Balad", nameArabic: "البلد", verses: 20, type: "Makkan", length: "Short", juz: 30, themes: ["Commands", "Lessons"], usage: ["Daily"], openingStyle: "Oaths", sajdah: false },
-  { id: 91, name: "Ash-Shams", nameArabic: "الشمس", verses: 15, type: "Makkan", length: "Short", juz: 30, themes: ["Tawheed", "Lessons"], usage: ["Daily"], openingStyle: "Oaths", sajdah: false },
-  { id: 92, name: "Al-Layl", nameArabic: "الليل", verses: 21, type: "Makkan", length: "Short", juz: 30, themes: ["Lessons", "Qiyamah"], usage: ["Night"], openingStyle: "Oaths", sajdah: false },
-  { id: 93, name: "Ad-Duhaa", nameArabic: "الضحى", verses: 11, type: "Makkan", length: "Short", juz: 30, themes: ["Comfort", "Stories"], usage: ["Morning"], openingStyle: "Oaths", sajdah: false },
-  { id: 94, name: "Ash-Sharh", nameArabic: "الشرح", verses: 8, type: "Makkan", length: "Short", juz: 30, themes: ["Comfort", "Encouragement"], usage: ["Daily"], openingStyle: "Commands", sajdah: false },
-  { id: 95, name: "At-Tin", nameArabic: "التين", verses: 8, type: "Makkan", length: "Short", juz: 30, themes: ["Tawheed", "Lessons"], usage: ["Daily"], openingStyle: "Oaths", sajdah: false },
+  { id: 90, name: "Al-Balad", nameArabic: "البلد", verses: 20, type: "Makkan", length: "Short", juz: 30, themes: ["Lessons", "Tawheed"], usage: ["Daily"], openingStyle: "Oaths", sajdah: false },
+  { id: 91, name: "Ash-Shams", nameArabic: "الشمس", verses: 15, type: "Makkan", length: "Short", juz: 30, themes: ["Lessons", "Oaths"], usage: ["Daily"], openingStyle: "Oaths", sajdah: false },
+  { id: 92, name: "Al-Layl", nameArabic: "الليل", verses: 21, type: "Makkan", length: "Short", juz: 30, themes: ["Lessons", "Oaths"], usage: ["Night"], openingStyle: "Oaths", sajdah: false },
+  { id: 93, name: "Ad-Duha", nameArabic: "الضحى", verses: 11, type: "Makkan", length: "Short", juz: 30, themes: ["Comfort", "Oaths"], usage: ["Morning"], openingStyle: "Oaths", sajdah: false },
+  { id: 94, name: "Ash-Sharh", nameArabic: "الشرح", verses: 8, type: "Makkan", length: "Short", juz: 30, themes: ["Comfort", "Lessons"], usage: ["Daily"], openingStyle: "Commands", sajdah: false },
+  { id: 95, name: "At-Tin", nameArabic: "التين", verses: 8, type: "Makkan", length: "Short", juz: 30, themes: ["Oaths", "Tawheed"], usage: ["Daily"], openingStyle: "Oaths", sajdah: false },
   { id: 96, name: "Al-Alaq", nameArabic: "العلق", verses: 19, type: "Makkan", length: "Short", juz: 30, themes: ["Commands", "Stories"], usage: ["Daily"], openingStyle: "Commands", sajdah: true },
-  { id: 97, name: "Al-Qadr", nameArabic: "القدر", verses: 5, type: "Makkan", length: "Short", juz: 30, themes: ["Worship", "Ramadan"], usage: ["Ramadan", "Night"], openingStyle: "Commands", sajdah: false },
+  { id: 97, name: "Al-Qadr", nameArabic: "القدر", verses: 5, type: "Makkan", length: "Short", juz: 30, themes: ["Worship", "Duas"], usage: ["Ramadan"], openingStyle: "Commands", sajdah: false },
   { id: 98, name: "Al-Bayyinah", nameArabic: "البينة", verses: 8, type: "Medinan", length: "Short", juz: 30, themes: ["Commands", "Stories"], usage: ["Daily"], openingStyle: "Commands", sajdah: false },
   { id: 99, name: "Az-Zalzalah", nameArabic: "الزلزلة", verses: 8, type: "Medinan", length: "Short", juz: 30, themes: ["Qiyamah", "Commands"], usage: ["Daily"], openingStyle: "Commands", sajdah: false },
-  { id: 100, name: "Al-Adiyat", nameArabic: "العاديات", verses: 11, type: "Makkan", length: "Short", juz: 30, themes: ["Lessons", "Qiyamah"], usage: ["Daily"], openingStyle: "Oaths", sajdah: false },
-  { id: 101, name: "Al-Qari'ah", nameArabic: "القارعة", verses: 11, type: "Makkan", length: "Short", juz: 30, themes: ["Qiyamah", "Tawheed"], usage: ["Daily"], openingStyle: "Commands", sajdah: false },
+  { id: 100, name: "Al-Adiyat", nameArabic: "العاديات", verses: 11, type: "Makkan", length: "Short", juz: 30, themes: ["Oaths", "Lessons"], usage: ["Daily"], openingStyle: "Oaths", sajdah: false },
+  { id: 101, name: "Al-Qari'ah", nameArabic: "القارعة", verses: 11, type: "Makkan", length: "Short", juz: 30, themes: ["Qiyamah", "Commands"], usage: ["Daily"], openingStyle: "Commands", sajdah: false },
   { id: 102, name: "At-Takathur", nameArabic: "التكاثر", verses: 8, type: "Makkan", length: "Short", juz: 30, themes: ["Lessons", "Qiyamah"], usage: ["Daily"], openingStyle: "Commands", sajdah: false },
-  { id: 103, name: "Al-Asr", nameArabic: "العصر", verses: 3, type: "Makkan", length: "Short", juz: 30, themes: ["Lessons", "Time"], usage: ["Daily"], openingStyle: "Oaths", sajdah: false },
+  { id: 103, name: "Al-Asr", nameArabic: "العصر", verses: 3, type: "Makkan", length: "Short", juz: 30, themes: ["Oaths", "Lessons"], usage: ["Afternoon"], openingStyle: "Oaths", sajdah: false },
   { id: 104, name: "Al-Humazah", nameArabic: "الهمزة", verses: 9, type: "Makkan", length: "Short", juz: 30, themes: ["Lessons", "Qiyamah"], usage: ["Daily"], openingStyle: "Commands", sajdah: false },
   { id: 105, name: "Al-Fil", nameArabic: "الفيل", verses: 5, type: "Makkan", length: "Short", juz: 30, themes: ["Stories", "Lessons"], usage: ["Daily"], openingStyle: "Commands", sajdah: false },
-  { id: 106, name: "Quraysh", nameArabic: "قريش", verses: 4, type: "Makkan", length: "Short", juz: 30, themes: ["Stories", "Gratitude"], usage: ["Daily"], openingStyle: "Commands", sajdah: false },
+  { id: 106, name: "Quraysh", nameArabic: "قريش", verses: 4, type: "Makkan", length: "Short", juz: 30, themes: ["Stories", "Worship"], usage: ["Daily"], openingStyle: "Commands", sajdah: false },
   { id: 107, name: "Al-Ma'un", nameArabic: "الماعون", verses: 7, type: "Makkan", length: "Short", juz: 30, themes: ["Commands", "Lessons"], usage: ["Daily"], openingStyle: "Commands", sajdah: false },
-  { id: 108, name: "Al-Kawthar", nameArabic: "الكوثر", verses: 3, type: "Makkan", length: "Short", juz: 30, themes: ["Comfort", "Worship"], usage: ["Daily"], openingStyle: "Commands", sajdah: false },
-  { id: 109, name: "Al-Kafirun", nameArabic: "الكافرون", verses: 6, type: "Makkan", length: "Short", juz: 30, themes: ["Tawheed", "Commands"], usage: ["Daily"], openingStyle: "Commands", sajdah: false },
-  { id: 110, name: "An-Nasr", nameArabic: "النصر", verses: 3, type: "Medinan", length: "Short", juz: 30, themes: ["Victory", "Gratitude"], usage: ["Daily"], openingStyle: "Commands", sajdah: false },
+  { id: 108, name: "Al-Kawthar", nameArabic: "الكوثر", verses: 3, type: "Makkan", length: "Short", juz: 30, themes: ["Worship", "Praise"], usage: ["Daily"], openingStyle: "Commands", sajdah: false },
+  { id: 109, name: "Al-Kafirun", nameArabic: "الكافرون", verses: 6, type: "Makkan", length: "Short", juz: 30, themes: ["Commands", "Tawheed"], usage: ["Before Sleep", "Protection"], openingStyle: "Commands", sajdah: false },
+  { id: 110, name: "An-Nasr", nameArabic: "النصر", verses: 3, type: "Medinan", length: "Short", juz: 30, themes: ["Commands", "Praise"], usage: ["Victory"], openingStyle: "Commands", sajdah: false },
   { id: 111, name: "Al-Masad", nameArabic: "المسد", verses: 5, type: "Makkan", length: "Short", juz: 30, themes: ["Stories", "Lessons"], usage: ["Daily"], openingStyle: "Commands", sajdah: false },
   { id: 112, name: "Al-Ikhlas", nameArabic: "الإخلاص", verses: 4, type: "Makkan", length: "Short", juz: 30, themes: ["Tawheed", "Worship"], usage: ["Daily", "Protection"], openingStyle: "Commands", sajdah: false },
-  { id: 113, name: "Al-Falaq", nameArabic: "الفلق", verses: 5, type: "Makkan", length: "Short", juz: 30, themes: ["Protection", "Duas"], usage: ["Protection", "Before Sleep"], openingStyle: "Commands", sajdah: false },
-  { id: 114, name: "An-Nas", nameArabic: "الناس", verses: 6, type: "Makkan", length: "Short", juz: 30, themes: ["Protection", "Duas"], usage: ["Protection", "Before Sleep"], openingStyle: "Commands", sajdah: false },
+  { id: 113, name: "Al-Falaq", nameArabic: "الفلق", verses: 5, type: "Makkan", length: "Short", juz: 30, themes: ["Protection", "Duas"], usage: ["Daily", "Protection"], openingStyle: "Commands", sajdah: false },
+  { id: 114, name: "An-Nas", nameArabic: "الناس", verses: 6, type: "Makkan", length: "Short", juz: 30, themes: ["Protection", "Duas"], usage: ["Daily", "Protection"], openingStyle: "Commands", sajdah: false }
 ];
 
-// Mock tracks data
+// Mock tracks data for demonstration
 const mockTracks = [
-  { id: 1, title: "Introduction & Verses 1-7", verseRange: "1-7", duration: "45:30", audioUrl: "#", pdfUrl: "#" },
-  { id: 2, title: "The Opening Prayer", verseRange: "1-7", duration: "32:15", audioUrl: "#", pdfUrl: "#" },
+  { id: 1, title: "Verses 1-5", verseRange: "1-5", duration: "3:25" },
+  { id: 2, title: "Verses 6-12", verseRange: "6-12", duration: "4:12" },
+  { id: 3, title: "Verses 13-18", verseRange: "13-18", duration: "2:58" },
 ];
 
+// Background images
 const backgroundImages = [
-  { id: 1, url: "/lovable-uploads/de544066-404e-4f0a-b317-094a97053dd8.png", name: "Interior View 1" },
-  { id: 2, url: "/lovable-uploads/6aff7365-23e1-4926-ad1b-c21e2ecbd69d.png", name: "Interior View 2" },
-  { id: 3, url: "/lovable-uploads/7c6c8e8e-cd8f-4ec8-ad1b-7fb29338ec2a.png", name: "Mosque Exterior" },
-  { id: 4, url: "/lovable-uploads/007566fa-5c53-4160-8d81-59971d899649.png", name: "Audio Books" },
-  { id: 5, url: "/lovable-uploads/45dc7a85-45be-402f-b230-9cf0edae2e9d.png", name: "Starry Night" },
-  { id: 6, url: "/lovable-uploads/cef81c6f-a31f-4227-93ac-8a9b75817ad2.png", name: "Clock Study" },
+  { id: 1, name: "Madinah", url: "/lovable-uploads/044670b3-5f8e-4be0-a4a4-dba6f69dbdc6.png" },
+  { id: 2, name: "Makkah", url: "/lovable-uploads/7c6c8e8e-cd8f-4ec8-ad1b-7fb29338ec2a.png" },
+  { id: 3, name: "Kaaba", url: "/lovable-uploads/cef81c6f-a31f-4227-93ac-8a9b75817ad2.png" },
+  { id: 4, name: "Desert", url: "/lovable-uploads/7c4f4c34-d840-49ba-8b37-be7770f72a79.png" },
+  { id: 5, name: "Quran", url: "/lovable-uploads/45dc7a85-45be-402f-b230-9cf0edae2e9d.png" },
+  { id: 6, name: "Islamic Pattern", url: "/lovable-uploads/3a5ddd31-2ae0-4452-90cd-ac556aad2bad.png" },
+  { id: 7, name: "Mosque", url: "/lovable-uploads/6aff7365-23e1-4926-ad1b-c21e2ecbd69d.png" },
+  { id: 8, name: "Islamic Calligraphy", url: "/lovable-uploads/de544066-404e-4f0a-b317-094a97053dd8.png" },
+  { id: 9, name: "Stars", url: "/lovable-uploads/007566fa-5c53-4160-8d81-59971d899649.png" }
 ];
 
 const Index = () => {
-  const [selectedSurah, setSelectedSurah] = useState(null);
-  const [activeTab, setActiveTab] = useState("surahs");
-  const [currentBg, setCurrentBg] = useState(backgroundImages[0].url);
-  const [bgOpacity, setBgOpacity] = useState([100]);
-  const [bgSharpness, setBgSharpness] = useState([0]);
-  const [playingTrack, setPlayingTrack] = useState(null);
+  // State management
+  const [mainView, setMainView] = useState("recent");
+  const [favoriteTrackIds, setFavoriteTrackIds] = useState(new Set());
+  const [completedTrackIds, setCompletedTrackIds] = useState(new Set());
+  const [expandedSurahs, setExpandedSurahs] = useState(new Set());
   const [showControls, setShowControls] = useState(false);
-  
-  // Block Settings
-  const [blockDarkness, setBlockDarkness] = useState([30]);
+  const [currentBg, setCurrentBg] = useState(backgroundImages[0].url);
+  const [bgOpacity, setBgOpacity] = useState([80]);
+  const [bgSharpness, setBgSharpness] = useState([2]);
+  const [blockDarkness, setBlockDarkness] = useState([50]);
   const [borderThickness, setBorderThickness] = useState([2]);
-  const [borderOpacity, setBorderOpacity] = useState([50]);
+  const [borderOpacity, setBorderOpacity] = useState([70]);
   const [numberBgColor, setNumberBgColor] = useState("#4C4B48");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedType, setSelectedType] = useState("");
+  const [selectedLength, setSelectedLength] = useState("");
+  const [selectedUsage, setSelectedUsage] = useState("");
+  const [showSajdah, setShowSajdah] = useState(false);
+  const [selectedThemes, setSelectedThemes] = useState([]);
+  const [showFilters, setShowFilters] = useState(false);
+  const [playingTrack, setPlayingTrack] = useState(null);
+  const [currentTrack, setCurrentTrack] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
   
-  // Counter Animation
+  // Counter animation states
   const [surahCount, setSurahCount] = useState(0);
   const [audioCount, setAudioCount] = useState(0);
   const [hoursCount, setHoursCount] = useState(0);
   const [isCounterVisible, setIsCounterVisible] = useState(false);
   const counterRef = useRef(null);
-  
-  // Counter view state
-  const [counterView, setCounterView] = useState("blocks");
-  
-  // Main view state (replaces surahs view)
-  const [mainView, setMainView] = useState("recent");
-  
-  // Track expansion states for surah toggle
-  const [expandedSurahs, setExpandedSurahs] = useState(new Set());
-  
-  // Audio Player Hook
-  const { 
-    currentTrack, 
-    audioState, 
-    loadTrack, 
-    togglePlayPause, 
-    seek, 
-    formatTime 
-  } = useAudioPlayer();
-  
-  // RSS Feed for Recent tab
-  const { data: recentTracks, isLoading: isLoadingRSS, error: rssError } = useRSSFeed('https://feeds.captivate.fm/arkolia-tafseer/');
-  const [isPlayerVisible, setIsPlayerVisible] = useState(false);
-  
-  // Favorites tracking
-  const [favoriteTrackIds, setFavoriteTrackIds] = useState(new Set());
-  
-  // Completed tracks tracking
-  const [completedTrackIds, setCompletedTrackIds] = useState(new Set());
-  
-  // Filter states
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedType, setSelectedType] = useState("all");
-  const [selectedLength, setSelectedLength] = useState("all");
-  const [selectedThemes, setSelectedThemes] = useState([]);
-  const [selectedUsage, setSelectedUsage] = useState("all");
-  const [showSajdah, setShowSajdah] = useState("all");
-  const [showFilters, setShowFilters] = useState(false);
 
+  // RSS Feed hook
+  const { data: rssData, isLoading: isLoadingRSS, error: rssError } = useRSSFeed('https://feeds.captivate.fm/arkolia-tafseer/');
+  
+  // Audio player hook
+  const { currentTrack: audioCurrentTrack, audioState, loadTrack, togglePlayPause, seek, formatTime } = useAudioPlayer();
+
+  // Utility functions
   const toggleFavorite = (trackId) => {
     const newFavorites = new Set(favoriteTrackIds);
     if (newFavorites.has(trackId)) {
       newFavorites.delete(trackId);
-      toast({ description: "Removed from favourites" });
     } else {
       newFavorites.add(trackId);
-      toast({ description: "Added to favourites" });
     }
     setFavoriteTrackIds(newFavorites);
   };
@@ -221,106 +202,102 @@ const Index = () => {
   const handleSurahClick = (surah) => {
     const surahId = surah.id;
     if (expandedSurahs.has(surahId)) {
-      const newExpanded = new Set(expandedSurahs);
-      newExpanded.delete(surahId);
-      setExpandedSurahs(newExpanded);
+      setExpandedSurahs(prev => {
+        const newExpanded = new Set(prev);
+        newExpanded.delete(surahId);
+        return newExpanded;
+      });
     } else {
-      const newExpanded = new Set(expandedSurahs);
-      newExpanded.add(surahId);
-      setExpandedSurahs(newExpanded);
+      setExpandedSurahs(prev => new Set(prev).add(surahId));
     }
   };
 
-  const handleTrackPlay = (track, surah) => {
+  const handleTrackPlay = (track: any, surah?: any) => {
     const trackToPlay = {
       ...track,
-      surahName: surah ? surah.name : track.surahName,
-      surahArabic: surah ? surah.nameArabic : undefined
+      surahName: surah?.name || track.surahName || 'Unknown Surah',
+      audioUrl: track.audioUrl
     };
     
-    loadTrack(trackToPlay);
-    setIsPlayerVisible(true);
+    setCurrentTrack(trackToPlay);
+    setPlayingTrack(track.id);
+    setIsPlaying(true);
     
-    // Add to completed tracks
-    setCompletedTrackIds(prev => new Set([...prev, track.id]));
+    if (track.audioUrl) {
+      loadTrack(trackToPlay);
+    }
   };
 
   const handlePlayPause = (trackId) => {
     if (currentTrack?.id === trackId) {
       togglePlayPause();
     } else {
-      // Find and load the track
-      const track = recentTracks?.find(t => t.id === trackId);
+      const track = rssData?.find(t => t.id === trackId);
       if (track) {
-        handleTrackPlay(track, null);
+        handleTrackPlay(track);
       }
     }
-    // Update visual state
-    setPlayingTrack(audioState.isPlaying ? trackId : null);
   };
 
   const handleShare = (track) => {
-    const shareUrl = `${window.location.origin}/track/${track.id}`;
-    navigator.clipboard.writeText(shareUrl);
+    navigator.clipboard.writeText(`Check out this Quran recitation: ${track.title}`);
     toast({
-      title: "Link Copied!",
-      description: "Track link copied to clipboard",
+      title: "Link copied to clipboard",
+      description: "Share this beautiful recitation with others",
+      duration: 2000,
     });
   };
 
   const handleDownload = (track) => {
     toast({
-      title: "Download Started",
+      title: "Download started",
       description: `Downloading ${track.title}`,
+      duration: 2000,
     });
   };
 
   const getBadgeColor = (type) => {
-    return type === "Makkan" ? "bg-[#60543D]" : "bg-[#3B4D3A]";
+    return type === "Makkan" ? "bg-[#8B4513] hover:bg-[#8B4513]/80" : "bg-[#0D3029] hover:bg-[#0D3029]/80";
   };
 
   const getBorderColor = (type, isSelected) => {
-    if (isSelected) return "border-blue-400";
-    const baseColor = type === "Makkan" ? "#A68C6B" : "#7A9678";
-    return `border-[${baseColor}]`;
+    const baseColor = type === "Makkan" ? "rgba(139, 69, 19, 0.8)" : "rgba(13, 48, 41, 0.8)";
+    return isSelected ? baseColor : "rgba(255, 255, 255, 0.3)";
   };
 
   const getTrackBorderColor = (type) => {
-    const baseColor = type === "Makkan" ? "#A68C6B" : "#7A9678";
-    return `border-[${baseColor}]`;
+    return type === "Makkan" ? "rgba(139, 69, 19, 0.6)" : "rgba(13, 48, 41, 0.6)";
   };
 
-  // Filter function
+  // Filtering logic
   const filteredSurahs = surahs.filter(surah => {
     const matchesSearch = surah.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         surah.nameArabic.includes(searchTerm) ||
-                         surah.themes.some(theme => theme.toLowerCase().includes(searchTerm.toLowerCase()));
-    
-    const matchesType = selectedType === "all" || surah.type === selectedType;
-    const matchesLength = selectedLength === "all" || surah.length === selectedLength;
+                         surah.nameArabic.includes(searchTerm);
+    const matchesType = !selectedType || surah.type === selectedType;
+    const matchesLength = !selectedLength || surah.length === selectedLength;
+    const matchesUsage = !selectedUsage || surah.usage.includes(selectedUsage);
+    const matchesSajdah = !showSajdah || surah.sajdah;
     const matchesThemes = selectedThemes.length === 0 || selectedThemes.some(theme => surah.themes.includes(theme));
-    const matchesUsage = selectedUsage === "all" || surah.usage.includes(selectedUsage);
-    const matchesSajdah = showSajdah === "all" || (showSajdah === "yes" && surah.sajdah) || (showSajdah === "no" && !surah.sajdah);
     
-    return matchesSearch && matchesType && matchesLength && matchesThemes && matchesUsage && matchesSajdah;
+    return matchesSearch && matchesType && matchesLength && matchesUsage && matchesSajdah && matchesThemes;
   });
 
   const clearFilters = () => {
-    setSearchTerm("");
-    setSelectedType("all");
-    setSelectedLength("all");
+    setSelectedType("");
+    setSelectedLength("");
+    setSelectedUsage("");
+    setShowSajdah(false);
     setSelectedThemes([]);
-    setSelectedUsage("all");
-    setShowSajdah("all");
+    setSearchTerm("");
   };
 
   const activeFiltersCount = [
-    searchTerm !== "",
-    selectedType !== "all",
-    selectedLength !== "all",
-    selectedThemes.length > 0,
-    selectedUsage !== "all",
-    showSajdah !== "all"
+    selectedType,
+    selectedLength,
+    selectedUsage,
+    showSajdah,
+    searchTerm,
+    selectedThemes.length > 0
   ].filter(Boolean).length;
 
   // Counter animation effect
@@ -330,155 +307,138 @@ const Index = () => {
         if (entry.isIntersecting && !isCounterVisible) {
           setIsCounterVisible(true);
           
-          // Animate Surahs counter
-          let start = 0;
-          const end = 114;
-          const duration = 2000;
-          const increment = end / (duration / 16);
-          
+          // Animate Surah count
           const surahTimer = setInterval(() => {
-            start += increment;
-            if (start >= end) {
-              setSurahCount(end);
-              clearInterval(surahTimer);
-            } else {
-              setSurahCount(Math.floor(start));
-            }
-          }, 16);
+            setSurahCount(start => {
+              const end = 114;
+              if (start >= end) {
+                clearInterval(surahTimer);
+                return end;
+              } else {
+                return start + 2;
+              }
+            });
+          }, 30);
           
-          // Animate Audios counter
-          let audioStart = 0;
-          const audioEnd = 1097;
-          const audioIncrement = audioEnd / (duration / 16);
-          
+          // Animate audio count
           const audioTimer = setInterval(() => {
-            audioStart += audioIncrement;
-            if (audioStart >= audioEnd) {
-              setAudioCount(audioEnd);
-              clearInterval(audioTimer);
-            } else {
-              setAudioCount(Math.floor(audioStart));
-            }
-          }, 16);
+            setAudioCount(audioStart => {
+              const audioEnd = 1200;
+              if (audioStart >= audioEnd) {
+                clearInterval(audioTimer);
+                return audioEnd;
+              } else {
+                return audioStart + 20;
+              }
+            });
+          }, 30);
           
-          // Animate Hours counter
-          let hoursStart = 0;
-          const hoursEnd = 2157;
-          const hoursIncrement = hoursEnd / (duration / 16);
-          
+          // Animate hours count
           const hoursTimer = setInterval(() => {
-            hoursStart += hoursIncrement;
-            if (hoursStart >= hoursEnd) {
-              setHoursCount(hoursEnd);
-              clearInterval(hoursTimer);
-            } else {
-              setHoursCount(Math.floor(hoursStart));
-            }
-          }, 16);
+            setHoursCount(hoursStart => {
+              const hoursEnd = 120;
+              if (hoursStart >= hoursEnd) {
+                clearInterval(hoursTimer);
+                return hoursEnd;
+              } else {
+                return hoursStart + 2;
+              }
+            });
+          }, 50);
         }
       },
       { threshold: 0.3 }
     );
-    
+
     if (counterRef.current) {
       observer.observe(counterRef.current);
     }
-    
+
     return () => observer.disconnect();
   }, [isCounterVisible]);
 
-  // Audio wave animation component
-  const AudioWave = ({ isPlaying }) => (
-    <div className="flex items-center space-x-0.5 h-6">
+  return (
+    <div className="min-h-screen relative font-poppins">
+      {/* Animated background dots */}
       {[...Array(5)].map((_, i) => (
         <div
           key={i}
           className={`w-1 bg-white/70 rounded-full transition-all duration-300 ${
             isPlaying 
-              ? `animate-pulse h-${Math.floor(Math.random() * 3) + 2}` 
-              : 'h-2'
+              ? "animate-pulse" 
+              : "opacity-60"
           }`}
           style={{
-            animationDelay: `${i * 0.1}s`,
-            height: isPlaying ? `${Math.random() * 16 + 8}px` : '8px'
+            position: 'absolute',
+            left: `${20 + (i * 15)}%`,
+            top: `${30 + (i * 10)}%`,
+            height: isPlaying ? `${20 + (i * 10)}px` : '10px',
+            zIndex: 1
           }}
         />
       ))}
-    </div>
-  );
 
-  return (
-    <div className="min-h-screen relative overflow-hidden font-poppins">
       {/* Dynamic Background - crisp and clear by default */}
       <div 
         className="fixed inset-0 bg-cover bg-center bg-no-repeat transition-all duration-1000"
         style={{ 
           backgroundImage: `url(${currentBg})`,
           filter: `blur(${bgSharpness[0]}px)`,
-          imageRendering: 'crisp-edges' as any
+          opacity: bgOpacity[0] / 100
         }}
       />
+      
       {/* Background overlay - only show when opacity is less than 100% */}
       {bgOpacity[0] < 100 && (
         <div 
           className="fixed inset-0 transition-all duration-1000"
           style={{
-            backgroundColor: `rgba(0, 0, 0, ${(100 - bgOpacity[0]) / 100})`,
+            background: `linear-gradient(135deg, rgba(0, 0, 0, ${0.3 + (100 - bgOpacity[0]) * 0.007}) 0%, rgba(0, 0, 0, ${0.2 + (100 - bgOpacity[0]) * 0.005}) 100%)`
           }}
         />
       )}
-      
+
       {/* Header */}
-      <header className="relative z-10 px-4 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <img 
-              src="/lovable-uploads/3a5ddd31-2ae0-4452-90cd-ac556aad2bad.png" 
-              alt="ARKolia Logo" 
-              className="w-10 h-10 rounded-full"
-            />
-            <div>
-              <h1 className="text-xl font-bold text-white font-poppins">ARKOLIA.CO.ZA</h1>
-              <p className="text-white/80 text-xs font-poppins">Daily Tafseer Collection</p>
-            </div>
+      <header className="relative z-10 p-4 md:p-6 lg:p-8">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <BookOpen className="h-6 w-6 md:h-8 md:w-8 text-white" />
+            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-white drop-shadow-lg font-poppins">
+              ARKOLIA QURAN
+            </h1>
           </div>
           
-          <Dialog>
+          <Dialog open={showControls} onOpenChange={setShowControls}>
             <DialogTrigger asChild>
               <Button 
                 variant="ghost" 
-                size="icon"
-                className="text-white hover:bg-white/10 backdrop-blur-md"
+                size="icon" 
+                className="text-white hover:bg-white/20 backdrop-blur-sm"
                 onClick={() => setShowControls(true)}
               >
-                <Settings className="w-5 h-5" />
+                <Settings className="h-5 w-5" />
               </Button>
             </DialogTrigger>
-            <DialogContent className="bg-white/20 backdrop-blur-xl border-white/20 text-white max-w-lg">
+            <DialogContent className="sm:max-w-md bg-black/90 backdrop-blur-xl border border-white/20">
               <DialogHeader>
-                <DialogTitle className="text-white font-poppins">App Settings</DialogTitle>
-                <DialogDescription className="text-white/70 font-poppins">
-                  Customize your background and display preferences
+                <DialogTitle className="text-white flex items-center gap-2">
+                  <Palette className="h-5 w-5" />
+                  Customize Experience
+                </DialogTitle>
+                <DialogDescription className="text-white/70">
+                  Personalize your visual and audio experience
                 </DialogDescription>
               </DialogHeader>
-              
-              <Tabs defaultValue="background" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 bg-white/20">
-                  <TabsTrigger value="background" className="data-[state=active]:bg-white/30 text-white font-poppins">
-                    <ImageIcon className="w-4 h-4 mr-2" />
-                    Background
-                  </TabsTrigger>
-                  <TabsTrigger value="blocks" className="data-[state=active]:bg-white/30 text-white font-poppins">
-                    <Palette className="w-4 h-4 mr-2" />
-                    Block Settings
-                  </TabsTrigger>
-                </TabsList>
-                
-                <TabsContent value="background" className="space-y-4">
-                  {/* Background Images Grid */}
+              <div className="space-y-6">
+                {/* Background Images Grid */}
+                <div className="space-y-3">
+                  <h4 className="text-sm font-medium text-white flex items-center gap-2">
+                    <ImageIcon className="h-4 w-4" />
+                    Background Images
+                  </h4>
                   <div className="grid grid-cols-3 gap-2">
                     {backgroundImages.map((img) => (
-                      <div 
+                      <div
                         key={img.id}
                         className={`relative cursor-pointer rounded-lg overflow-hidden border-2 transition-all ${
                           currentBg === img.url ? 'border-[#0D3029] shadow-lg' : 'border-white/20'
@@ -490,174 +450,165 @@ const Index = () => {
                           alt={img.name}
                           className="w-full h-16 object-cover"
                         />
-                        <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                          <ImageIcon className="w-4 h-4 text-white" />
+                        <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-1 text-center">
+                          {img.name}
                         </div>
                       </div>
                     ))}
                   </div>
-                  
-                   {/* Opacity Slider */}
-                   <div>
-                     <label className="text-sm font-medium text-white mb-2 block font-poppins">
-                       Background Opacity: {bgOpacity[0]}% 
-                       <span className="text-white/60 text-xs ml-2">
-                         (100% = original image)
-                       </span>
-                     </label>
-                     <Slider
-                       value={bgOpacity}
-                       onValueChange={setBgOpacity}
-                       max={100}
-                       min={0}
-                       step={5}
-                       className="w-full"
-                     />
-                   </div>
-                   
-                   {/* Blur Slider */}
-                   <div>
-                     <label className="text-sm font-medium text-white mb-2 block font-poppins">
-                       Background Blur: {bgSharpness[0]}px
-                       <span className="text-white/60 text-xs ml-2">
-                         (0px = crisp original)
-                       </span>
-                     </label>
-                     <Slider
-                       value={bgSharpness}
-                       onValueChange={setBgSharpness}
-                       max={10}
-                       min={0}
-                       step={0.5}
-                       className="w-full"
-                     />
-                   </div>
-                </TabsContent>
-                
-                <TabsContent value="blocks" className="space-y-4">
-                  {/* Block Darkness */}
-                  <div>
-                    <label className="text-sm font-medium text-white mb-2 block font-poppins">
-                      Block Darkness: {blockDarkness[0]}%
-                    </label>
-                    <Slider
-                      value={blockDarkness}
-                      onValueChange={setBlockDarkness}
-                      max={80}
-                      min={10}
-                      step={5}
-                      className="w-full"
-                    />
+                </div>
+
+                {/* Opacity Slider */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-white">
+                    Background Opacity: {bgOpacity[0]}%
+                  </label>
+                  <Slider
+                    value={bgOpacity}
+                    onValueChange={setBgOpacity}
+                    max={100}
+                    min={0}
+                    step={5}
+                    className="w-full"
+                  />
+                </div>
+
+                {/* Blur Slider */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-white">
+                    Background Sharpness: {bgSharpness[0] === 0 ? 'Sharp' : `${bgSharpness[0]}px blur`}
+                  </label>
+                  <Slider
+                    value={bgSharpness}
+                    onValueChange={setBgSharpness}
+                    max={10}
+                    min={0}
+                    step={0.5}
+                    className="w-full"
+                  />
+                </div>
+
+                {/* Block Darkness */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-white">Block Darkness: {blockDarkness[0]}%</label>
+                  <Slider
+                    value={blockDarkness}
+                    onValueChange={setBlockDarkness}
+                    max={80}
+                    min={10}
+                    step={5}
+                    className="w-full"
+                  />
+                </div>
+
+                {/* Border Thickness */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-white">Border Thickness: {borderThickness[0]}px</label>
+                  <Slider
+                    value={borderThickness}
+                    onValueChange={setBorderThickness}
+                    max={5}
+                    min={1}
+                    step={1}
+                    className="w-full"
+                  />
+                </div>
+
+                {/* Border Opacity */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-white">Border Opacity: {borderOpacity[0]}%</label>
+                  <Slider
+                    value={borderOpacity}
+                    onValueChange={setBorderOpacity}
+                    max={100}
+                    min={20}
+                    step={5}
+                    className="w-full"
+                  />
+                </div>
+
+                {/* Number Circle Color */}
+                <div className="space-y-3">
+                  <h4 className="text-sm font-medium text-white">Number Circle Color</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {["#4C4B48", "#60543D", "#3B4D3A", "#4B4155", "#2C3E50", "#8B4513", "#0D3029", "#2C5530", "#A68C6B", "#7A9678", "#8B6914", "#4A90A4"].map(color => (
+                      <button
+                        key={color}
+                        className={`w-8 h-8 rounded-full border-2 transition-all ${
+                          numberBgColor === color ? 'border-white scale-110' : 'border-white/30'
+                        }`}
+                        style={{ backgroundColor: color }}
+                        onClick={() => setNumberBgColor(color)}
+                      />
+                    ))}
                   </div>
-                  
-                  {/* Border Thickness */}
-                  <div>
-                    <label className="text-sm font-medium text-white mb-2 block font-poppins">
-                      Border Thickness: {borderThickness[0]}px
-                    </label>
-                    <Slider
-                      value={borderThickness}
-                      onValueChange={setBorderThickness}
-                      max={5}
-                      min={1}
-                      step={1}
-                      className="w-full"
-                    />
-                  </div>
-                  
-                  {/* Border Opacity */}
-                  <div>
-                    <label className="text-sm font-medium text-white mb-2 block font-poppins">
-                      Border Opacity: {borderOpacity[0]}%
-                    </label>
-                    <Slider
-                      value={borderOpacity}
-                      onValueChange={setBorderOpacity}
-                      max={100}
-                      min={20}
-                      step={5}
-                      className="w-full"
-                    />
-                  </div>
-                  
-                  {/* Number Circle Color */}
-                  <div>
-                    <label className="text-sm font-medium text-white mb-2 block font-poppins">
-                      Number Circle Color
-                    </label>
-                    <div className="grid grid-cols-6 gap-2">
-                      {["#4C4B48", "#60543D", "#3B4D3A", "#4B4155", "#2C3E50", "#8B4513", "#0D3029", "#2C5530", "#A68C6B", "#7A9678", "#8B6914", "#4A90A4"].map(color => (
-                        <button
-                          key={color}
-                          className={`w-8 h-8 rounded-full border-2 transition-all ${
-                            numberBgColor === color ? 'border-white scale-110' : 'border-white/30'
-                          }`}
-                          style={{ backgroundColor: color }}
-                          onClick={() => setNumberBgColor(color)}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </TabsContent>
-              </Tabs>
+                </div>
+              </div>
             </DialogContent>
           </Dialog>
         </div>
-      </header>
 
-      {/* Welcome Section */}
-      <section className="relative z-10 px-4 mb-6">
-        <div className="max-w-6xl mx-auto">
-          <Card className="bg-white/40 backdrop-blur-xl border-3 border-[#0D3029]" 
-                style={{ 
-                  borderWidth: '3px',
-                  backgroundColor: `rgba(255, 255, 255, ${blockDarkness[0] / 100})`
-                }}>
-            <CardContent className="p-6 text-center">
-              <div className="flex items-center justify-center mb-3">
-                <img 
-                  src="/lovable-uploads/3a5ddd31-2ae0-4452-90cd-ac556aad2bad.png" 
-                  alt="ARKolia Logo" 
-                  className="w-12 h-12 rounded-full mr-3"
-                />
-                <h2 className="text-2xl font-bold text-[#0D3029] font-poppins">WELCOME TO ARKOLIA.CO.ZA</h2>
-              </div>
-              <p className="text-[#2C5530] leading-relaxed max-w-3xl mx-auto font-poppins font-medium">
-                Listen to the daily Tafseer recordings by Moulana Abdur Rahman Kolia, delivered each morning after Fajr Salaah. Select any Surah below to access the available Tafseer tracks.
-              </p>
-            </CardContent>
-          </Card>
+        {/* Welcome Section */}
+        <div 
+          ref={counterRef} 
+          className="text-center mb-8 p-6 md:p-8 lg:p-12 backdrop-blur-xl rounded-2xl border border-white/20"
+          style={{ 
+            background: `linear-gradient(135deg, rgba(0, 0, 0, ${blockDarkness[0] / 100}) 0%, rgba(0, 0, 0, ${(blockDarkness[0] - 10) / 100}) 100%)`,
+            borderWidth: `${borderThickness[0]}px`,
+            borderColor: `rgba(255, 255, 255, ${borderOpacity[0] / 100})`
+          }}
+        >
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 drop-shadow-lg font-poppins">
+            Welcome to Your Spiritual Journey
+          </h2>
+          <p className="text-white/90 text-sm md:text-base lg:text-lg mb-6 max-w-2xl mx-auto font-poppins">
+            Immerse yourself in the divine beauty of the Holy Quran with our comprehensive collection of recitations, tafseer, and spiritual guidance.
+          </p>
+          
+          {/* Statistics */}
+          <div className="grid grid-cols-3 gap-4 md:gap-8 max-w-md mx-auto">
+            <div className="text-center">
+              <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white drop-shadow-lg font-poppins">{surahCount}</div>
+              <div className="text-white/80 text-xs md:text-sm font-poppins">Surahs</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white drop-shadow-lg font-poppins">{audioCount}+</div>
+              <div className="text-white/80 text-xs md:text-sm font-poppins">Audio Files</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl md:text-3xl lg:text-4xl font-bold text-white drop-shadow-lg font-poppins">{hoursCount}+</div>
+              <div className="text-white/80 text-xs md:text-sm font-poppins">Hours Content</div>
+            </div>
+          </div>
         </div>
-      </section>
 
-      {/* Main Content */}
-      <main className="relative z-10 px-4 pb-32">
-        <div className="max-w-6xl mx-auto">
+        {/* Main Content */}
+        <div className="space-y-6">
           {/* Filter Section */}
-          <div className="bg-black/50 backdrop-blur-xl border-2 border-white rounded-lg p-4 mb-6">
-            <div className="flex flex-row gap-3 items-center">
+          <div className="space-y-4">
+            <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
               {/* Search Input */}
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#0D3029] w-4 h-4" />
                 <input
                   type="text"
                   placeholder="Search Surahs..."
+                  className="w-full pl-10 pr-4 py-2 bg-white/90 backdrop-blur-sm border border-white/30 rounded-lg text-[#0D3029] placeholder-[#0D3029]/60 focus:outline-none focus:ring-2 focus:ring-[#0D3029] font-poppins text-sm"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-white/25 border border-white/30 rounded-lg text-black placeholder-black/60 focus:outline-none focus:ring-2 focus:ring-[#0D3029] font-poppins font-bold"
                 />
               </div>
 
               {/* Filter Toggle */}
               <Button
-                variant="ghost"
+                variant="outline"
                 onClick={() => setShowFilters(!showFilters)}
-                className="bg-[#5C5D40] text-white hover:bg-[#4A4E35] hover:text-white active:bg-[#3A3E28] relative font-poppins shrink-0"
+                className="bg-white/90 backdrop-blur-sm border-white/30 text-[#0D3029] hover:bg-white/80 font-poppins text-sm px-4 py-2 flex items-center gap-2"
               >
-                <Filter className="w-4 h-4 mr-2" />
+                <Filter className="w-4 h-4" />
                 Filters
                 {activeFiltersCount > 0 && (
-                  <Badge className="ml-2 bg-[#0D3029] text-white text-xs px-2 py-0.5">
+                  <Badge className="bg-[#0D3029] text-white text-xs px-1.5 py-0.5">
                     {activeFiltersCount}
                   </Badge>
                 )}
@@ -667,163 +618,152 @@ const Index = () => {
               {activeFiltersCount > 0 && (
                 <Button
                   variant="ghost"
-                  size="sm"
                   onClick={clearFilters}
-                  className="text-[#0D3029]/70 hover:text-[#0D3029] hover:bg-[#0D3029]/10 font-poppins shrink-0"
+                  className="text-white hover:bg-white/20 backdrop-blur-sm font-poppins text-sm px-4 py-2"
                 >
-                  <X className="w-4 h-4 mr-1" />
-                  Clear
+                  Clear All
                 </Button>
               )}
             </div>
 
             {/* Expanded Filters */}
             {showFilters && (
-              <div className="mt-4 pt-4 border-t border-white/20">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {/* Type Filter */}
-                  <div>
-                    <label className="text-white text-sm mb-2 block font-poppins font-medium">Type</label>
-                    <Select value={selectedType} onValueChange={setSelectedType}>
-                      <SelectTrigger className="bg-white/25 border-white/30 text-black font-poppins focus:ring-[#0D3029]">
-                        <SelectValue />
-                      </SelectTrigger>
-                       <SelectContent className="bg-white">
-                         <SelectItem value="all" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">All Types</SelectItem>
-                         <SelectItem value="Makkan" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Makkan</SelectItem>
-                         <SelectItem value="Medinan" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Medinan</SelectItem>
-                       </SelectContent>
-                    </Select>
-                  </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-white/10 backdrop-blur-xl rounded-lg border border-white/20">
+                {/* Type Filter */}
+                <Select value={selectedType} onValueChange={setSelectedType}>
+                  <SelectTrigger className="bg-white/90 border-white/30 text-[#0D3029] font-poppins">
+                    <SelectValue placeholder="All Types" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">All Types</SelectItem>
+                    <SelectItem value="Makkan">Makkan</SelectItem>
+                    <SelectItem value="Medinan">Medinan</SelectItem>
+                  </SelectContent>
+                </Select>
 
-                  {/* Length Filter */}
-                  <div>
-                    <label className="text-white text-sm mb-2 block font-poppins font-medium">Length</label>
-                    <Select value={selectedLength} onValueChange={setSelectedLength}>
-                      <SelectTrigger className="bg-white/25 border-white/30 text-black font-poppins focus:ring-[#0D3029]">
-                        <SelectValue />
-                      </SelectTrigger>
-                       <SelectContent className="bg-white">
-                         <SelectItem value="all" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">All Lengths</SelectItem>
-                         <SelectItem value="Short" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Short</SelectItem>
-                         <SelectItem value="Medium" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Medium</SelectItem>
-                         <SelectItem value="Long" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Long</SelectItem>
-                       </SelectContent>
-                    </Select>
-                  </div>
+                {/* Length Filter */}
+                <Select value={selectedLength} onValueChange={setSelectedLength}>
+                  <SelectTrigger className="bg-white/90 border-white/30 text-[#0D3029] font-poppins">
+                    <SelectValue placeholder="All Lengths" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">All Lengths</SelectItem>
+                    <SelectItem value="Short">Short</SelectItem>
+                    <SelectItem value="Medium">Medium</SelectItem>
+                    <SelectItem value="Long">Long</SelectItem>
+                  </SelectContent>
+                </Select>
 
-                  {/* Usage Filter */}
-                  <div>
-                    <label className="text-white text-sm mb-2 block font-poppins font-medium">Usage</label>
-                    <Select value={selectedUsage} onValueChange={setSelectedUsage}>
-                      <SelectTrigger className="bg-white/25 border-white/30 text-black font-poppins focus:ring-[#0D3029]">
-                        <SelectValue />
-                      </SelectTrigger>
-                       <SelectContent className="bg-white">
-                         <SelectItem value="all" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">All Usage</SelectItem>
-                         <SelectItem value="Daily" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Daily</SelectItem>
-                         <SelectItem value="Friday" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Friday</SelectItem>
-                         <SelectItem value="Before Sleep" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Before Sleep</SelectItem>
-                         <SelectItem value="Protection" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Protection</SelectItem>
-                         <SelectItem value="Night" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Night</SelectItem>
-                         <SelectItem value="Morning" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Morning</SelectItem>
-                         <SelectItem value="Ramadan" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Ramadan</SelectItem>
-                         <SelectItem value="Hajj" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Hajj</SelectItem>
-                       </SelectContent>
-                    </Select>
-                  </div>
+                {/* Usage Filter */}
+                <Select value={selectedUsage} onValueChange={setSelectedUsage}>
+                  <SelectTrigger className="bg-white/90 border-white/30 text-[#0D3029] font-poppins">
+                    <SelectValue placeholder="All Usage" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">All Usage</SelectItem>
+                    <SelectItem value="Daily">Daily</SelectItem>
+                    <SelectItem value="Friday">Friday</SelectItem>
+                    <SelectItem value="Night">Night</SelectItem>
+                    <SelectItem value="Morning">Morning</SelectItem>
+                    <SelectItem value="Protection">Protection</SelectItem>
+                    <SelectItem value="Before Sleep">Before Sleep</SelectItem>
+                    <SelectItem value="Ramadan">Ramadan</SelectItem>
+                    <SelectItem value="Hajj">Hajj</SelectItem>
+                    <SelectItem value="Victory">Victory</SelectItem>
+                    <SelectItem value="Salah">Salah</SelectItem>
+                  </SelectContent>
+                </Select>
 
-                  {/* Sajdah Filter */}
-                  <div>
-                    <label className="text-white text-sm mb-2 block font-poppins font-medium">Sajdah</label>
-                    <Select value={showSajdah} onValueChange={setShowSajdah}>
-                      <SelectTrigger className="bg-white/25 border-white/30 text-black font-poppins focus:ring-[#0D3029]">
-                        <SelectValue />
-                      </SelectTrigger>
-                       <SelectContent className="bg-white">
-                         <SelectItem value="all" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">All Surahs</SelectItem>
-                         <SelectItem value="yes" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">With Sajdah</SelectItem>
-                         <SelectItem value="no" className="text-black hover:bg-[#5C5D40] hover:text-white data-[state=checked]:bg-[#0D3029] data-[state=checked]:text-white">Without Sajdah</SelectItem>
-                       </SelectContent>
-                    </Select>
-                  </div>
+                {/* Sajdah Filter */}
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="sajdah"
+                    checked={showSajdah}
+                    onChange={(e) => setShowSajdah(e.target.checked)}
+                    className="rounded border-white/30"
+                  />
+                  <label htmlFor="sajdah" className="text-white font-poppins text-sm">Only Sajdah Surahs</label>
+                </div>
 
-                  {/* Themes Filter */}
-                  <div className="md:col-span-2">
-                    <label className="text-white text-sm mb-2 block font-poppins font-medium">Themes</label>
-                    <ToggleGroup 
-                      type="multiple" 
-                      value={selectedThemes} 
-                      onValueChange={setSelectedThemes}
-                      className="flex flex-wrap gap-2 justify-start"
-                    >
-                      {["Tawheed", "Stories", "Laws", "Commands", "Worship", "Qiyamah", "Duas", "Lessons", "Protection"].map(theme => (
-                         <ToggleGroupItem 
-                           key={theme} 
-                           value={theme}
-                           className="bg-[#0D3029] text-white border border-white hover:bg-[#5C5D40] hover:text-white data-[state=on]:bg-[#5C5D40] data-[state=on]:text-white text-xs px-3 py-1 font-poppins"
-                         >
-                          {theme}
-                        </ToggleGroupItem>
-                      ))}
-                    </ToggleGroup>
-                  </div>
+                {/* Themes Filter */}
+                <div className="sm:col-span-2 lg:col-span-4">
+                  <ToggleGroup 
+                    type="multiple" 
+                    value={selectedThemes} 
+                    onValueChange={setSelectedThemes}
+                    className="flex flex-wrap gap-2"
+                  >
+                    {["Tawheed", "Stories", "Laws", "Commands", "Worship", "Qiyamah", "Duas", "Lessons", "Protection"].map(theme => (
+                      <ToggleGroupItem 
+                        key={theme} 
+                        value={theme}
+                        className="bg-white/90 text-[#0D3029] hover:bg-white/80 data-[state=on]:bg-[#0D3029] data-[state=on]:text-white font-poppins text-sm"
+                      >
+                        {theme}
+                      </ToggleGroupItem>
+                    ))}
+                  </ToggleGroup>
                 </div>
               </div>
             )}
           </div>
 
           {/* Main View Switch */}
-          <div className="flex justify-center mb-6">
-            <div className="bg-black/50 backdrop-blur-xl rounded-xl p-1 border-2 border-white">
-              <div className="flex flex-wrap justify-center gap-1">
-                <button
-                  onClick={() => setMainView("recent")}
-                  className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
-                    mainView === "recent"
-                      ? "bg-white/25 text-black shadow-lg"
-                      : "text-white/70 hover:text-white"
-                  }`}
-                >
-                  Recent
-                </button>
-                <button
-                  onClick={() => setMainView("surahs")}
-                  className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
-                    mainView === "surahs"
-                      ? "bg-white/25 text-black shadow-lg"
-                      : "text-white/70 hover:text-white"
-                  }`}
-                >
-                  Surahs
-                </button>
-                <button
-                  onClick={() => setMainView("favourites")}
-                  className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
-                    mainView === "favourites"
-                      ? "bg-white/25 text-black shadow-lg"
-                      : "text-white/70 hover:text-white"
-                  }`}
-                >
-                  Liked
-                </button>
-                <button
-                  onClick={() => setMainView("completed")}
-                  className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
-                    mainView === "completed"
-                      ? "bg-white/25 text-black shadow-lg"
-                      : "text-white/70 hover:text-white"
-                  }`}
-                >
-                  Done
-                </button>
-              </div>
-            </div>
+          <div className="flex flex-wrap gap-2 md:gap-4 justify-center">
+            <Button
+              variant={mainView === "recent" ? "default" : "outline"}
+              onClick={() => setMainView("recent")}
+              className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
+                mainView === "recent"
+                  ? "bg-white text-[#0D3029] hover:bg-white/90"
+                  : "bg-white/20 text-white border-white/30 hover:bg-white/30"
+              }`}
+            >
+              <Clock className="w-4 h-4 mr-1 md:mr-2" />
+              Recent
+            </Button>
+            <Button
+              variant={mainView === "surahs" ? "default" : "outline"}
+              onClick={() => setMainView("surahs")}
+              className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
+                mainView === "surahs"
+                  ? "bg-white text-[#0D3029] hover:bg-white/90"
+                  : "bg-white/20 text-white border-white/30 hover:bg-white/30"
+              }`}
+            >
+              <BookOpen className="w-4 h-4 mr-1 md:mr-2" />
+              Surahs
+            </Button>
+            <Button
+              variant={mainView === "favourites" ? "default" : "outline"}
+              onClick={() => setMainView("favourites")}
+              className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
+                mainView === "favourites"
+                  ? "bg-white text-[#0D3029] hover:bg-white/90"
+                  : "bg-white/20 text-white border-white/30 hover:bg-white/30"
+              }`}
+            >
+              <Heart className="w-4 h-4 mr-1 md:mr-2" />
+              Favourites
+            </Button>
+            <Button
+              variant={mainView === "completed" ? "default" : "outline"}
+              onClick={() => setMainView("completed")}
+              className={`px-3 md:px-6 py-2 md:py-3 rounded-lg font-poppins font-medium transition-all duration-300 text-xs md:text-sm ${
+                mainView === "completed"
+                  ? "bg-white text-[#0D3029] hover:bg-white/90"
+                  : "bg-white/20 text-white border-white/30 hover:bg-white/30"
+              }`}
+            >
+              <Headphones className="w-4 h-4 mr-1 md:mr-2" />
+              Completed
+            </Button>
           </div>
 
           {/* Main Content Based on View */}
           {mainView === "surahs" && (
-            <div className="space-y-3">
+            <div className="space-y-4">
               {filteredSurahs.map((surah) => {
                 const isExpanded = expandedSurahs.has(surah.id);
                 const isMakkan = surah.type === "Makkan";
@@ -835,53 +775,52 @@ const Index = () => {
                       className="backdrop-blur-xl border-white/20 hover:bg-white/10 transition-all duration-300 cursor-pointer"
                       style={{ 
                         background: `linear-gradient(135deg, ${isMakkan 
-                          ? 'rgba(245, 245, 220, 0.15)' 
-                          : 'rgba(232, 245, 232, 0.15)'} 0%, rgba(255, 255, 255, 0.05) 100%)`,
-                        borderColor: isMakkan ? "#D4C4A8" : "#B8D4B8",
-                        borderWidth: "1px",
-                        borderStyle: 'solid',
-                        backdropFilter: "blur(15px)"
+                          ? 'rgba(139, 69, 19, 0.3)' 
+                          : 'rgba(13, 48, 41, 0.3)'} 0%, rgba(0, 0, 0, 0.4) 100%)`,
+                        borderWidth: `${borderThickness[0]}px`,
+                        borderColor: getBorderColor(surah.type, isExpanded),
+                        borderStyle: 'solid'
                       }}
+                      onClick={() => handleSurahClick(surah)}
                     >
-                      <CardContent className="p-4" onClick={() => handleSurahClick(surah)}>
+                      <CardContent className="p-4 md:p-6">
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-4">
+                          <div className="flex items-center gap-3 md:gap-4 flex-1">
                             <div 
-                              className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 shadow-lg"
+                              className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center text-white font-bold text-sm md:text-base border-2 border-white/30"
                               style={{ backgroundColor: numberBgColor }}
                             >
-                              <span className="text-white font-bold text-sm font-poppins">{surah.id}</span>
+                              {surah.id}
                             </div>
-                            <div className="flex-1">
-                              <div className="flex items-center gap-3 mb-2">
+                            <div className="flex-1 min-w-0">
+                              <div className="flex flex-wrap items-center gap-2 mb-2">
                                 <h3 className="font-semibold text-lg text-white font-poppins drop-shadow-lg">{surah.name}</h3>
                                 <Badge className={`${getBadgeColor(surah.type)} text-white text-xs px-2 py-1 font-poppins font-medium hover:opacity-80 transition-opacity`}>
                                   {surah.type}
                                 </Badge>
-                              </div>
-                              <p className="text-xl font-arabic text-white/90 mb-2 drop-shadow-lg">{surah.nameArabic}</p>
-                              <div className="flex items-center space-x-4 text-sm text-white/80 font-poppins font-medium">
-                                <span>{surah.verses} verses</span>
+                                <Badge className="bg-[#60543D] hover:bg-[#60543D]/80 text-white text-xs px-2 py-0.5 font-poppins transition-colors">
+                                  {surah.verses} verses
+                                </Badge>
                                 {surah.sajdah && (
                                   <Badge className="bg-[#4B4155] hover:bg-[#4B4155]/80 text-white text-xs px-2 py-0.5 font-poppins transition-colors">
                                     Sajdah
                                   </Badge>
                                 )}
                               </div>
+                              <p className="text-white/80 text-sm md:text-base font-poppins">{surah.nameArabic}</p>
+                              <p className="text-white/70 text-xs md:text-sm mt-1 font-poppins">
+                                Juz {surah.juz} • {surah.length} • {surah.themes.join(", ")}
+                              </p>
                             </div>
                           </div>
-                          <div className="flex items-center space-x-2">
-                            <span className="text-white/60 font-poppins text-sm">
-                              {isExpanded ? '▼' : '▶'}
-                            </span>
-                          </div>
+                          <ChevronRight className={`w-5 h-5 text-white/70 transition-transform duration-300 ${isExpanded ? 'transform rotate-90' : ''}`} />
                         </div>
                       </CardContent>
                     </Card>
 
                     {/* Expanded Tracks */}
                     {isExpanded && (
-                      <div className="ml-2 md:ml-4 mt-3 space-y-3">
+                      <div className="ml-4 md:ml-8 mt-2 space-y-2">
                         {mockTracks.map((track) => (
                           <Card 
                             key={track.id} 
@@ -890,7 +829,7 @@ const Index = () => {
                               background: `linear-gradient(135deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.40) 100%)`,
                               borderWidth: "2px",
                               borderStyle: 'solid',
-                              borderColor: "white",
+                              borderColor: getTrackBorderColor(surah.type),
                               backdropFilter: "blur(20px)"
                             }}
                           >
@@ -919,57 +858,46 @@ const Index = () => {
                                         toggleFavorite(track.id);
                                       }}
                                     >
-                                      <Heart className="w-3 h-3" fill={favoriteTrackIds.has(track.id) ? "currentColor" : "none"} />
+                                      <Heart className="w-4 h-4" fill={favoriteTrackIds.has(track.id) ? "currentColor" : "none"} />
                                     </Button>
                                     <Button
                                       size="sm"
                                       variant="ghost"
-                                      className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
+                                      className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10 transition-colors"
                                       onClick={(e) => {
                                         e.stopPropagation();
-                                        toast({ description: "Sharing..." });
+                                        handleShare(track);
                                       }}
                                     >
-                                      <Share2 className="w-3 h-3" />
+                                      <Share2 className="w-4 h-4" />
                                     </Button>
                                     <Button
                                       size="sm"
                                       variant="ghost"
-                                      className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
+                                      className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10 transition-colors"
                                       onClick={(e) => {
                                         e.stopPropagation();
-                                        toast({ description: "Downloading..." });
+                                        handleDownload(track);
                                       }}
                                     >
-                                      <Download className="w-3 h-3" />
-                                    </Button>
-                                    <Button
-                                      size="sm"
-                                      variant="ghost"
-                                      className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        toast({ description: "Opening PDF..." });
-                                      }}
-                                    >
-                                      <FileText className="w-3 h-3" />
+                                      <Download className="w-4 h-4" />
                                     </Button>
                                   </div>
-                                  <div className="flex items-center gap-2">
-                                    <Button
-                                      size="sm"
-                                      variant="ghost"
-                           className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border-1 border-white"
-                                      onClick={() => handleTrackPlay(track, surah)}
-                                    >
-                                      {playingTrack === track.id ? (
-                                        <Pause className="w-3 h-3" />
-                                      ) : (
-                                        <Play className="w-3 h-3" />
-                                      )}
-                                    </Button>
-                                    <AudioWave isPlaying={playingTrack === track.id} />
-                                  </div>
+                                  <Button
+                                    size="sm"
+                                    className="bg-white/20 hover:bg-white/30 text-white border-white/30 transition-all duration-300 px-3 py-1.5 h-auto font-poppins text-xs backdrop-blur-sm"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleTrackPlay(track, surah);
+                                    }}
+                                  >
+                                    {playingTrack === track.id ? (
+                                      <Pause className="w-3 h-3 mr-1" />
+                                    ) : (
+                                      <Play className="w-3 h-3 mr-1" />
+                                    )}
+                                    {playingTrack === track.id ? "Playing" : "Play"}
+                                  </Button>
                                 </div>
                               </div>
                             </CardContent>
@@ -980,39 +908,38 @@ const Index = () => {
                   </div>
                 );
               })}
-
-              {/* No Results Message */}
+              
               {filteredSurahs.length === 0 && (
                 <div className="text-center py-12">
-                  <div className="text-white/60 mb-4">
-                    <Search className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                    <p className="text-lg font-poppins">No Surahs found matching your criteria</p>
-                    <p className="text-sm font-poppins">Try adjusting your filters or search terms</p>
+                  <div className="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                    <Search className="w-8 h-8 text-white/70" />
                   </div>
+                  <h3 className="text-xl font-semibold text-white mb-2 font-poppins">No Surahs Found</h3>
+                  <p className="text-white/70 font-poppins">Try adjusting your search criteria or clear filters to see more results.</p>
                   <Button 
                     onClick={clearFilters}
-                    className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white font-poppins"
+                    className="mt-4 bg-white/20 hover:bg-white/30 text-white border-white/30 font-poppins"
                   >
-                    Clear All Filters
+                    Clear Filters
                   </Button>
                 </div>
               )}
             </div>
           )}
 
-          {/* Recent View */}
           {mainView === "recent" && (
             <div className="space-y-4">
               {isLoadingRSS ? (
-                <div className="flex items-center justify-center py-8">
-                  <div className="text-white/60 font-poppins">Loading latest episodes...</div>
+                <div className="text-center py-12">
+                  <div className="animate-spin w-8 h-8 border-2 border-white/30 border-t-white rounded-full mx-auto mb-4"></div>
+                  <p className="text-white/70 font-poppins">Loading recent tracks...</p>
                 </div>
               ) : rssError ? (
-                <div className="flex items-center justify-center py-8">
-                  <div className="text-white/60 font-poppins">Failed to load recent episodes. Please try again later.</div>
+                <div className="text-center py-12">
+                  <p className="text-red-400 font-poppins">Error loading recent tracks</p>
                 </div>
-              ) : recentTracks && recentTracks.length > 0 ? (
-                recentTracks.slice(0, 10).map((track) => (
+              ) : rssData?.length > 0 ? (
+                rssData.map((track) => (
                   <Card 
                     key={track.id} 
                     className="backdrop-blur-xl hover:bg-black/60 transition-all duration-300 shadow-2xl"
@@ -1024,26 +951,32 @@ const Index = () => {
                       backdropFilter: "blur(20px)"
                     }}
                   >
-                  <CardContent className="p-4">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-medium text-white font-poppins text-sm md:text-base mb-1 leading-tight">
-                          {track.title.split(' - ')[0] || track.title}
-                        </h4>
-                        <p className="text-white/80 text-xs md:text-sm font-poppins">
-                          {track.title.split(' - ')[1] || `${track.surahName} ${track.verseRange ? `• ${track.verseRange}` : ''}`}
-                        </p>
-                        <p className="text-white/60 text-xs font-poppins mt-1">{track.date}</p>
-                      </div>
-                      <div className="flex items-center justify-between md:justify-end gap-1 md:gap-2">
-                        <div className="flex items-center space-x-1 ml-2">
-                          <div className="flex space-x-0.5">
+                    <CardContent className="p-4">
+                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium text-white font-poppins text-sm md:text-base mb-1 leading-tight">
+                            {track.title}
+                          </h4>
+                          <p className="text-white/80 text-xs md:text-sm font-poppins">
+                            {track.surahName} {track.verseRange && `• ${track.verseRange}`} • {track.date}
+                          </p>
+                        </div>
+                        <div className="flex items-center justify-between md:justify-end gap-1 md:gap-2">
+                          <div className="flex items-center gap-1">
                             {[...Array(5)].map((_, i) => (
-                              <div key={i} className="w-0.5 bg-emerald-400/60 rounded-full animate-pulse" style={{ height: `${Math.random() * 8 + 4}px` }}></div>
+                              <div
+                                key={i}
+                                className={`w-1 bg-white/70 rounded-full transition-all duration-300 ${
+                                  audioState.isPlaying && audioCurrentTrack?.id === track.id
+                                    ? "animate-pulse" 
+                                    : "opacity-60"
+                                }`}
+                                style={{
+                                  height: audioState.isPlaying && audioCurrentTrack?.id === track.id ? `${8 + (i * 2)}px` : '4px'
+                                }}
+                              />
                             ))}
                           </div>
-                        </div>
-                        <div className="flex items-center gap-1">
                           <Button
                             size="sm"
                             variant="ghost"
@@ -1052,202 +985,218 @@ const Index = () => {
                                 ? "text-red-400 hover:text-red-300"
                                 : "text-white/70 hover:text-red-400"
                             } hover:bg-white/10`}
-                            onClick={() => toggleFavorite(track.id)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleFavorite(track.id);
+                            }}
                           >
-                            <Heart className="w-3 h-3" fill={favoriteTrackIds.has(track.id) ? "currentColor" : "none"} />
+                            <Heart className="w-4 h-4" fill={favoriteTrackIds.has(track.id) ? "currentColor" : "none"} />
                           </Button>
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
-                            onClick={() => toast({ description: "Sharing..." })}
+                            className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleShare(track);
+                            }}
                           >
-                            <Share2 className="w-3 h-3" />
+                            <Share2 className="w-4 h-4" />
                           </Button>
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
+                            className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDownload(track);
+                            }}
+                          >
+                            <Download className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            className="bg-white/20 hover:bg-white/30 text-white border-white/30 transition-all duration-300 px-3 py-1.5 h-auto font-poppins text-xs backdrop-blur-sm"
                             onClick={() => {
                               if (track.audioUrl) {
-                                const link = document.createElement('a');
-                                link.href = track.audioUrl;
-                                link.download = `${track.title}.mp3`;
-                                link.click();
+                                handleTrackPlay(track, null);
                               } else {
-                                toast({ description: "Audio not available for download" });
+                                toast({
+                                  title: "Audio not available",
+                                  description: "This track doesn't have an audio file",
+                                  duration: 2000,
+                                });
                               }
                             }}
                           >
-                            <Download className="w-3 h-3" />
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
-                            onClick={() => toast({ description: "PDF feature coming soon..." })}
-                          >
-                            <FileText className="w-3 h-3" />
-                          </Button>
-                        </div>
-                        <Button
-                          size="sm"
-                           variant="ghost"
-                            className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border-1 border-white"
-                            onClick={() => handleTrackPlay(track, null)}
-                         >
-                           <Play className="w-3 h-3" />
-                         </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-                ))
-              ) : (
-                <div className="flex items-center justify-center py-8">
-                  <div className="text-white/60 font-poppins">No recent episodes available.</div>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Favourites View */}
-          {mainView === "favourites" && (
-            <div className="space-y-4">
-              {favoriteTrackIds.size === 0 ? (
-                <div className="text-center py-12">
-                  <div className="text-white/60 mb-4">
-                    <Heart className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                    <p className="text-lg font-poppins">No Favourite Tracks</p>
-                    <p className="text-sm font-poppins">Add tracks to favourites to see them here</p>
-                  </div>
-                </div>
-              ) : (
-                // Show favorite tracks - for demo purposes, we'll show the recent tracks that are favorited
-                Array.from(favoriteTrackIds).map((trackId: any) => (
-                   <Card 
-                     key={String(trackId)} 
-                     className="backdrop-blur-xl border-white/30 hover:bg-white/15 transition-all duration-300"
-                     style={{ 
-                       background: `linear-gradient(135deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.10) 100%)`,
-                       borderColor: "#0D3029",
-                       borderWidth: "2px",
-                       borderStyle: 'solid',
-                       backdropFilter: "blur(20px)"
-                     }}
-                  >
-                    <CardContent className="p-4">
-                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-                        <div className="flex-1 min-w-0">
-                           <h4 className="font-medium text-[#0D3029] font-poppins text-sm md:text-base mb-1 leading-tight">
-                             Favorite Track #{String(trackId)}
-                           </h4>
-                           <p className="text-black text-xs md:text-sm font-poppins">
-                            Sample favorite content
-                          </p>
-                        </div>
-                        <div className="flex items-center justify-between md:justify-end gap-1 md:gap-2">
-                          <div className="flex items-center gap-1">
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="w-8 h-8 p-0 text-red-400 hover:text-red-300 hover:bg-white/10"
-                              onClick={() => toggleFavorite(trackId)}
-                            >
-                              <Heart className="w-3 h-3" fill="currentColor" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
-                            >
-                              <Share2 className="w-3 h-3" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
-                            >
-                              <Download className="w-3 h-3" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
-                            >
-                              <FileText className="w-3 h-3" />
-                            </Button>
-                          </div>
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                          className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border border-white"
-                          >
-                            <Play className="w-3 h-3" />
+                            {audioState.isPlaying && audioCurrentTrack?.id === track.id ? (
+                              <>
+                                <Pause className="w-3 h-3 mr-1" />
+                                Playing
+                              </>
+                            ) : (
+                              <>
+                                <Play className="w-3 h-3 mr-1" />
+                                Play
+                              </>
+                            )}
                           </Button>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
                 ))
+              ) : (
+                <div className="text-center py-12">
+                  <p className="text-white/70 font-poppins">No recent tracks available</p>
+                </div>
               )}
             </div>
           )}
 
-          {/* Completed View */}
+          {mainView === "favourites" && (
+            <div className="space-y-4">
+              {favoriteTrackIds.size === 0 ? (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                    <Heart className="w-8 h-8 text-white/70" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-2 font-poppins">No Favourites Yet</h3>
+                  <p className="text-white/70 font-poppins">Mark tracks as favorites by clicking the heart icon.</p>
+                </div>
+              ) : (
+                [...favoriteTrackIds].map((trackId) => {
+                  const track = rssData?.find(t => t.id === trackId) || mockTracks.find(t => t.id === trackId);
+                  if (!track) return null;
+                  
+                  return (
+                    <Card 
+                     key={String(trackId)} 
+                     className="backdrop-blur-xl border-white/30 hover:bg-white/15 transition-all duration-300"
+                     style={{ 
+                       background: `linear-gradient(135deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.30) 100%)`,
+                       borderWidth: "2px",
+                       borderStyle: 'solid',
+                       borderColor: "rgba(255, 255, 255, 0.3)",
+                       backdropFilter: "blur(20px)"
+                     }}
+                   >
+                     <CardContent className="p-4">
+                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                         <div className="flex-1 min-w-0">
+                           <h4 className="font-medium text-white font-poppins text-sm md:text-base mb-1 leading-tight">
+                             {track.title}
+                           </h4>
+                           <p className="text-white/80 text-xs md:text-sm font-poppins">
+                             {'surahName' in track ? track.surahName || 'Unknown Surah' : 'Unknown Surah'} {track.verseRange && `• ${track.verseRange}`} • {track.duration}
+                           </p>
+                         </div>
+                         <div className="flex items-center justify-between md:justify-end gap-1 md:gap-2">
+                           <Button
+                             size="sm"
+                             variant="ghost"
+                             className="w-8 h-8 p-0 text-red-400 hover:text-red-300 hover:bg-white/10 transition-colors"
+                             onClick={(e) => {
+                               e.stopPropagation();
+                               toggleFavorite(track.id);
+                             }}
+                           >
+                             <Heart className="w-4 h-4" fill="currentColor" />
+                           </Button>
+                           <Button
+                             size="sm"
+                             variant="ghost"
+                             className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+                             onClick={(e) => {
+                               e.stopPropagation();
+                               handleShare(track);
+                             }}
+                           >
+                             <Share2 className="w-4 h-4" />
+                           </Button>
+                           <Button
+                             size="sm"
+                             variant="ghost"
+                             className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+                             onClick={(e) => {
+                               e.stopPropagation();
+                               handleDownload(track);
+                             }}
+                           >
+                             <Download className="w-4 h-4" />
+                           </Button>
+                           <Button
+                             size="sm"
+                             className="bg-white/20 hover:bg-white/30 text-white border-white/30 transition-all duration-300 px-3 py-1.5 h-auto font-poppins text-xs backdrop-blur-sm"
+                             onClick={(e) => {
+                               e.stopPropagation();
+                               handleTrackPlay(track, null);
+                             }}
+                           >
+                             {playingTrack === track.id ? (
+                               <>
+                                 <Pause className="w-3 h-3 mr-1" />
+                                 Playing
+                               </>
+                             ) : (
+                               <>
+                                 <Play className="w-3 h-3 mr-1" />
+                                 Play
+                               </>
+                             )}
+                           </Button>
+                         </div>
+                       </div>
+                     </CardContent>
+                   </Card>
+                  );
+                })
+              )}
+            </div>
+          )}
+
           {mainView === "completed" && (
             <div className="space-y-4">
               {completedTrackIds.size === 0 ? (
                 <div className="text-center py-12">
-                  <div className="text-white/60 mb-4">
-                    <p className="text-lg font-poppins">Completed Tracks</p>
-                    <p className="text-sm font-poppins">Tracks you've finished listening to will appear here</p>
+                  <div className="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                    <Headphones className="w-8 h-8 text-white/70" />
                   </div>
+                  <h3 className="text-xl font-semibold text-white mb-2 font-poppins">No Completed Tracks</h3>
+                  <p className="text-white/70 font-poppins">Tracks you've listened to will appear here.</p>
                 </div>
               ) : (
-                // Show completed tracks from recent tracks and surah tracks
-                [
-                  {
-                    id: "recent-1",
-                    title: "Fri-20250728 - Surah Kahf, Verses 1–5",
-                    surahName: "Al-Kahf",
-                    duration: "12:45",
-                    date: "28 July 2025",
-                    verseRange: "1-5"
-                  },
-                  {
-                    id: "recent-2", 
-                    title: "Thu-20250727 - Surah Al-Baqarah, Verses 255–260",
-                    surahName: "Al-Baqarah",
-                    duration: "15:20",
-                    date: "27 July 2025",
-                    verseRange: "255-260"
-                  }
-                ].filter(track => completedTrackIds.has(track.id)).map((track) => (
-                   <Card 
-                     key={track.id} 
-                     className="backdrop-blur-xl border-white/20 hover:bg-white/15 transition-all duration-300"
-                     style={{ 
-                       background: `linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%)`,
-                       borderColor: "#0D3029",
-                       borderWidth: "2px",
-                       borderStyle: 'solid',
-                       backdropFilter: "blur(20px)"
-                     }}
-                  >
-                    <CardContent className="p-4">
-                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-                        <div className="flex-1 min-w-0">
-                           <h4 className="font-medium text-[#0D3029] font-poppins text-sm md:text-base mb-1 leading-tight">
-                             {track.title.split(' - ')[0]}
-                           </h4>
-                           <p className="text-black text-xs md:text-sm font-poppins">
-                             {track.title.split(' - ')[1]}
-                           </p>
-                           <p className="text-black/70 text-xs font-poppins mt-1">{track.date}</p>
-                        </div>
-                        <div className="flex items-center justify-between md:justify-end gap-1 md:gap-2">
-                          <div className="flex items-center gap-1">
+                [...completedTrackIds].map((trackId: any) => {
+                  const track = mockTracks.find(t => t.id === trackId) || {
+                    id: trackId,
+                    title: `Track ${trackId}`,
+                    verseRange: "1-10",
+                    duration: "3:00"
+                  };
+                  
+                  return (
+                    <Card 
+                      key={track.id} 
+                      className="backdrop-blur-xl border-white/20 hover:bg-white/15 transition-all duration-300"
+                      style={{ 
+                        background: `linear-gradient(135deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.30) 100%)`,
+                        borderWidth: "2px",
+                        borderStyle: 'solid',
+                        borderColor: "rgba(255, 255, 255, 0.2)",
+                        backdropFilter: "blur(20px)"
+                      }}
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-medium text-white font-poppins text-sm md:text-base mb-1 leading-tight">
+                              {track.title}
+                            </h4>
+                            <p className="text-white/80 text-xs md:text-sm font-poppins">
+                              Verses {track.verseRange} • {track.duration} • Completed
+                            </p>
+                          </div>
+                          <div className="flex items-center justify-between md:justify-end gap-1 md:gap-2">
                             <Button
                               size="sm"
                               variant="ghost"
@@ -1256,277 +1205,178 @@ const Index = () => {
                                   ? "text-red-400 hover:text-red-300"
                                   : "text-white/70 hover:text-red-400"
                               } hover:bg-white/10`}
-                              onClick={() => toggleFavorite(track.id)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleFavorite(track.id);
+                              }}
                             >
-                              <Heart className="w-3 h-3" fill={favoriteTrackIds.has(track.id) ? "currentColor" : "none"} />
+                              <Heart className="w-4 h-4" fill={favoriteTrackIds.has(track.id) ? "currentColor" : "none"} />
                             </Button>
                             <Button
                               size="sm"
                               variant="ghost"
-                              className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
-                              onClick={() => toast({ description: "Sharing..." })}
+                              className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleShare(track);
+                              }}
                             >
-                              <Share2 className="w-3 h-3" />
+                              <Share2 className="w-4 h-4" />
                             </Button>
                             <Button
                               size="sm"
                               variant="ghost"
-                              className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
-                              onClick={() => toast({ description: "Downloading..." })}
+                              className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDownload(track);
+                              }}
                             >
-                              <Download className="w-3 h-3" />
+                              <Download className="w-4 h-4" />
                             </Button>
                             <Button
                               size="sm"
-                              variant="ghost"
-                              className="w-8 h-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
-                              onClick={() => toast({ description: "Opening PDF..." })}
+                              className="bg-white/20 hover:bg-white/30 text-white border-white/30 transition-all duration-300 px-3 py-1.5 h-auto font-poppins text-xs backdrop-blur-sm"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleTrackPlay(track, null);
+                              }}
                             >
-                              <FileText className="w-3 h-3" />
+                              <Play className="w-3 h-3 mr-1" />
+                              Replay
                             </Button>
                           </div>
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                             className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border-1 border-white"
-                              onClick={() => handleTrackPlay(track, null)}
-                          >
-                            <Play className="w-3 h-3" />
-                          </Button>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))
+                      </CardContent>
+                    </Card>
+                  );
+                })
               )}
             </div>
           )}
-
         </div>
-      </main>
+      </header>
 
-      {/* Counter Statistics Module */}
-      <section ref={counterRef} className="relative z-10 px-4 mb-20">
-        <div className="max-w-6xl mx-auto">
-          {/* Image View Only - Default */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Surahs - Image Style */}
-              <div className="relative group">
-                <div className="bg-gradient-to-br from-[#3F533C] to-[#3F533C] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
-                  <div className="text-6xl font-bold text-white mb-2 font-poppins">
-                    {surahCount.toLocaleString()}
-                  </div>
-                  <div className="text-white text-lg font-medium opacity-90 relative">
-                    <span className="inline-flex items-center gap-2 border-2 border-[#2B3A28] bg-[#2B3A28]/20 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
-                      <BookOpen className="w-4 h-4" />
-                      Surahs
-                    </span>
-                  </div>
-                  <div className="text-white/70 text-sm font-medium mt-1">
-                    Complete Quran Collection
-                  </div>
-                </div>
+      {/* Audio Player */}
+      {audioCurrentTrack && (
+        <div className="fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-xl border-t border-white/20 p-4 z-50">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center gap-4">
+              {/* Track Info */}
+              <div className="flex-1 min-w-0 text-center md:text-left">
+                <h4 className="font-medium text-white font-poppins text-sm truncate">
+                  {audioCurrentTrack.title}
+                </h4>
+                <p className="text-white/70 text-xs font-poppins truncate">
+                  {audioCurrentTrack.surahName}
+                </p>
               </div>
 
-              {/* Audios - Image Style */}
-              <div className="relative group">
-                <div className="bg-gradient-to-br from-[#54465F] to-[#54465F] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
-                  <div className="text-6xl font-bold text-white mb-2 font-poppins">
-                    {audioCount.toLocaleString()}
-                  </div>
-                  <div className="text-white text-lg font-medium opacity-90 relative">
-                    <span className="inline-flex items-center gap-2 border-2 border-[#3F3248] bg-[#3F3248]/20 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
-                      <Headphones className="w-4 h-4" />
-                      Audios
-                    </span>
-                  </div>
-                  <div className="text-white/70 text-sm font-medium mt-1">
-                    Tafseer Recordings
-                  </div>
-                </div>
+              {/* Controls */}
+              <div className="flex items-center gap-4">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="text-white hover:bg-white/20"
+                  onClick={() => {
+                    // Previous track logic would go here
+                  }}
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+                
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="text-white hover:bg-white/20"
+                  onClick={togglePlayPause}
+                  disabled={audioState.isLoading}
+                >
+                  {audioState.isLoading ? (
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : audioState.isPlaying ? (
+                    <Pause className="w-4 h-4" />
+                  ) : (
+                    <Play className="w-4 h-4" />
+                  )}
+                </Button>
+                
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="text-white hover:bg-white/20"
+                  onClick={() => {
+                    // Next track logic would go here
+                  }}
+                >
+                  <X className="w-4 h-4" />
+                </Button>
               </div>
 
-              {/* Hours - Image Style */}
-              <div className="relative group">
-                <div className="bg-gradient-to-br from-[#5C5D40] to-[#5C5D40] rounded-2xl p-8 text-center shadow-2xl border-2 border-white backdrop-blur-xl">
-                  <div className="text-6xl font-bold text-white mb-2 font-poppins">
-                    {hoursCount.toLocaleString()}
-                  </div>
-                  <div className="text-white text-lg font-medium opacity-90 relative">
-                    <span className="inline-flex items-center gap-2 border-2 border-[#484A30] bg-[#484A30]/20 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
-                      <Clock className="w-4 h-4" />
-                      Hours
-                    </span>
-                  </div>
-                  <div className="text-white/70 text-sm font-medium mt-1">
-                    Total Content Duration
-                  </div>
+              {/* Progress */}
+              <div className="flex-1 max-w-md">
+                <div className="flex items-center gap-2 text-xs text-white/70 mb-1">
+                  <span>{formatTime(audioState.currentTime)}</span>
+                  <span>/</span>
+                  <span>{formatTime(audioState.duration)}</span>
+                </div>
+                <div 
+                  className="w-full h-2 bg-white/20 rounded-full overflow-hidden cursor-pointer"
+                  onClick={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const percent = (e.clientX - rect.left) / rect.width;
+                    const newTime = percent * audioState.duration;
+                    seek(newTime);
+                  }}
+                >
+                  <div 
+                    className="h-full bg-white/70 transition-all duration-300"
+                    style={{ width: audioState.duration > 0 ? `${(audioState.currentTime / audioState.duration) * 100}%` : '0%' }}
+                  />
                 </div>
               </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Bottom Audio Player */}
-      {isPlayerVisible && currentTrack && (
-        <div className="fixed bottom-16 left-0 right-0 z-30">
-          <div className="max-w-6xl mx-auto px-4">
-            <Card className="bg-[#0D3029]/95 backdrop-blur-xl border-2 border-white text-white">
-              <CardContent className="p-3 md:p-4">
-                {/* Mobile Layout */}
-                <div className="md:hidden">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center space-x-3 flex-1 min-w-0">
-                      <img 
-                        src="/lovable-uploads/7c4f4c34-d840-49ba-8b37-be7770f72a79.png" 
-                        alt="ARKolia" 
-                        className="w-10 h-10 rounded-full flex-shrink-0"
-                      />
-                      <div className="min-w-0 flex-1">
-                        <h3 className="font-semibold text-sm font-poppins truncate">{currentTrack.title}</h3>
-                        <p className="text-white/80 text-xs font-poppins truncate">
-                          {currentTrack.surahName} • {currentTrack.duration}
-                        </p>
-                      </div>
-                    </div>
-                    
-                     <Button
-                       size="sm"
-                       variant="ghost"
-                       onClick={() => setIsPlayerVisible(false)}
-                       className="text-white/60 hover:text-white hover:bg-white/10 p-1.5"
-                     >
-                       <X className="w-4 h-4" />
-                     </Button>
-                   </div>
-                   
-                   {/* Audio Wave Animation for Mobile */}
-                   {playingTrack === currentTrack.id && (
-                     <div className="flex items-center justify-center space-x-1 mb-3">
-                       {[...Array(5)].map((_, i) => (
-                         <div
-                           key={i}
-                           className="w-1 bg-white/60 rounded-full animate-pulse"
-                           style={{
-                             height: `${Math.random() * 16 + 8}px`,
-                             animationDelay: `${i * 100}ms`,
-                             animationDuration: '1.5s'
-                           }}
-                         />
-                       ))}
-                     </div>
-                   )}
-                  <div className="flex items-center justify-center space-x-6">
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      className="text-white hover:bg-white/10"
-                    >
-                      ⏮
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      className="bg-white/20 hover:bg-white/30 text-white"
-                      onClick={() => handlePlayPause(currentTrack.id)}
-                    >
-                      {audioState.isPlaying ? (
-                        <Pause className="w-5 h-5" />
-                      ) : (
-                        <Play className="w-5 h-5" />
-                      )}
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      className="text-white hover:bg-white/10"
-                    >
-                      ⏭
-                    </Button>
-                  </div>
-                </div>
-
-                 {/* Desktop and Tablet Layout */}
-                <div className="hidden md:flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
-                    <img 
-                      src="/lovable-uploads/7c4f4c34-d840-49ba-8b37-be7770f72a79.png" 
-                      alt="ARKolia" 
-                      className="w-12 h-12 rounded-full flex-shrink-0"
-                    />
-                    <div>
-                      <h3 className="font-semibold text-sm font-poppins">{currentTrack.title}</h3>
-                      <p className="text-white/80 text-xs font-poppins">
-                        {currentTrack.surahName} • {currentTrack.duration}
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center space-x-4">
-                    <AudioWave isPlaying={playingTrack === currentTrack.id} />
-                    
-                    <div className="flex items-center space-x-2">
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        className="text-white hover:bg-white/10"
-                      >
-                        ⏮
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        className="bg-white/20 hover:bg-white/30 text-white"
-                        onClick={() => handlePlayPause(currentTrack.id)}
-                      >
-                        {playingTrack === currentTrack.id ? (
-                          <Pause className="w-4 h-4" />
-                        ) : (
-                          <Play className="w-4 h-4" />
-                        )}
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        className="text-white hover:bg-white/10"
-                      >
-                        ⏭
-                      </Button>
-                    </div>
-                    
-                    <div className="w-32 h-1 bg-white/20 rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-white/70 transition-all duration-300"
-                        style={{ width: playingTrack === currentTrack.id ? '30%' : '0%' }}
-                      />
-                    </div>
-                    
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => setIsPlayerVisible(false)}
-                      className="text-white/60 hover:text-white hover:bg-white/10 p-1.5"
-                    >
-                      <X className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            </div>
           </div>
         </div>
       )}
 
       {/* Footer */}
-      <footer className="fixed bottom-0 left-0 right-0 z-20 bg-black/80 backdrop-blur-xl border-t border-white/10">
-        <div className="max-w-6xl mx-auto px-4 py-3">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
-            <div className="flex items-center space-x-2">
-              <img 
-                src="/lovable-uploads/044670b3-5f8e-4be0-a4a4-dba6f69dbdc6.png" 
-                alt="ARKolia Banner" 
-                className="h-6 w-auto"
-              />
+      <footer className="relative z-10 mt-16">
+        <div 
+          className="p-6 md:p-8 lg:p-12 backdrop-blur-xl border-t border-white/20"
+          style={{ 
+            background: `linear-gradient(135deg, rgba(0, 0, 0, ${blockDarkness[0] / 100}) 0%, rgba(0, 0, 0, ${(blockDarkness[0] - 10) / 100}) 100%)`
+          }}
+        >
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+              <div>
+                <h3 className="text-white font-semibold text-lg mb-4 font-poppins">ARKOLIA QURAN</h3>
+                <p className="text-white/80 text-sm font-poppins leading-relaxed">
+                  Experience the divine beauty of the Holy Quran through our comprehensive collection of recitations and spiritual guidance.
+                </p>
+              </div>
+              
+              <div>
+                <h4 className="text-white font-semibold text-base mb-4 font-poppins">Quick Links</h4>
+                <ul className="space-y-2 text-white/80 text-sm">
+                  <li><button onClick={() => setMainView("surahs")} className="hover:text-white transition-colors font-poppins">All Surahs</button></li>
+                  <li><button onClick={() => setMainView("recent")} className="hover:text-white transition-colors font-poppins">Recent</button></li>
+                  <li><button onClick={() => setMainView("favourites")} className="hover:text-white transition-colors font-poppins">Favourites</button></li>
+                  <li><button onClick={() => setMainView("completed")} className="hover:text-white transition-colors font-poppins">Completed</button></li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 className="text-white font-semibold text-base mb-4 font-poppins">Features</h4>
+                <ul className="space-y-2 text-white/80 text-sm">
+                  <li className="font-poppins">📖 114 Complete Surahs</li>
+                  <li className="font-poppins">🎵 High Quality Audio</li>
+                  <li className="font-poppins">🔍 Advanced Search & Filters</li>
+                  <li className="font-poppins">❤️ Personal Favourites</li>
+                  <li className="font-poppins">🎨 Customizable Interface</li>
+                </ul>
+              </div>
             </div>
             <p className="text-white/70 text-xs text-center font-poppins">
               © 2025 – Simtech W for ARKOLIA.CO.ZA. All Rights Reserved.
