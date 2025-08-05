@@ -57,16 +57,6 @@ const parseRSSFeed = async (url: string): Promise<RSSFeed> => {
   return { items };
 };
 
-const formatDate = (dateString: string): string => {
-  const date = new Date(dateString);
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const day = date.getDate().toString().padStart(2, '0');
-  const month = months[date.getMonth()];
-  const year = date.getFullYear().toString().slice(2);
-  return `${day} ${month} ${year}`;
-};
-
 const transformRSSToTracks = (rssItems: RSSItem[]): Track[] => {
   return rssItems.map((item, index) => {
     // Extract Surah name and verse range from title
@@ -86,8 +76,8 @@ const transformRSSToTracks = (rssItems: RSSItem[]): Track[] => {
       verseRange = verseMatch[1];
     }
     
-    // Format date to DD MMM YY
-    const date = item.pubDate ? formatDate(item.pubDate) : '';
+    // Format date
+    const date = item.pubDate ? new Date(item.pubDate).toLocaleDateString() : '';
     
     return {
       id: item.guid || item.link || `rss-${index}`,
