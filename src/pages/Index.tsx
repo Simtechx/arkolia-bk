@@ -140,9 +140,9 @@ const backgroundImages = [
   { id: 1, url: "/lovable-uploads/de544066-404e-4f0a-b317-094a97053dd8.png", name: "Interior View 1" },
   { id: 2, url: "/lovable-uploads/6aff7365-23e1-4926-ad1b-c21e2ecbd69d.png", name: "Interior View 2" },
   { id: 3, url: "/lovable-uploads/7c6c8e8e-cd8f-4ec8-ad1b-7fb29338ec2a.png", name: "Mosque Exterior" },
-  { id: 4, url: "/lovable-uploads/007566fa-5c53-4160-8d81-59971d899649.png", name: "Audio Books" },
+  { id: 4, url: "/lovable-uploads/ecc7a99d-f398-4937-91c9-3d060eab80f0.png", name: "Starry Lake" },
   { id: 5, url: "/lovable-uploads/45dc7a85-45be-402f-b230-9cf0edae2e9d.png", name: "Starry Night" },
-  { id: 6, url: "/lovable-uploads/cef81c6f-a31f-4227-93ac-8a9b75817ad2.png", name: "Clock Study" },
+  { id: 6, url: "/lovable-uploads/89d792e3-a397-4e42-966e-c94e90b39b35.png", name: "Mountain Landscape" },
 ];
 
 const Index = () => {
@@ -153,6 +153,7 @@ const Index = () => {
   const [bgSharpness, setBgSharpness] = useState([0]);
   const [playingTrack, setPlayingTrack] = useState(null);
   const [showControls, setShowControls] = useState(false);
+  const [customBackgrounds, setCustomBackgrounds] = useState([]);
   
   // Block Settings
   const [blockDarkness, setBlockDarkness] = useState([30]);
@@ -182,6 +183,41 @@ const Index = () => {
   // RSS Feed for Recent tab
   const { data: rssData, isLoading: rssLoading, error: rssError } = useRSSFeed('https://feeds.captivate.fm/arkolia-tafseer/');
   const [isPlayerVisible, setIsPlayerVisible] = useState(false);
+
+  // Handle custom background upload
+  const handleCustomBackgroundUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const result = e.target?.result as string;
+          const newCustomBg = {
+            id: Date.now(),
+            url: result,
+            name: `Custom: ${file.name}`,
+            isCustom: true
+          };
+          setCustomBackgrounds(prev => [...prev, newCustomBg]);
+          setCurrentBg(result);
+          toast({
+            title: "Background uploaded successfully!",
+            description: "Your custom background has been applied.",
+          });
+        };
+        reader.readAsDataURL(file);
+      } else {
+        toast({
+          title: "Invalid file type",
+          description: "Please select an image file (JPG, PNG, GIF, etc.)",
+          variant: "destructive",
+        });
+      }
+    }
+  };
+
+  // Combine default and custom backgrounds
+  const allBackgrounds = [...backgroundImages, ...customBackgrounds];
   
   // Favorites tracking
   const [favoriteTrackIds, setFavoriteTrackIds] = useState(new Set());
@@ -460,9 +496,32 @@ const Index = () => {
                 </TabsList>
                 
                 <TabsContent value="background" className="space-y-4">
+                  {/* Custom Background Upload */}
+                  <div className="mb-4">
+                    <label className="text-sm font-medium text-white mb-2 block font-poppins">
+                      Upload Custom Background
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleCustomBackgroundUpload}
+                        className="hidden"
+                        id="background-upload"
+                      />
+                      <label
+                        htmlFor="background-upload"
+                        className="flex items-center justify-center w-full p-3 border-2 border-dashed border-white/30 rounded-lg cursor-pointer hover:border-white/50 transition-colors"
+                      >
+                        <ImageIcon className="w-5 h-5 text-white mr-2" />
+                        <span className="text-white font-poppins">Choose Image File</span>
+                      </label>
+                    </div>
+                  </div>
+
                   {/* Background Images Grid */}
                   <div className="grid grid-cols-3 gap-2">
-                    {backgroundImages.map((img) => (
+                    {allBackgrounds.map((img) => (
                       <div 
                         key={img.id}
                         className={`relative cursor-pointer rounded-lg overflow-hidden border-2 transition-all ${
@@ -478,6 +537,11 @@ const Index = () => {
                         <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
                           <ImageIcon className="w-4 h-4 text-white" />
                         </div>
+                        {img.isCustom && (
+                          <div className="absolute top-1 right-1">
+                            <Badge variant="secondary" className="text-xs px-1 py-0">Custom</Badge>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
