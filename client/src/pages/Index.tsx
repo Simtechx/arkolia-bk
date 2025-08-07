@@ -130,8 +130,18 @@ const surahs = [
   { id: 114, name: "An-Nas", nameArabic: "الناس", verses: 6, type: "Makkan", length: "Short", juz: 30, themes: ["Protection", "Duas"], usage: ["Protection", "Before Sleep"], openingStyle: "Commands", sajdah: false },
 ];
 
+// Audio track interface
+interface AudioTrack {
+  id: number;
+  title: string;
+  verseRange: string;
+  duration: string;
+  audioUrl: string;
+  hasAudio: boolean;
+}
+
 // Enhanced tracks data with actual audio availability
-const surahAudioData = {
+const surahAudioData: Record<number, AudioTrack[]> = {
   1: [
     { id: 1, title: "Al-Fatihah - Complete Recitation", verseRange: "1-7", duration: "1:30", audioUrl: "https://example.com/audio/1-complete.mp3", hasAudio: true },
   ],
@@ -151,12 +161,12 @@ const surahAudioData = {
 };
 
 // Helper function to check if Surah has audio
-const surahHasAudio = (surahId: number) => {
+const surahHasAudio = (surahId: number): boolean => {
   return surahAudioData[surahId] && surahAudioData[surahId].length > 0;
 };
 
 // Get tracks for a specific Surah
-const getTracksForSurah = (surahId: number) => {
+const getTracksForSurah = (surahId: number): AudioTrack[] => {
   return surahAudioData[surahId] || [];
 };
 
@@ -1037,7 +1047,7 @@ const Index = () => {
                     {isExpanded && (
                       <div className="ml-2 md:ml-4 mt-3 space-y-3">
                         {getTracksForSurah(surah.id).length > 0 ? (
-                          getTracksForSurah(surah.id).map((track) => (
+                          getTracksForSurah(surah.id).map((track: AudioTrack) => (
                           <Card 
                             key={track.id} 
                             className="backdrop-blur-xl hover:bg-black/60 transition-all duration-300 shadow-2xl"
