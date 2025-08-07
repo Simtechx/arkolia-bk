@@ -27,34 +27,56 @@ interface Track {
 }
 
 const parseRSSFeed = async (url: string): Promise<RSSFeed> => {
-  // Use CORS proxy to bypass CORS restrictions
-  const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-  
-  const response = await fetch(proxyUrl);
-  if (!response.ok) {
-    throw new Error('Failed to fetch RSS feed');
+  try {
+    // Use our server's RSS proxy to bypass CORS restrictions
+    const proxyUrl = `/api/rss-proxy?url=${encodeURIComponent(url)}`;
+    
+    const response = await fetch(proxyUrl, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/rss+xml, application/xml, text/xml',
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch RSS feed: ${response.status} ${response.statusText}`);
+    }
+    
+    const text = await response.text();
+    
+    if (!text || text.trim().length === 0) {
+      throw new Error('Empty RSS feed response');
+    }
+    
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'text/xml');
+    
+    // Check for XML parsing errors
+    const parseError = doc.querySelector('parsererror');
+    if (parseError) {
+      throw new Error(`XML parsing error: ${parseError.textContent}`);
+    }
+    
+    const items = Array.from(doc.querySelectorAll('item')).map(item => {
+      const enclosureEl = item.querySelector('enclosure');
+      return {
+        title: item.querySelector('title')?.textContent || '',
+        pubDate: item.querySelector('pubDate')?.textContent || '',
+        description: item.querySelector('description')?.textContent || '',
+        guid: item.querySelector('guid')?.textContent || '',
+        link: item.querySelector('link')?.textContent || '',
+        enclosure: enclosureEl ? {
+          url: enclosureEl.getAttribute('url') || '',
+          type: enclosureEl.getAttribute('type') || ''
+        } : undefined
+      };
+    });
+    
+    return { items };
+  } catch (error) {
+    console.error('RSS parsing error:', error);
+    throw error;
   }
-  
-  const text = await response.text();
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(text, 'text/xml');
-  
-  const items = Array.from(doc.querySelectorAll('item')).map(item => {
-    const enclosureEl = item.querySelector('enclosure');
-    return {
-      title: item.querySelector('title')?.textContent || '',
-      pubDate: item.querySelector('pubDate')?.textContent || '',
-      description: item.querySelector('description')?.textContent || '',
-      guid: item.querySelector('guid')?.textContent || '',
-      link: item.querySelector('link')?.textContent || '',
-      enclosure: enclosureEl ? {
-        url: enclosureEl.getAttribute('url') || '',
-        type: enclosureEl.getAttribute('type') || ''
-      } : undefined
-    };
-  });
-  
-  return { items };
 };
 
 const transformRSSToTracks = (rssItems: RSSItem[]): Track[] => {
@@ -95,11 +117,18 @@ export const useRSSFeed = (feedUrl: string) => {
   return useQuery({
     queryKey: ['rssFeed', feedUrl],
     queryFn: async () => {
-      const rssData = await parseRSSFeed(feedUrl);
-      return transformRSSToTracks(rssData.items);
+      try {
+        const rssData = await parseRSSFeed(feedUrl);
+        return transformRSSToTracks(rssData.items);
+      } catch (error) {
+        console.warn('RSS feed parsing failed, using fallback data:', error);
+        // Return empty array as fallback instead of throwing
+        return [];
+      }
     },
     staleTime: 30 * 60 * 1000, // 30 minutes
     refetchInterval: 30 * 60 * 1000, // Refetch every 30 minutes
     retry: 2,
+
   });
 };
