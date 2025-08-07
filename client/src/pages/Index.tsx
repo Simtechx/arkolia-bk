@@ -130,11 +130,35 @@ const surahs = [
   { id: 114, name: "An-Nas", nameArabic: "الناس", verses: 6, type: "Makkan", length: "Short", juz: 30, themes: ["Protection", "Duas"], usage: ["Protection", "Before Sleep"], openingStyle: "Commands", sajdah: false },
 ];
 
-// Mock tracks data
-const mockTracks = [
-  { id: 1, title: "Introduction & Verses 1-7", verseRange: "1-7", duration: "45:30", audioUrl: "#", pdfUrl: "#" },
-  { id: 2, title: "The Opening Prayer", verseRange: "1-7", duration: "32:15", audioUrl: "#", pdfUrl: "#" },
-];
+// Enhanced tracks data with actual audio availability
+const surahAudioData = {
+  1: [
+    { id: 1, title: "Al-Fatihah - Complete Recitation", verseRange: "1-7", duration: "1:30", audioUrl: "https://example.com/audio/1-complete.mp3", hasAudio: true },
+  ],
+  2: [
+    { id: 2, title: "Al-Baqarah - Part 1", verseRange: "1-50", duration: "45:30", audioUrl: "https://example.com/audio/2-part1.mp3", hasAudio: true },
+    { id: 3, title: "Al-Baqarah - Part 2", verseRange: "51-100", duration: "42:15", audioUrl: "https://example.com/audio/2-part2.mp3", hasAudio: true },
+  ],
+  18: [
+    { id: 4, title: "Al-Kahf - Complete", verseRange: "1-110", duration: "67:45", audioUrl: "https://example.com/audio/18-complete.mp3", hasAudio: true },
+  ],
+  36: [
+    { id: 5, title: "Ya-Sin - Complete", verseRange: "1-83", duration: "23:30", audioUrl: "https://example.com/audio/36-complete.mp3", hasAudio: true },
+  ],
+  67: [
+    { id: 6, title: "Al-Mulk - Complete", verseRange: "1-30", duration: "8:45", audioUrl: "https://example.com/audio/67-complete.mp3", hasAudio: true },
+  ],
+};
+
+// Helper function to check if Surah has audio
+const surahHasAudio = (surahId: number) => {
+  return surahAudioData[surahId] && surahAudioData[surahId].length > 0;
+};
+
+// Get tracks for a specific Surah
+const getTracksForSurah = (surahId: number) => {
+  return surahAudioData[surahId] || [];
+};
 
 const backgroundImages = [
   { id: 1, url: "/lovable-uploads/de544066-404e-4f0a-b317-094a97053dd8.png", name: "Interior View 1" },
@@ -171,8 +195,10 @@ const Index = () => {
   // Counter view state
   const [counterView, setCounterView] = useState("blocks");
   
-  // Main view state (replaces surahs view)
+  // Main view state with audio toggle
   const [mainView, setMainView] = useState("recent");
+  const [showOnlyWithAudio, setShowOnlyWithAudio] = useState(false);
+  const [sortBy, setSortBy] = useState("surahNumber"); // surahNumber, recentlyAdded, name
   
   // Track expansion states for surah toggle
   const [expandedSurahs, setExpandedSurahs] = useState(new Set());
@@ -260,6 +286,15 @@ const Index = () => {
   };
 
   const handleTrackPlay = (track: any, surah: any) => {
+    if (!track.hasAudio) {
+      toast({
+        title: "Audio Coming Soon",
+        description: `${surah.name} audio will be available soon.`,
+        variant: "default",
+      });
+      return;
+    }
+    
     setCurrentTrack({
       ...track,
       surahName: surah.name,
@@ -311,7 +346,7 @@ const Index = () => {
     return `border-[${baseColor}]`;
   };
 
-  // Filter function
+  // Enhanced filter function with audio availability
   const filteredSurahs = surahs.filter(surah => {
     const matchesSearch = surah.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          surah.nameArabic.includes(searchTerm) ||
@@ -322,8 +357,23 @@ const Index = () => {
     const matchesThemes = selectedThemes.length === 0 || selectedThemes.some(theme => surah.themes.includes(theme));
     const matchesUsage = selectedUsage === "all" || surah.usage.includes(selectedUsage);
     const matchesSajdah = showSajdah === "all" || (showSajdah === "yes" && surah.sajdah) || (showSajdah === "no" && !surah.sajdah);
+    const matchesAudio = !showOnlyWithAudio || surahHasAudio(surah.id);
     
-    return matchesSearch && matchesType && matchesLength && matchesThemes && matchesUsage && matchesSajdah;
+    return matchesSearch && matchesType && matchesLength && matchesThemes && matchesUsage && matchesSajdah && matchesAudio;
+  }).sort((a, b) => {
+    switch (sortBy) {
+      case "name":
+        return a.name.localeCompare(b.name);
+      case "recentlyAdded":
+        // Sort by Surahs with audio first, then by Surah number
+        const aHasAudio = surahHasAudio(a.id);
+        const bHasAudio = surahHasAudio(b.id);
+        if (aHasAudio && !bHasAudio) return -1;
+        if (!aHasAudio && bHasAudio) return 1;
+        return a.id - b.id;
+      default: // surahNumber
+        return a.id - b.id;
+    }
   });
 
   const clearFilters = () => {
@@ -823,7 +873,7 @@ const Index = () => {
           </div>
 
           {/* Main View Switch */}
-          <div className="flex justify-center mb-6">
+          <div className="flex flex-col items-center gap-4 mb-6">
             <div className="bg-black/50 backdrop-blur-xl rounded-xl p-1 border-2 border-white">
               <div className="flex flex-wrap justify-center gap-1">
                 <button
@@ -844,7 +894,7 @@ const Index = () => {
                       : "text-white/70 hover:text-white"
                   }`}
                 >
-                  Surahs
+                  Surahs ({filteredSurahs.length})
                 </button>
                 <button
                   onClick={() => setMainView("favourites")}
@@ -868,6 +918,48 @@ const Index = () => {
                 </button>
               </div>
             </div>
+
+            {/* Audio Toggle Controls - Only show for Surahs view */}
+            {mainView === "surahs" && (
+              <div className="flex flex-col sm:flex-row items-center gap-3 bg-black/30 backdrop-blur-xl rounded-lg p-3 border border-white/20">
+                <div className="flex items-center gap-2">
+                  <span className="text-white text-sm font-medium">Show:</span>
+                  <button
+                    onClick={() => setShowOnlyWithAudio(false)}
+                    className={`px-3 py-1 rounded-md text-xs transition-colors font-medium ${
+                      !showOnlyWithAudio
+                        ? "bg-blue-500 text-white shadow-md"
+                        : "bg-white/20 text-white/80 hover:bg-white/30 hover:text-white"
+                    }`}
+                  >
+                    All Surahs (114)
+                  </button>
+                  <button
+                    onClick={() => setShowOnlyWithAudio(true)}
+                    className={`px-3 py-1 rounded-md text-xs transition-colors font-medium ${
+                      showOnlyWithAudio
+                        ? "bg-blue-500 text-white shadow-md"
+                        : "bg-white/20 text-white/80 hover:bg-white/30 hover:text-white"
+                    }`}
+                  >
+                    Audio Available ({filteredSurahs.filter(s => surahHasAudio(s.id)).length})
+                  </button>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-white text-sm font-medium">Sort:</span>
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="px-3 py-1 rounded-md text-xs bg-white/20 text-white border border-white/30 hover:bg-white/30 transition-colors"
+                    style={{ backgroundColor: 'rgba(255,255,255,0.2)' }}
+                  >
+                    <option value="surahNumber" className="text-black">Surah Number</option>
+                    <option value="name" className="text-black">Name</option>
+                    <option value="recentlyAdded" className="text-black">Audio First</option>
+                  </select>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Main Content Based on View */}
@@ -902,11 +994,24 @@ const Index = () => {
                               <span className="text-white font-bold text-sm font-poppins">{surah.id}</span>
                             </div>
                             <div className="flex-1">
-                              <div className="flex items-center gap-3 mb-2">
+                              <div className="flex items-center gap-3 mb-2 flex-wrap">
                                 <h3 className="font-semibold text-lg text-white font-poppins drop-shadow-lg">{surah.name}</h3>
-                                <Badge className={`${getBadgeColor(surah.type)} text-white text-xs px-2 py-1 font-poppins font-medium hover:opacity-80 transition-opacity`}>
-                                  {surah.type}
-                                </Badge>
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  <Badge className={`${getBadgeColor(surah.type)} text-white text-xs px-2 py-1 font-poppins font-medium hover:opacity-80 transition-opacity`}>
+                                    {surah.type}
+                                  </Badge>
+                                  {/* Audio Availability Badge */}
+                                  {surahHasAudio(surah.id) ? (
+                                    <Badge className="bg-green-600 hover:bg-green-700 text-white text-xs px-2 py-1 font-poppins font-medium transition-colors flex items-center gap-1">
+                                      <Play className="w-3 h-3" />
+                                      Audio
+                                    </Badge>
+                                  ) : (
+                                    <Badge className="bg-gray-600 hover:bg-gray-700 text-white/80 text-xs px-2 py-1 font-poppins font-medium transition-colors">
+                                      Coming Soon
+                                    </Badge>
+                                  )}
+                                </div>
                               </div>
                               <p className="text-xl font-arabic text-white/90 mb-2 drop-shadow-lg">{surah.nameArabic}</p>
                               <div className="flex items-center space-x-4 text-sm text-white/80 font-poppins font-medium">
@@ -931,7 +1036,8 @@ const Index = () => {
                     {/* Expanded Tracks */}
                     {isExpanded && (
                       <div className="ml-2 md:ml-4 mt-3 space-y-3">
-                        {mockTracks.map((track) => (
+                        {getTracksForSurah(surah.id).length > 0 ? (
+                          getTracksForSurah(surah.id).map((track) => (
                           <Card 
                             key={track.id} 
                             className="backdrop-blur-xl hover:bg-black/60 transition-all duration-300 shadow-2xl"
@@ -1023,7 +1129,13 @@ const Index = () => {
                               </div>
                             </CardContent>
                           </Card>
-                        ))}
+                          ))
+                        ) : (
+                          <div className="text-center text-white/60 py-8">
+                            <Clock className="w-8 h-8 mx-auto mb-2" />
+                            <p className="font-poppins text-sm">Audio tracks coming soon for {surah.name}</p>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>

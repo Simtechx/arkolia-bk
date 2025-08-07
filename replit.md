@@ -18,6 +18,14 @@ A comprehensive Quran study application with advanced features including:
   - Maintained all existing functionality during migration
   - Application successfully running on Replit platform
 
+- **Enhanced Audio Handling System (January 2025)**
+  - Implemented toggle view system: "All Surahs (114)" vs "Audio Available" modes
+  - Added visual indicators: play icons for available audio, "Coming Soon" badges for pending
+  - Enhanced sorting options: Surah Number, Name, Audio First priority
+  - Added server-side RSS proxy to handle CORS issues
+  - Improved error handling with global unhandled promise rejection handler
+  - Added audio availability data structure with 5 sample Surahs (Al-Fatihah, Al-Baqarah, Al-Kahf, Ya-Sin, Al-Mulk)
+
 ## Project Architecture
 - **Frontend**: React with TypeScript, Vite build system
 - **Backend**: Express.js server with in-memory storage
