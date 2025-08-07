@@ -146,12 +146,12 @@ const backgroundImages = [
 ];
 
 const Index = () => {
-  const [selectedSurah, setSelectedSurah] = useState(null);
+  const [selectedSurah, setSelectedSurah] = useState<any>(null);
   const [activeTab, setActiveTab] = useState("surahs");
   const [currentBg, setCurrentBg] = useState(backgroundImages[0].url);
   const [bgOpacity, setBgOpacity] = useState([100]);
   const [bgSharpness, setBgSharpness] = useState([0]);
-  const [playingTrack, setPlayingTrack] = useState(null);
+  const [playingTrack, setPlayingTrack] = useState<string | null>(null);
   const [showControls, setShowControls] = useState(false);
   const [customBackgrounds, setCustomBackgrounds] = useState<Array<{id: number, url: string, name: string, isCustom: boolean}>>([]);
   
@@ -537,7 +537,7 @@ const Index = () => {
                         <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
                           <ImageIcon className="w-4 h-4 text-white" />
                         </div>
-                        {'isCustom' in img && img.isCustom && (
+                        {(img as any).isCustom && (
                           <div className="absolute top-1 right-1">
                             <Badge variant="secondary" className="text-xs px-1 py-0">Custom</Badge>
                           </div>
@@ -1011,13 +1011,13 @@ const Index = () => {
                            className="bg-[#0D3029] hover:bg-[#0D3029]/80 text-white px-3 py-1 border-1 border-white"
                                       onClick={() => handleTrackPlay(track, surah)}
                                     >
-                                      {playingTrack === track.id ? (
+                                      {playingTrack === track.id.toString() ? (
                                         <Pause className="w-3 h-3" />
                                       ) : (
                                         <Play className="w-3 h-3" />
                                       )}
                                     </Button>
-                                    <AudioWave isPlaying={playingTrack === track.id} />
+                                    <AudioWave isPlaying={playingTrack === track.id.toString()} />
                                   </div>
                                 </div>
                               </div>
@@ -1151,10 +1151,10 @@ const Index = () => {
                               duration: track.duration,
                               audioUrl: track.audioUrl
                             });
-                            setPlayingTrack(track.id);
+                            setPlayingTrack(track.id.toString());
                             setIsPlayerVisible(true);
                             // Add to completed tracks
-                            setCompletedTrackIds(prev => new Set([...prev, track.id]));
+                            setCompletedTrackIds(prev => new Set([...Array.from(prev), track.id.toString()]));
                           }}
                         >
                           <Play className="w-3 h-3" />
@@ -1357,7 +1357,7 @@ const Index = () => {
                                 surahName: track.surahName,
                                 duration: track.duration
                               });
-                              setPlayingTrack(track.id);
+                              setPlayingTrack(track.id.toString());
                               setIsPlayerVisible(true);
                             }}
                           >
