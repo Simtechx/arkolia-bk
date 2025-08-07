@@ -153,7 +153,7 @@ const Index = () => {
   const [bgSharpness, setBgSharpness] = useState([0]);
   const [playingTrack, setPlayingTrack] = useState(null);
   const [showControls, setShowControls] = useState(false);
-  const [customBackgrounds, setCustomBackgrounds] = useState([]);
+  const [customBackgrounds, setCustomBackgrounds] = useState<Array<{id: number, url: string, name: string, isCustom: boolean}>>([]);
   
   // Block Settings
   const [blockDarkness, setBlockDarkness] = useState([30]);
@@ -178,15 +178,15 @@ const Index = () => {
   const [expandedSurahs, setExpandedSurahs] = useState(new Set());
   
   // Current playing track info for bottom player
-  const [currentTrack, setCurrentTrack] = useState(null);
+  const [currentTrack, setCurrentTrack] = useState<any>(null);
   
   // RSS Feed for Recent tab
   const { data: rssData, isLoading: rssLoading, error: rssError } = useRSSFeed('https://feeds.captivate.fm/arkolia-tafseer/');
   const [isPlayerVisible, setIsPlayerVisible] = useState(false);
 
   // Handle custom background upload
-  const handleCustomBackgroundUpload = (event) => {
-    const file = event.target.files[0];
+  const handleCustomBackgroundUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (file) {
       if (file.type.startsWith('image/')) {
         const reader = new FileReader();
@@ -229,12 +229,12 @@ const Index = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("all");
   const [selectedLength, setSelectedLength] = useState("all");
-  const [selectedThemes, setSelectedThemes] = useState([]);
+  const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
   const [selectedUsage, setSelectedUsage] = useState("all");
   const [showSajdah, setShowSajdah] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
 
-  const toggleFavorite = (trackId) => {
+  const toggleFavorite = (trackId: any) => {
     const newFavorites = new Set(favoriteTrackIds);
     if (newFavorites.has(trackId)) {
       newFavorites.delete(trackId);
@@ -246,7 +246,7 @@ const Index = () => {
     setFavoriteTrackIds(newFavorites);
   };
 
-  const handleSurahClick = (surah) => {
+  const handleSurahClick = (surah: any) => {
     const surahId = surah.id;
     if (expandedSurahs.has(surahId)) {
       const newExpanded = new Set(expandedSurahs);
@@ -259,7 +259,7 @@ const Index = () => {
     }
   };
 
-  const handleTrackPlay = (track, surah) => {
+  const handleTrackPlay = (track: any, surah: any) => {
     setCurrentTrack({
       ...track,
       surahName: surah.name,
@@ -269,10 +269,10 @@ const Index = () => {
     setIsPlayerVisible(true);
     
     // Add to completed tracks
-    setCompletedTrackIds(prev => new Set([...prev, track.id]));
+    setCompletedTrackIds(prev => new Set([...Array.from(prev), track.id]));
   };
 
-  const handlePlayPause = (trackId) => {
+  const handlePlayPause = (trackId: any) => {
     if (playingTrack === trackId) {
       setPlayingTrack(null);
     } else {
@@ -280,7 +280,7 @@ const Index = () => {
     }
   };
 
-  const handleShare = (track) => {
+  const handleShare = (track: any) => {
     const shareUrl = `${window.location.origin}/track/${track.id}`;
     navigator.clipboard.writeText(shareUrl);
     toast({
@@ -289,24 +289,24 @@ const Index = () => {
     });
   };
 
-  const handleDownload = (track) => {
+  const handleDownload = (track: any) => {
     toast({
       title: "Download Started",
       description: `Downloading ${track.title}`,
     });
   };
 
-  const getBadgeColor = (type) => {
+  const getBadgeColor = (type: string) => {
     return type === "Makkan" ? "bg-[#60543D]" : "bg-[#3B4D3A]";
   };
 
-  const getBorderColor = (type, isSelected) => {
+  const getBorderColor = (type: string, isSelected: boolean) => {
     if (isSelected) return "border-blue-400";
     const baseColor = type === "Makkan" ? "#A68C6B" : "#7A9678";
     return `border-[${baseColor}]`;
   };
 
-  const getTrackBorderColor = (type) => {
+  const getTrackBorderColor = (type: string) => {
     const baseColor = type === "Makkan" ? "#A68C6B" : "#7A9678";
     return `border-[${baseColor}]`;
   };
@@ -409,7 +409,7 @@ const Index = () => {
   }, [isCounterVisible]);
 
   // Audio wave animation component
-  const AudioWave = ({ isPlaying }) => (
+  const AudioWave = ({ isPlaying }: { isPlaying: boolean }) => (
     <div className="flex items-center space-x-0.5 h-6">
       {[...Array(5)].map((_, i) => (
         <div
@@ -537,7 +537,7 @@ const Index = () => {
                         <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
                           <ImageIcon className="w-4 h-4 text-white" />
                         </div>
-                        {img.isCustom && (
+                        {'isCustom' in img && img.isCustom && (
                           <div className="absolute top-1 right-1">
                             <Badge variant="secondary" className="text-xs px-1 py-0">Custom</Badge>
                           </div>
